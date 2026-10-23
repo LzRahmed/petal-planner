@@ -909,7 +909,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
     say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
   }
-  var SHANTY = ["Come aboard, my love… one kiss for the captain? 💋"];
+  var SHANTY = ["Oh, won't you kiss me on the mouth and love me like a sailor? 💋"];
   function startSail() {
     PT.st = "sail"; PT.t = 0; PT.hT = 0; PT.i = 0; PT.sleepGet = null; zEl.hidden = true; PT.v = 0;
     PT.lx = PT.x > window.innerWidth / 2 ? 10 : window.innerWidth - psize() - 10;
