@@ -119,7 +119,7 @@ input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent);
 .sw button { width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid transparent; background: var(--bg-s); cursor: pointer; box-shadow: 0 0 0 1.5px var(--ink-s); }
 .sw button[aria-pressed="true"] { border-color: var(--surface); box-shadow: 0 0 0 3px var(--ink-s); }
 .tt-scroll { overflow-x: auto; }
-table.tt { border-collapse: separate; border-spacing: 6px; min-width: 700px; width: 100%; }
+table.tt { border-collapse: separate; border-spacing: 6px; min-width: 900px; width: 100%; }
 table.tt th.time { display: table-cell; }
 .tcell { display: grid; gap: 4px; justify-items: end; }
 .tcell input { width: 96px; padding: 4px 6px; font: 700 12px var(--body); text-transform: none; letter-spacing: 0; text-align: center; border-radius: 10px; }
@@ -322,7 +322,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 (function () {
   "use strict";
   var KEY = "petal-planner-offline-v1";
-  var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+  var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var DAYFULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var SLOTS = ["09:00", "10:30", "12:00", "13:30", "15:00"];
   var COLORS = 8, SHOWN = 6;
@@ -537,7 +537,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function sortedA() { return S.assignments.slice().sort(function (a, b) { return ((a.done ? 1 : 0) - (b.done ? 1 : 0)) || (a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }); }
   function sortedE() { return S.exams.slice().sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : 0; }); }
-  function nextClassDay() { var t = new Date().getDay(); for (var o = 0; o < 7; o++) { var w = (t + o) % 7; if (w <= 4) return { idx: w, offset: o }; } return { idx: 0, offset: 0 }; }
+  function nextClassDay() {
+    var t = new Date().getDay();
+    for (var o = 0; o < 7; o++) { var w = (t + o) % 7; for (var si = 0; si < S.slots.length; si++) if (subj(S.tt[w + "-" + si])) return { idx: w, offset: o }; }
+    return { idx: t, offset: 0 };
+  }
   /* ---------- notes from home (notes.txt, newest first, split by ---, # lines ignored) ---------- */
   function fetchNotes() {
     if (!window.fetch || location.protocol.indexOf("http") !== 0) return;
@@ -960,7 +964,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     say("@#$%! “" + a.t + "” isn't done!", 5000); PT.lastCurse = Date.now();
   }
   function activeLecture() {
-    var n = new Date(), idx = n.getDay(); if (idx > 4) return null;
+    var n = new Date(), idx = n.getDay();
     var mins = n.getHours() * 60 + n.getMinutes();
     for (var si = 0; si < S.slots.length; si++) {
       var id = S.tt[idx + "-" + si], s = id ? subj(id) : null; if (!s) continue;
