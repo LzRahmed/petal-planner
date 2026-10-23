@@ -905,7 +905,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
     say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
   }
-  var SHANTY = ["Ahoy! Captain Bunny here ⚓", "Row, row, row your boat ♪", "gently down the stream ♪", "merrily, merrily, merrily ♪", "life is but a dream ♪", "sailing away 🌊"];
+  var SHANTY = ["Come aboard, my love… one kiss for the captain? 💋"];
   function startSail() {
     PT.st = "sail"; PT.t = 0; PT.hT = 0; PT.i = 0; PT.sleepGet = null; zEl.hidden = true; PT.v = 0;
     PT.lx = PT.x > window.innerWidth / 2 ? 10 : window.innerWidth - psize() - 10;
@@ -1046,9 +1046,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     } else if (PT.st === "sail") {
       PT.t -= dt * 1000; PT.hT -= dt * 1000;
       if (PT.y < restY()) PT.y = Math.min(restY(), PT.y + 560 * dt);
-      if (PT.t <= 0) { PT.t = 2700; say(SHANTY[PT.i++ % SHANTY.length], 2500); }
-      if (PT.hT <= 0) { PT.hT = 650; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize(), PT.y + 2, pick(["♪", "♫", "🌊"])); }
-      if (reduce || moveP(PT.lx, restY(), 55, dt, true)) { say("Land ho! 🏝️", 2000); toIdle(3000); }
+      if (PT.t <= 0) { PT.t = 4200; say(SHANTY[PT.i++ % SHANTY.length], 4000); }
+      if (PT.hT <= 0) { PT.hT = 650; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize(), PT.y + 2, pick(["💋", "♡", "🌊"])); }
+      if (reduce || moveP(PT.lx, restY(), 55, dt, true)) toIdle(3000);
     } else if (PT.st === "party") {
       PT.t -= dt * 1000; if (PT.t <= 0) toIdle(2500);
     } else if (PT.st === "lecture") {
