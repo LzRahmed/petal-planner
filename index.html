@@ -193,6 +193,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 @keyframes trip { 0% { transform: rotate(0); } 35% { transform: translateX(8px) rotate(35deg); } 65% { transform: translateY(6px) rotate(100deg); } 80% { transform: translateY(3px) rotate(82deg); } 100% { transform: translateY(5px) rotate(90deg); } }
 @keyframes sob { 0%, 100% { transform: translateY(0) scaleY(.95); } 50% { transform: translateY(2px) scaleY(.9) rotate(-2deg); } }
 @keyframes hop { 50% { transform: translateY(-9px); } }
+#pet.dance #petBody { animation: dance .5s ease-in-out infinite; }
+#pet.dance .arm-l { animation: swing .25s ease-in-out infinite; } #pet.dance .arm-r { animation: swing .25s ease-in-out infinite .12s; }
+#pet.munch #petBody { animation: bob .22s ease-in-out infinite; }
+@keyframes dance { 25% { transform: translateY(-8px) rotate(-9deg); } 75% { transform: translateY(-8px) rotate(9deg); } }
 @keyframes tear { 0% { opacity: 0; transform: translateY(-3px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
 @keyframes idleBreath { 50% { transform: scaleY(1.025) translateY(-1px); } }
 @keyframes earSway { 0%, 80%, 100% { transform: rotate(0); } 88% { transform: rotate(5deg); } 94% { transform: rotate(-3deg); } }
@@ -553,16 +557,17 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
 
   function vSubjects() {
-    var h = '<section class="card"><h2>My subjects</h2><div class="note" style="margin:-6px 0 12px">Rename anything. Pick an emoji and a color for each one.</div><div class="subjects">';
+    var h = '<section class="card"><h2>My subjects</h2><div class="note" style="margin:-6px 0 12px">Rename anything. Pick an emoji and a color for each one. Deleting a subject also removes its classes, exams and grades.</div><div class="subjects">';
     S.subjects.forEach(function (s, i) {
       var sw = ""; for (var c = 0; c < COLORS; c++) sw += '<button type="button" class="p' + c + '" data-act="color" data-id="' + s.id + '" data-c="' + c + '" aria-pressed="' + (s.c === c) + '" aria-label="Color ' + (c + 1) + '"></button>';
-      h += '<div class="scard p' + s.c + '"><div class="tag">Subject ' + (i + 1) + '</div><div class="top">' +
+      var del = S.subjects.length > 1 ? '<button type="button" class="btn ghost sm" data-act="delsubj" data-id="' + s.id + '">' + (confirmKey === "subj" + s.id ? "Tap again to delete" : "Delete") + "</button>" : "";
+      h += '<div class="scard p' + s.c + '"><div class="tag" style="display:flex;justify-content:space-between;align-items:center;gap:8px">Subject ' + (i + 1) + del + '</div><div class="top">' +
         '<input class="emoji" type="text" maxlength="4" value="' + esc(s.e) + '" data-act="field" data-id="' + s.id + '" data-p="e" aria-label="Emoji for subject ' + (i + 1) + '">' +
         '<input class="name" type="text" dir="auto" value="' + esc(s.n) + '" data-act="field" data-id="' + s.id + '" data-p="n" aria-label="Name of subject ' + (i + 1) + '"></div>' +
         '<input type="text" dir="auto" value="' + esc(s.t) + '" placeholder="Instructor" data-act="field" data-id="' + s.id + '" data-p="t" aria-label="Instructor">' +
         '<input type="text" dir="auto" value="' + esc(s.r) + '" placeholder="Room or hall" data-act="field" data-id="' + s.id + '" data-p="r" aria-label="Room"><div class="sw">' + sw + "</div></div>";
     });
-    return h + "</div></section>";
+    return h + '</div><div class="btns" style="margin-top:14px"><button class="btn" type="button" data-act="addsubj">Add a subject</button></div></section>';
   }
 
   function vTimetable() {
@@ -665,7 +670,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = [["overview", "Overview", ""], ["subjects", "Subjects", 6], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["settings", "Settings", ""]];
+    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["settings", "Settings", ""]];
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -723,6 +728,19 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (a === "tab") { tab = el.getAttribute("data-tab"); confirmKey = null; render(); window.scrollTo(0, 0); }
     else if (a === "color") { subj(id).c = +el.getAttribute("data-c"); commit(); }
     else if (a === "del") { S[k] = S[k].filter(function (x) { return x.id !== id; }); commit(); }
+    else if (a === "delsubj") {
+      if (S.subjects.length < 2) return;
+      if (confirmKey !== "subj" + id) { confirmKey = "subj" + id; render(); return; }
+      confirmKey = null;
+      S.subjects = S.subjects.filter(function (x) { return x.id !== id; });
+      Object.keys(S.tt).forEach(function (kk) { if (S.tt[kk] === id) delete S.tt[kk]; });
+      S.exams = S.exams.filter(function (x) { return x.s !== id; });
+      S.grades = S.grades.filter(function (x) { return x.s !== id; });
+      S.assignments.forEach(function (x) { if (x.s === id) x.s = ""; });
+      commit(); toast("Subject deleted");
+    } else if (a === "addsubj") {
+      S.subjects.push({ id: "s" + uid(), n: "New subject", e: "📚", c: S.subjects.length % COLORS, t: "", r: "" }); commit();
+    }
     else if (a === "add-assign") {
       var t = $("aT").value.trim(); if (!t) { $("aT").focus(); return; }
       var o = $("aO").value, item = { id: uid(), t: t, s: $("aS").value, d: $("aD").value || addDays(3), done: false, rem: null };
@@ -752,7 +770,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (a === "remics") { var it2 = findItem(modal.k, modal.id); makeIcs(modal.k, it2); }
     else if (a === "snooze") { findItem(k, id).rem.snooze = Date.now() + 3600000; commit(); }
     else if (a === "dismiss") { findItem(k, id).rem.done = true; commit(); }
-    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; ai.rem.done = true; commit(); }
+    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; ai.rem.done = true; commit(); celebrate(); }
     else if (a === "addphoto") { $("photoIn").click(); }
     else if (a === "shuffle") { pickRandom(); render(); }
     else if (a === "zoom") { modal = { t: "zoom", id: id }; renderModal(); }
@@ -775,7 +793,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   document.addEventListener("change", function (e) {
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id");
-    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked && x.rem) x.rem.done = true; } }); commit(); }
+    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked && x.rem) x.rem.done = true; } }); commit(); if (el.checked) celebrate(); }
     else if (a === "field") { var s = subj(id), p = el.getAttribute("data-p"); s[p] = el.value.trim() || (p === "n" ? "Subject" : ""); commit(); }
     else if (a === "slotT") { var sl2 = S.slots[+el.getAttribute("data-i")]; if (el.value) sl2[el.getAttribute("data-f")] = el.value; commit(); }
     else if (a === "slot") { var key = el.getAttribute("data-key"); if (el.value) S.tt[key] = el.value; else delete S.tt[key]; commit(); }
@@ -808,6 +826,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     angry: '<circle cx="33" cy="39.5" r="2.3" fill="' + INK + '"/><circle cx="47" cy="39.5" r="2.3" fill="' + INK + '"/><path d="M27 33 L37 36.5 M53 33 L43 36.5" stroke="' + INK + '" stroke-width="2.4" stroke-linecap="round"/><path d="M34.5 48 l2.8 -3 l2.8 3 l2.8 -3 l2.8 3" stroke="' + INK + '" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
     run: '<circle cx="33" cy="38" r="2.7" fill="' + INK + '"/><circle cx="47" cy="38" r="2.7" fill="' + INK + '"/><ellipse cx="40" cy="47" rx="3" ry="2.6" fill="#c2415f"/><path d="M61 30 q3 5 0 7.5 q-3 -2.5 0 -7.5 Z" fill="#9ad4f5"/>',
     dizzy: '<path d="M29.5 35.5 l7 6 M36.5 35.5 l-7 6 M43.5 35.5 l7 6 M50.5 35.5 l-7 6" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/><path d="M35 47.5 q2.5 -3 5 0 q2.5 3 5 0" stroke="' + INK + '" stroke-width="1.8" fill="none" stroke-linecap="round"/>',
+    chew: '<path d="M29 39.5 q4 -5 8 0 M43 39.5 q4 -5 8 0" stroke="' + INK + '" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="46.5" rx="3.4" ry="2.2" fill="#c2415f"/><circle cx="29" cy="44" r="3" fill="#ffb3c6" opacity=".8"/><circle cx="51" cy="44" r="3" fill="#ffb3c6" opacity=".8"/>',
     cry: '<path d="M29 35.5 l7 3 l-7 3 M51 35.5 l-7 3 l7 3" stroke="' + INK + '" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse class="tear" cx="31.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><ellipse class="tear t2" cx="48.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><path d="M35 49.5 q5 -5 10 0" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round"/>'
   };
   var PT = { x: 24, y: 0, dir: 1, st: "idle", t: 0, next: 2500, tg: null, sp: 70, after: null, bT: 0, hT: 0, face: "", lastCurse: Date.now() - 52000, v: 0, taps: [], dismissed: {}, lecKey: "", lx: 0, sleepGet: null };
@@ -816,7 +835,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function setFace(f) { if (PT.face !== f) { PT.face = f; faceEl.innerHTML = FACES[f]; } }
   function setCls(c) { petEl.className = c; }
   function say(txt, ms) { bubbleEl.textContent = txt; bubbleEl.hidden = false; PT.bT = ms || 3000; }
-  function heart(x, y) { var h = document.createElement("div"); h.className = "heart"; h.textContent = "♡"; h.style.left = x + "px"; h.style.top = y + "px"; layer.appendChild(h); setTimeout(function () { if (h.parentNode) h.parentNode.removeChild(h); }, 1150); }
+  function heart(x, y, ch) { var h = document.createElement("div"); h.className = "heart"; h.textContent = ch || "♡"; h.style.left = x + "px"; h.style.top = y + "px"; layer.appendChild(h); setTimeout(function () { if (h.parentNode) h.parentNode.removeChild(h); }, 1150); }
   function visible(sel, minW) {
     var s = psize();
     return Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function (el) { var r = el.getBoundingClientRect(); return r.width >= (minW || 0) && r.top > s + 6 && r.bottom < window.innerHeight - 4 && r.left >= 0 && r.right <= window.innerWidth; });
@@ -855,10 +874,27 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     };
     goTo(getT, 105, "walk", function () { PT.st = "sleep"; PT.t = 12000 + Math.random() * 6000; PT.sleepGet = getT; setCls("sleep"); setFace("sleep"); zEl.hidden = false; });
   }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function startDance() { PT.st = "dance"; PT.t = 4200; PT.hT = 0; zEl.hidden = true; setCls("dance"); setFace("kiss"); say(pick(["dance break! ♪", "la la la ♪", "wiggle wiggle ♪"]), 2500); }
+  function startSnack() { PT.st = "snack"; PT.t = 3600; PT.hT = 0; zEl.hidden = true; setCls("munch"); setFace("chew"); say(pick(["nom nom 🥕", "snack time! 🥕", "crunchy 🥕"]), 2600); }
+  function sweetTalk() {
+    var h = new Date().getHours(), n = S.name ? ", " + S.name : "";
+    var lines = ["you've got this" + n + " ♡", "drink some water 💧", "proud of you ♡", "one step at a time 🌸", "take a little break? ☕", "you're doing great" + n + "!"];
+    if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
+    say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
+  }
+  function celebrate() {
+    if (layer.hidden || PT.st === "trip" || PT.st === "cry" || PT.st === "lecture") return;
+    PT.st = "party"; PT.t = 2600; PT.sleepGet = null; zEl.hidden = true; setCls("hop"); setFace("kiss"); say(pick(["Yay! One done! 🎉", "Proud of you ♡", "Woohoo! ✨"]), 2400);
+    for (var i = 0; i < 6; i++) (function (k) { setTimeout(function () { heart(PT.x + psize() / 2 + (k - 2.5) * 14, PT.y + 6 + (k % 2) * 10, k % 2 ? "✨" : "♡"); }, k * 140); })(i);
+  }
   function chooseAction() {
     var r = Math.random(), pols = visible(".pol");
-    if (pols.length && r < 0.5) visitPhoto(pols[Math.floor(Math.random() * pols.length)]);
-    else if (r < 0.8) { var spots = visible(".card, .pol, .paper", 140); if (spots.length) sleepOn(spots[Math.floor(Math.random() * spots.length)]); else wander(); }
+    if (pols.length && r < 0.35) visitPhoto(pols[Math.floor(Math.random() * pols.length)]);
+    else if (r < 0.55) { var spots = visible(".card, .pol, .paper", 140); if (spots.length) sleepOn(spots[Math.floor(Math.random() * spots.length)]); else wander(); }
+    else if (r < 0.65) startDance();
+    else if (r < 0.75) startSnack();
+    else if (r < 0.87) sweetTalk();
     else wander();
   }
   function flee(txt) {
@@ -958,6 +994,16 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       PT.t -= dt * 1000; if (PT.t <= 0) toIdle(2500);
     } else if (PT.st === "curse") {
       PT.t -= dt * 1000; if (PT.t <= 0) toIdle(3000);
+    } else if (PT.st === "dance") {
+      PT.t -= dt * 1000; PT.hT -= dt * 1000;
+      if (PT.hT <= 0) { PT.hT = 500; PT.dir = -PT.dir; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize(), PT.y + 4, pick(["♪", "♫"])); }
+      if (PT.t <= 0) toIdle();
+    } else if (PT.st === "snack") {
+      PT.t -= dt * 1000; PT.hT -= dt * 1000;
+      if (PT.hT <= 0) { PT.hT = 900; heart(PT.x + psize() / 2 + PT.dir * psize() * 0.3, PT.y + psize() * 0.4, "🥕"); }
+      if (PT.t <= 0) { say("yummy ♡", 1500); toIdle(); }
+    } else if (PT.st === "party") {
+      PT.t -= dt * 1000; if (PT.t <= 0) toIdle(2500);
     } else if (PT.st === "lecture") {
       if (reduce) { PT.y = restY(); }
       else if (moveP(PT.lx, restY(), 400, dt, true)) PT.lx = PT.lx > window.innerWidth / 2 ? 10 : window.innerWidth - psize() - 10;
@@ -978,6 +1024,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   window.addEventListener("resize", function () { PT.x = Math.max(0, Math.min(PT.x, window.innerWidth - psize() - 4)); if (PT.st === "idle") PT.y = restY(); });
   setFace("happy"); PT.y = restY(); applyPet();
+  if (!layer.hidden) setTimeout(function () { if (PT.st === "idle") sweetTalk(); }, 1200);
   requestAnimationFrame(frame);
   setInterval(checkEvents, 1500);
 
