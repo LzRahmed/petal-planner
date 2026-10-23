@@ -323,7 +323,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return {
       v: 1, name: "", theme: "", pet: { on: true },
       subjects: d.map(function (x, i) { return { id: "s" + (i + 1), n: x[0], e: x[1], c: x[2], t: "", r: "" }; }),
-      tt: {}, slots: [["09:00", "10:30"], ["10:30", "12:00"], ["12:00", "13:30"], ["13:30", "15:00"], ["15:00", "16:30"]].map(function (p) { return { s: p[0], e: p[1] }; }), assignments: [], exams: [], grades: [],
+      tt: {}, slots: [["09:00", "10:30"], ["10:30", "12:00"], ["12:00", "13:30"], ["13:30", "15:00"], ["15:00", "16:30"]].map(function (p) { return { s: p[0], e: p[1] }; }), assignments: [], exams: [], grades: [], seen: [],
       notes: [{ id: uid(), text: "Welcome, beautiful ♡\nThis planner is all yours. Everything you add is saved on this device, even without internet.", at: Date.now() }]
     };
   }
@@ -512,6 +512,16 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function sortedA() { return S.assignments.slice().sort(function (a, b) { return ((a.done ? 1 : 0) - (b.done ? 1 : 0)) || (a.d < b.d ? -1 : a.d > b.d ? 1 : 0); }); }
   function sortedE() { return S.exams.slice().sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : 0; }); }
   function nextClassDay() { var t = new Date().getDay(); for (var o = 0; o < 7; o++) { var w = (t + o) % 7; if (w <= 4) return { idx: w, offset: o }; } return { idx: 0, offset: 0 }; }
+  /* ---------- notes from home (notes.txt, newest first, split by ---, # lines ignored) ---------- */
+  function fetchNotes() {
+    if (!window.fetch || location.protocol.indexOf("http") !== 0) return;
+    fetch("notes.txt?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : ""; }).then(function (txt) {
+      var got = txt.replace(/\r/g, "").replace(/^#.*$/gm, "").split(/^-{3,}[ \t]*$/m).map(function (s) { return s.trim(); }).filter(Boolean).reverse(), added = 0;
+      if (!S.seen) S.seen = [];
+      got.forEach(function (t) { var id = "r" + hash(t); if (S.seen.indexOf(id) >= 0) return; S.seen.push(id); S.notes.unshift({ id: id, text: t, at: Date.now() }); added++; });
+      if (added) { commit(); toast(added === 1 ? "A new note for you ♡" : added + " new notes for you ♡"); }
+    }).catch(function () {});
+  }
   function noteCard(n) {
     return '<div class="paper"><span class="tape"></span><div class="msg" dir="auto">' + esc(n.text) + '</div><div class="meta">' + esc(fmtStamp(n.at)) + "</div></div>";
   }
@@ -975,6 +985,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   setInterval(tick, 15000);
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
   loadPhotos();
+  fetchNotes();
+  window.addEventListener("online", fetchNotes);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) fetchNotes(); });
 })();
 </script>
 <script>

@@ -1,0 +1,10 @@
+# Notes for Petal Planner.
+# Write a new note at the TOP (under these lines), then put a line with just --- under it.
+# Lines starting with # are ignored. Don't change old notes, or they show up again as new ones.
+#
+# Example:
+#   Good luck on your exam today ♡
+#   ---
+#   I'm proud of you
+#   ---
+
