@@ -475,7 +475,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); }
 
   /* ---------- sharing: a view-only copy (no photos) for one person, via Supabase ---------- */
-  var SB_URL = "", SB_KEY = "", SHARE_WITH = "your person";
+  var SB_URL = "https://scrmqwetvtlscsiqhsny.supabase.co", SB_KEY = "sb_publishable_ymbj3CZKK_TUeV4ivNZIXA_vAW901ig", SHARE_WITH = "ZoZo";
   var VIEW = /[?&]view\b/.test(location.search), shareT = null;
   function sbRpc(fn, body) {
     return fetch(SB_URL + "/rest/v1/rpc/" + fn, { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) })
