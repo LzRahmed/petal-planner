@@ -1050,11 +1050,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     chew: '<path d="M29 39.5 q4 -5 8 0 M43 39.5 q4 -5 8 0" stroke="' + INK + '" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="46.5" rx="3.4" ry="2.2" fill="#c2415f"/><circle cx="29" cy="44" r="3" fill="#ffb3c6" opacity=".8"/><circle cx="51" cy="44" r="3" fill="#ffb3c6" opacity=".8"/>',
     cry: '<path d="M29 35.5 l7 3 l-7 3 M51 35.5 l-7 3 l7 3" stroke="' + INK + '" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse class="tear" cx="31.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><ellipse class="tear t2" cx="48.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><path d="M35 49.5 q5 -5 10 0" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round"/>'
   };
-  function catEyes(iris, ring, pupil) {
-    var e = function (cx) { return '<ellipse cx="' + cx + '" cy="37.6" rx="3.9" ry="4.3" fill="' + iris + '" stroke="' + ring + '" stroke-width="1.1"/><ellipse cx="' + cx + '" cy="37.8" rx="' + pupil + '" ry="3.2" fill="#22160e"/><circle cx="' + (cx + 1.2) + '" cy="36" r="1.2" fill="#fff"/><circle cx="' + (cx - 1.1) + '" cy="39.4" r=".5" fill="#fff"/>'; };
+  function catEyes(iris, ring) {
+    var e = function (cx) { return '<circle cx="' + cx + '" cy="37.8" r="4" fill="' + iris + '" stroke="' + ring + '" stroke-width=".9"/><circle cx="' + cx + '" cy="37.5" r="3.2" fill="#2a1c14"/><circle cx="' + (cx + 1.3) + '" cy="36.2" r="1.5" fill="#fff"/><circle cx="' + (cx - 1.2) + '" cy="39.2" r=".7" fill="#fff"/>'; };
     return e(33) + e(47) + '<path d="M40 43.4 v1.2 M40 44.6 q-2 2.2 -4 .4 M40 44.6 q2 2.2 4 .4" stroke="' + INK + '" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
   }
-  var CATFACE = { cat: { happy: catEyes("#e8b84a", "#7a5418", 1.3) }, kitten: { happy: catEyes("#7d9bb0", "#3a4a58", 2) } };
+  var CATFACE = { cat: { happy: catEyes("#e8b84a", "#7a5418") }, kitten: { happy: catEyes("#7d9bb0", "#3a4a58") } };
   function faceFor(f, ch) { return (CATFACE[ch] && CATFACE[ch][f]) || FACES[f]; }
   var PREV = $("petBody").innerHTML.replace(/ id="[^"]*"/g, "");
   function prevSVG(face, ch) { return PREV.replace('<g class="face"></g>', '<g class="face">' + faceFor(face, ch) + "</g>"); }
