@@ -190,6 +190,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .fcard b { font: 700 18px var(--display); font-style: italic; }
 .qrow { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1.5px dashed var(--line); }
 .qrow:last-child { border-bottom: 0; }
+.viewonly main input, .viewonly main select, .viewonly main textarea, .viewonly main button { pointer-events: none; }
 .qbar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
 .qbar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
 #pet.walk #petBody { animation: bob .36s ease-in-out infinite; } #pet.run #petBody { animation: bob .16s ease-in-out infinite; }
@@ -319,16 +320,18 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         <g class="char char-cat">
           <path d="M52 70 q16 2 15 -12 q-1 -7 5 -9" stroke="#9a5a24" stroke-width="7.5" fill="none" stroke-linecap="round"/>
           <path d="M52 70 q16 2 15 -12 q-1 -7 5 -9" stroke="#f2a65a" stroke-width="4.6" fill="none" stroke-linecap="round"/>
-          <path d="M63 66.5 l3 -2.5 M65.5 59 l3.2 .3 M67 52 l3 1.2" stroke="#d17a35" stroke-width="1.6" stroke-linecap="round"/>
-          <g class="ear ear-l"><path d="M22 28 L24 4 L38 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M25.5 22 L26 10 L33 19 Z" fill="#f4a8b8"/></g>
-          <g class="ear ear-r"><path d="M58 28 L56 4 L42 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M54.5 22 L54 10 L47 19 Z" fill="#f4a8b8"/></g>
+          <path d="M57 71.6 l.8 -3.3 M61.6 69.4 l2.4 -2.4 M65.2 64 l3.2 -.8 M66.4 57.6 l3.2 .2 M67.2 52 l3 1.4 M70.4 48.6 l2.2 2.4" stroke="#c8692a" stroke-width="1.8" stroke-linecap="round"/>
+          <g class="ear ear-l"><path d="M22 28 L24 4 L38 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M25.5 22 L26 10 L33 19 Z" fill="#f4a8b8"/><path d="M26.5 21 l1.4 -5 M28.8 20.6 l.6 -6 M30.8 20.4 l-.2 -4.6" stroke="#fff4e6" stroke-width=".9" stroke-linecap="round"/></g>
+          <g class="ear ear-r"><path d="M58 28 L56 4 L42 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M54.5 22 L54 10 L47 19 Z" fill="#f4a8b8"/><path d="M53.5 21 l-1.4 -5 M51.2 20.6 l-.6 -6 M49.2 20.4 l.2 -4.6" stroke="#fff4e6" stroke-width=".9" stroke-linecap="round"/></g>
           <ellipse class="foot foot-l" cx="32" cy="73.5" rx="6.5" ry="4" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/>
           <ellipse class="foot foot-r" cx="48" cy="73.5" rx="6.5" ry="4" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/>
+          <path d="M29.6 75 v1.4 M32 75.4 v1.4 M34.4 75 v1.4 M45.6 75 v1.4 M48 75.4 v1.4 M50.4 75 v1.4" stroke="#9a5a24" stroke-width=".9" stroke-linecap="round"/>
           <path d="M29 47 Q22 60 25 73 Q40 78 55 73 Q58 60 51 47 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/>
-          <path d="M34 49 Q40 70 46 49 Z" fill="#fde6c8"/>
-          <path d="M25.5 58 q4 1 6 -1.5 M25 64.5 q4 1 6 -1.5 M54.5 58 q-4 1 -6 -1.5 M55 64.5 q-4 1 -6 -1.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <g class="arm arm-l"><ellipse cx="31" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M27.5 60 h7 M27.5 64 h7" stroke="#d17a35" stroke-width="1.4"/><path d="M29.6 70.4 v1.8 M32.4 70.4 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
-          <g class="arm arm-r"><ellipse cx="49" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M45.5 60 h7 M45.5 64 h7" stroke="#d17a35" stroke-width="1.4"/><path d="M47.6 70.4 v1.8 M50.4 70.4 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
+          <path d="M33 48 Q35 55 33.4 59 Q37.4 62 40 67.5 Q42.6 62 46.6 59 Q45 55 47 48 Z" fill="#fde6c8"/>
+          <path d="M35.4 58.6 l1.4 1.6 M44.6 58.6 l-1.4 1.6 M38.6 63.6 l1.4 1.4 l1.4 -1.4" stroke="#f2c99a" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <path d="M25.8 54.6 q4 1.2 6.4 -1.2 M25 60.4 q4.6 1.2 7 -1.4 M25.2 66.6 q4.6 1 6.6 -1.6 M54.2 54.6 q-4 1.2 -6.4 -1.2 M55 60.4 q-4.6 1.2 -7 -1.4 M54.8 66.6 q-4.6 1 -6.6 -1.6" stroke="#c8692a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <g class="arm arm-l"><ellipse cx="31" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M27.4 57.6 h7.2 M27 61.4 h8 M27.2 65.2 h7.6" stroke="#c8692a" stroke-width="1.4"/><ellipse cx="31" cy="70.6" rx="3.2" ry="1.6" fill="#fde6c8"/><path d="M29.6 70 v1.8 M32.4 70 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
+          <g class="arm arm-r"><ellipse cx="49" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M45.4 57.6 h7.2 M45 61.4 h8 M45.2 65.2 h7.6" stroke="#c8692a" stroke-width="1.4"/><ellipse cx="49" cy="70.6" rx="3.2" ry="1.6" fill="#fde6c8"/><path d="M47.6 70 v1.8 M50.4 70 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
         </g>
         <g class="char char-kitten">
           <path d="M50 71 q11 1 11 -8" stroke="#9a5a24" stroke-width="7" fill="none" stroke-linecap="round"/>
@@ -338,10 +341,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <ellipse class="foot foot-l" cx="33" cy="74" rx="6" ry="3.8" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/>
           <ellipse class="foot foot-r" cx="47" cy="74" rx="6" ry="3.8" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/>
           <path d="M31 49 Q24 62 27 74 Q40 78 53 74 Q56 62 49 49 Z" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/>
-          <path d="M35 50 Q40 68 45 50 Z" fill="#fde6c8"/>
-          <path d="M27.5 61 q4 1 6 -1.5 M52.5 61 q-4 1 -6 -1.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <g class="arm arm-l"><ellipse cx="33" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M30 63 h6" stroke="#d17a35" stroke-width="1.4"/></g>
-          <g class="arm arm-r"><ellipse cx="47" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M44 63 h6" stroke="#d17a35" stroke-width="1.4"/></g>
+          <path d="M34.4 50 Q36 56 34.8 59.4 Q38 62 40 66 Q42 62 45.2 59.4 Q44 56 45.6 50 Z" fill="#fde6c8"/>
+          <path d="M28.6 56.6 q3.6 1 5.4 -1.2 M27.5 61 q4 1 6 -1.5 M27.6 66 q4 .8 5.8 -1.4 M51.4 56.6 q-3.6 1 -5.4 -1.2 M52.5 61 q-4 1 -6 -1.5 M52.4 66 q-4 .8 -5.8 -1.4" stroke="#d17a35" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path d="M53 70 l1.6 -2.6 M57.4 68.4 l2.6 -1.4" stroke="#d17a35" stroke-width="1.5" stroke-linecap="round"/>
+          <g class="arm arm-l"><ellipse cx="33" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M30 61 h6 M29.6 64.6 h6.8" stroke="#d17a35" stroke-width="1.4"/><ellipse cx="33" cy="71" rx="2.8" ry="1.4" fill="#fde6c8"/></g>
+          <g class="arm arm-r"><ellipse cx="47" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M44 61 h6 M43.6 64.6 h6.8" stroke="#d17a35" stroke-width="1.4"/><ellipse cx="47" cy="71" rx="2.8" ry="1.4" fill="#fde6c8"/></g>
         </g>
         <g class="char char-plush">
           <g class="ear ear-l"><path d="M25 26 Q12 14 19 3 Q23 13 33 17 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="2.2" stroke-linejoin="round"/></g>
@@ -365,17 +369,24 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         <ellipse cx="40" cy="42" rx="2.4" ry="1.8" fill="#e58aa0"/>
         </g>
         <g class="char char-cat">
+          <path d="M22 36 l-4.6 1.4 l3.8 1.6 l-3.4 2.2 l4.8 .2 M58 36 l4.6 1.4 l-3.8 1.6 l3.4 2.2 l-4.8 .2" fill="#f2a65a" stroke="#9a5a24" stroke-width="1.4" stroke-linejoin="round"/>
           <ellipse cx="40" cy="35" rx="19.5" ry="16" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4"/>
-          <path d="M34.5 20 q1 4 0 7.5 M40 19 v8.5 M45.5 20 q-1 4 0 7.5" stroke="#d17a35" stroke-width="1.9" fill="none" stroke-linecap="round"/>
-          <path d="M21 33 h5 M21.5 37.5 h4 M59 33 h-5 M58.5 37.5 h-4" stroke="#d17a35" stroke-width="1.8" stroke-linecap="round"/>
-          <ellipse cx="36" cy="44" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="44" cy="44" rx="5" ry="3.6" fill="#fde6c8"/>
+          <ellipse cx="33" cy="37.6" rx="5.6" ry="5" fill="#f8c58e" opacity=".75"/><ellipse cx="47" cy="37.6" rx="5.6" ry="5" fill="#f8c58e" opacity=".75"/>
+          <path d="M33.4 20.6 q1.2 4 0 8 M36.8 19.4 q.6 4 0 7.6 M40 19 v8.6 M43.2 19.4 q-.6 4 0 7.6 M46.6 20.6 q-1.2 4 0 8" stroke="#c8692a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path d="M25.4 31.4 q3 .8 5 -.8 M54.6 31.4 q-3 .8 -5 -.8" stroke="#c8692a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path d="M20.8 34.4 h5 M21.2 38.4 h4.4 M59.2 34.4 h-5 M58.8 38.4 h-4.4" stroke="#c8692a" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="36" cy="44" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="44" cy="44" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="40" cy="48" rx="4" ry="2.4" fill="#fde6c8"/>
+          <circle cx="34.4" cy="44.6" r=".55" fill="#c8692a"/><circle cx="36.4" cy="45.6" r=".55" fill="#c8692a"/><circle cx="45.6" cy="44.6" r=".55" fill="#c8692a"/><circle cx="43.6" cy="45.6" r=".55" fill="#c8692a"/>
           <ellipse cx="26.5" cy="42" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".7"/><ellipse cx="53.5" cy="42" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".7"/>
           <path d="M37.6 40.6 h4.8 l-2.4 2.8 Z" fill="#f08aa0" stroke="#c45a74" stroke-width=".8" stroke-linejoin="round"/>
-          <path d="M24 42.5 L13 40.5 M24 45 L13 46.5 M56 42.5 L67 40.5 M56 45 L67 46.5" stroke="#9a5a24" stroke-width=".9" opacity=".55" stroke-linecap="round"/>
+          <path d="M24 41.6 L12.6 39 M24 44 L12.4 44.4 M24.4 46.2 L13.4 49.4 M56 41.6 L67.4 39 M56 44 L67.6 44.4 M55.6 46.2 L66.6 49.4" stroke="#fff4e6" stroke-width=".9" opacity=".9" stroke-linecap="round"/>
         </g>
         <g class="char char-kitten">
           <ellipse cx="40" cy="35" rx="20.5" ry="17" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4"/>
-          <path d="M35 20 q1 3.5 0 6.5 M40 19 v7.5 M45 20 q-1 3.5 0 6.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M36 18.6 l1.4 -3 l1.4 2.8 l1.4 -3.2 l1.4 3.2 l1.4 -2.8" fill="#f5b06a" stroke="#9a5a24" stroke-width="1.2" stroke-linejoin="round"/>
+          <ellipse cx="33" cy="37.6" rx="5.8" ry="5.4" fill="#fac992" opacity=".8"/><ellipse cx="47" cy="37.6" rx="5.8" ry="5.4" fill="#fac992" opacity=".8"/>
+          <path d="M33.6 21 q1 3.6 0 7 M36.8 20 q.6 3.6 0 6.6 M40 19.6 v7.4 M43.2 20 q-.6 3.6 0 6.6 M46.4 21 q-1 3.6 0 7" stroke="#d17a35" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M20.6 32.6 h4.4 M59.4 32.6 h-4.4" stroke="#d17a35" stroke-width="1.6" stroke-linecap="round"/>
           <path d="M20.5 36 l-3.5 2 l3.6 1.6 M59.5 36 l3.5 2 l-3.6 1.6" stroke="#9a5a24" stroke-width="1.6" fill="#f5b06a" stroke-linejoin="round"/>
           <ellipse cx="36" cy="44.5" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="44" cy="44.5" rx="5" ry="3.6" fill="#fde6c8"/>
           <ellipse cx="26" cy="42.5" rx="3.8" ry="2.5" fill="#ffb3c6" opacity=".8"/><ellipse cx="54" cy="42.5" rx="3.8" ry="2.5" fill="#ffb3c6" opacity=".8"/>
@@ -461,7 +472,20 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return base;
   }
   var S = load();
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } }
+  function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); }
+
+  /* ---------- sharing: a view-only copy (no photos) for one person, via Supabase ---------- */
+  var SB_URL = "", SB_KEY = "", SHARE_WITH = "your person";
+  var VIEW = /[?&]view\b/.test(location.search), shareT = null;
+  function sbRpc(fn, body) {
+    return fetch(SB_URL + "/rest/v1/rpc/" + fn, { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) { return t ? JSON.parse(t) : null; });
+  }
+  function pushShare(now) {
+    if (VIEW || !SB_URL || S.share === false || !navigator.onLine) return;
+    clearTimeout(shareT);
+    shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S }).catch(function () {}); }, now ? 0 : 4000);
+  }
   function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 3200); }
 
   function subj(id) { for (var i = 0; i < S.subjects.length; i++) if (S.subjects[i].id === id) return S.subjects[i]; return null; }
@@ -667,6 +691,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function has(r) { if (r === "bunny" || r === "cap" || r === "none") return true; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return qDone(QUESTS[i]); return false; }
   function questFor(r) { for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return QUESTS[i].t; return ""; }
   function checkQuests() {
+    if (VIEW) return;
     if (!S.got) S.got = [];
     QUESTS.forEach(function (q) {
       if (S.got.indexOf(q.id) >= 0 || !qDone(q)) return;
@@ -681,7 +706,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   /* ---------- notes from home (notes.txt, newest first, split by ---, # lines ignored) ---------- */
   function fetchNotes() {
-    if (!window.fetch || location.protocol.indexOf("http") !== 0) return;
+    if (VIEW || !window.fetch || location.protocol.indexOf("http") !== 0) return;
     fetch("notes.txt?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : ""; }).then(function (txt) {
       var got = txt.replace(/\r/g, "").replace(/^#.*$/gm, "").split(/^-{3,}[ \t]*$/m).map(function (s) { return s.trim(); }).filter(Boolean).reverse(), added = 0;
       if (!S.seen) S.seen = [];
@@ -819,7 +844,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<section class="card"><h3>All notes</h3><div style="display:grid;gap:26px;padding-top:8px">' + (hist || '<div class="empty">no notes yet</div>') + "</div></section>";
   }
 
-  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy") + "</div>"; }
+  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
   function vFriends() {
     var h = '<section class="card"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
     FRIENDS.forEach(function (f) {
@@ -850,6 +875,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var ns = np === "granted" ? "Notifications are on." : np === "denied" ? "Notifications are blocked in this browser." : np === "unsupported" ? "This browser has no notifications. Reminders still appear inside the planner." : "Notifications are off.";
     return '<section class="card"><h2>Settings</h2><div style="display:grid;gap:18px">' +
       '<div class="form" style="grid-template-columns:1fr;margin:0"><label>Her name<input type="text" dir="auto" id="nameIn" value="' + esc(S.name) + '" placeholder="Shown in the greeting" data-act="name"></label></div>' +
+      (SB_URL ? '<div><h3>Sharing</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="shareOn"' + (S.share === false ? "" : " checked") + "> Share a view-only copy of my planner with " + esc(SHARE_WITH) + ' ♡</label><div class="stat" style="margin-top:6px">They can see your planner but can’t change anything. Photos are never shared. Turn this off any time.</div></div>' : "") +
       '<div><h3>Little friend</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="petOn"' + (S.pet && S.pet.on === false ? "" : " checked") + '> Show my little bunny on the planner</label><div class="stat" style="margin-top:6px">She kisses your photos, naps on top of things, runs when tapped (tap her three times and she trips and cries until you give her a kiss), grumbles about unfinished assignments, and sprints with her bag before a class.</div></div>' +
       '<div><h3>Reminders</h3><div class="stat" style="margin-bottom:8px">' + ns + " Reminders show up inside the planner whenever it is open, and when it opens after the time has passed. For alerts while it is closed, use “Add to calendar” on any reminder.</div>" +
       '<div class="btns"><button class="btn ghost" type="button" data-act="notif">Turn on notifications</button></div></div>' +
@@ -991,6 +1017,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (a === "cap") { photos.forEach(function (p) { if (p.id === id) { p.cap = el.value.trim(); var rec = { id: p.id, blob: p.blob, cap: p.cap, at: p.at }; tx("readwrite", function (st) { return st.put(rec); }); } }); }
     else if (a === "name") { S.name = el.value.trim(); save(); }
     else if (a === "petOn") { S.pet = { on: el.checked }; save(); applyPet(); }
+    else if (a === "shareOn") {
+      S.share = el.checked; save();
+      if (!el.checked && SB_URL && navigator.onLine) sbRpc("put_planner", { p_data: { off: true } }).catch(function () {});
+    }
   });
   $("photoIn").addEventListener("change", function (e) { addPhotos(e.target.files); e.target.value = ""; });
   $("importIn").addEventListener("change", function (e) { if (e.target.files[0]) importAll(e.target.files[0]); e.target.value = ""; });
@@ -1020,18 +1050,25 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     chew: '<path d="M29 39.5 q4 -5 8 0 M43 39.5 q4 -5 8 0" stroke="' + INK + '" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="46.5" rx="3.4" ry="2.2" fill="#c2415f"/><circle cx="29" cy="44" r="3" fill="#ffb3c6" opacity=".8"/><circle cx="51" cy="44" r="3" fill="#ffb3c6" opacity=".8"/>',
     cry: '<path d="M29 35.5 l7 3 l-7 3 M51 35.5 l-7 3 l7 3" stroke="' + INK + '" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse class="tear" cx="31.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><ellipse class="tear t2" cx="48.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><path d="M35 49.5 q5 -5 10 0" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round"/>'
   };
+  function catEyes(iris, ring, pupil) {
+    var e = function (cx) { return '<ellipse cx="' + cx + '" cy="37.6" rx="3.9" ry="4.3" fill="' + iris + '" stroke="' + ring + '" stroke-width="1.1"/><ellipse cx="' + cx + '" cy="37.8" rx="' + pupil + '" ry="3.2" fill="#22160e"/><circle cx="' + (cx + 1.2) + '" cy="36" r="1.2" fill="#fff"/><circle cx="' + (cx - 1.1) + '" cy="39.4" r=".5" fill="#fff"/>'; };
+    return e(33) + e(47) + '<path d="M40 43.4 v1.2 M40 44.6 q-2 2.2 -4 .4 M40 44.6 q2 2.2 4 .4" stroke="' + INK + '" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+  }
+  var CATFACE = { cat: { happy: catEyes("#e8b84a", "#7a5418", 1.3) }, kitten: { happy: catEyes("#7d9bb0", "#3a4a58", 2) } };
+  function faceFor(f, ch) { return (CATFACE[ch] && CATFACE[ch][f]) || FACES[f]; }
   var PREV = $("petBody").innerHTML.replace(/ id="[^"]*"/g, "");
-  function prevSVG(face) { return PREV.replace('<g class="face"></g>', '<g class="face">' + FACES[face] + "</g>"); }
+  function prevSVG(face, ch) { return PREV.replace('<g class="face"></g>', '<g class="face">' + faceFor(face, ch) + "</g>"); }
   function applyLook() {
     if (!has(S.friend)) S.friend = "bunny";
     if (!has(S.outfit)) S.outfit = "cap";
     petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit);
     petEl.setAttribute("data-buddy", (S.friend === "kitten" || S.friend === "cat") && has("naps") ? "1" : "0");
+    if (PT.fName) setFace(PT.fName);
   }
   var PT = { x: 24, y: 0, dir: 1, st: "idle", t: 0, next: 2500, tg: null, sp: 70, after: null, bT: 0, hT: 0, face: "", lastCurse: Date.now() - 52000, v: 0, taps: [], dismissed: {}, lecKey: "", lx: 0, sleepGet: null };
   function psize() { return petEl.offsetWidth || 72; }
   function restY() { return window.innerHeight - psize() - 6; }
-  function setFace(f) { if (PT.face !== f) { PT.face = f; faceEl.innerHTML = FACES[f]; } }
+  function setFace(f) { var key = f + S.friend; PT.fName = f; if (PT.face !== key) { PT.face = key; faceEl.innerHTML = faceFor(f, S.friend); } }
   function setCls(c) { petEl.className = c; }
   function say(txt, ms) { bubbleEl.textContent = txt; bubbleEl.hidden = false; PT.bT = ms || 3000; }
   function heart(x, y, ch) { var h = document.createElement("div"); h.className = "heart"; h.textContent = ch || "♡"; h.style.left = x + "px"; h.style.top = y + "px"; layer.appendChild(h); setTimeout(function () { if (h.parentNode) h.parentNode.removeChild(h); }, 1150); }
@@ -1259,6 +1296,21 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } checkQuests(); save(); })();
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
+  if (VIEW) {
+    document.body.classList.add("viewonly");
+    var pass = ""; try { pass = localStorage.getItem("petal-view-pass") || ""; } catch (e) {}
+    if (!pass) pass = window.prompt("Passcode") || "";
+    sbRpc("get_planner", { p_pass: pass }).then(function (r) {
+      if (!r || !r.data) throw new Error("no access");
+      try { localStorage.setItem("petal-view-pass", pass); } catch (e) {}
+      if (r.data.off) { toast("Sharing is turned off."); return; }
+      var base = seed(); S = r.data; for (var k in base) if (!(k in S)) S[k] = base[k];
+      applyTheme(); render(); toast("View only · updated " + fmtStamp(new Date(r.at).getTime()));
+    }).catch(function () { try { localStorage.removeItem("petal-view-pass"); } catch (e) {} toast("Couldn't load. Check the passcode and reload."); });
+  } else {
+    pushShare(true);
+    window.addEventListener("online", function () { pushShare(true); });
+  }
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
   loadPhotos();
   fetchNotes();
