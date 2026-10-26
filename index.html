@@ -481,11 +481,15 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return fetch(SB_URL + "/rest/v1/rpc/" + fn, { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) { return t ? JSON.parse(t) : null; });
   }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function devId() { var d = lsGet("petal-dev"); if (!d) { d = uid() + uid(); lsSet("petal-dev", d); } return d; }
   function pushShare(now) {
-    if (VIEW || !SB_URL || S.share === false || !navigator.onLine) return;
+    if (VIEW || !SB_URL || S.share === false || !navigator.onLine || lsGet("petal-viewer")) return;
     clearTimeout(shareT);
-    shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S }).catch(function () {}); }, now ? 0 : 4000);
+    shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S, p_dev: devId() }).catch(function () {}); }, now ? 0 : 4000);
   }
+  if (VIEW) lsSet("petal-viewer", "1");
   function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 3200); }
 
   function subj(id) { for (var i = 0; i < S.subjects.length; i++) if (S.subjects[i].id === id) return S.subjects[i]; return null; }
@@ -1019,7 +1023,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (a === "petOn") { S.pet = { on: el.checked }; save(); applyPet(); }
     else if (a === "shareOn") {
       S.share = el.checked; save();
-      if (!el.checked && SB_URL && navigator.onLine) sbRpc("put_planner", { p_data: { off: true } }).catch(function () {});
+      if (!el.checked && SB_URL && navigator.onLine && !lsGet("petal-viewer")) sbRpc("put_planner", { p_data: { off: true }, p_dev: devId() }).catch(function () {});
     }
   });
   $("photoIn").addEventListener("change", function (e) { addPhotos(e.target.files); e.target.value = ""; });
