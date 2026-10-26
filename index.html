@@ -674,15 +674,15 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { idx: t, offset: 0 };
   }
   /* ---------- friends & quests ---------- */
-  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Plushie", "Handmade with love"], ["kitten", "Kitten", "Tiny, fluffy and curious"], ["cat", "Grown-up cat", "All grown up"]];
+  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"]];
   var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"]];
   var QUESTS = [
-    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Plushie friend" },
-    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Kitten friend" },
+    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi" },
+    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe" },
     { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown" },
     { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow" },
-    { id: "q5", t: "Unlock the plushie and the kitten", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene" },
-    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Kitten grows up" },
+    { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene" },
+    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe" },
     { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat" }
   ];
   function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
@@ -863,7 +863,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       h += '<button class="btn sm' + (S.outfit === o[0] ? "" : " ghost") + '" type="button" data-act="outfit" data-id="' + o[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(o[0])) + '"') + ">" + (ok ? "" : "🔒 ") + o[1] + "</button>";
     });
     h += '</div></section><section class="card"><h2>Nap buddies</h2>';
-    h += has("naps") ? '<div class="fcard">' + look(has("cat") ? "cat" : "kitten", true) + '<div class="stat">When your cat naps, the plushie is its pillow ♡</div></div>'
+    h += has("naps") ? '<div class="fcard">' + look(has("cat") ? "cat" : "kitten", true) + '<div class="stat">When Tofe naps, Kuromi is his pillow ♡</div></div>'
       : '<div class="fcard locked">' + look("kitten", true) + '<div class="stat">🔒 ' + esc(questFor("naps")) + "</div></div>";
     return h + "</section>";
   }
