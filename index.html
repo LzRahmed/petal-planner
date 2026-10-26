@@ -472,12 +472,13 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     try { var r = localStorage.getItem(KEY); if (r) { var o = JSON.parse(r); if (o && o.subjects && o.subjects.length) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; } } } catch (e) {}
     return base;
   }
-  var S = load();
+  var VIEW = /[?&]view\b/.test(location.search);
+  var S = VIEW ? seed() : load();
   function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); }
 
   /* ---------- sharing: a view-only copy (no photos) for one person, via Supabase ---------- */
   var SB_URL = "https://scrmqwetvtlscsiqhsny.supabase.co", SB_KEY = "sb_publishable_ymbj3CZKK_TUeV4ivNZIXA_vAW901ig", SHARE_WITH = "ZoZo";
-  var VIEW = /[?&]view\b/.test(location.search), shareT = null;
+  var shareT = null;
   function sbRpc(fn, body) {
     return fetch(SB_URL + "/rest/v1/rpc/" + fn, { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) { return t ? JSON.parse(t) : null; });
@@ -491,6 +492,22 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S, p_dev: devId() }).catch(function () {}); }, now ? 0 : 4000);
   }
   if (VIEW) lsSet("petal-viewer", "1");
+  function viewCard(msg, ask) {
+    $("main").innerHTML = '<section class="card"><h2>Petal View</h2><div class="note">' + esc(msg) + "</div>" +
+      (ask ? '<div class="btns" style="margin-top:12px"><input id="viewPass" type="password" placeholder="Passcode" style="max-width:220px"><button class="btn" type="button" data-act="viewpass">Open</button></div>' : "") + "</section>";
+  }
+  function loadView() {
+    var pass = lsGet("petal-view-pass") || "";
+    if (!pass) { viewCard("Enter your passcode to see the planner.", true); return; }
+    if (!S.viewed) viewCard("Loading…");
+    sbRpc("get_planner", { p_pass: pass }).then(function (r) {
+      if (!r) { try { localStorage.removeItem("petal-view-pass"); } catch (e) {} viewCard("That passcode didn't work. Try again.", true); return; }
+      if (!r.data) { viewCard("Nothing shared yet. It shows up after she opens the planner with internet (twice after an update)."); return; }
+      if (r.data.off) { viewCard("Sharing is turned off."); return; }
+      var base = seed(); S = r.data; for (var k in base) if (!(k in S)) S[k] = base[k]; S.viewed = true;
+      document.body.classList.add("viewonly"); applyTheme(); render(); toast("Updated " + fmtStamp(new Date(r.at).getTime()));
+    }).catch(function () { if (!S.viewed) viewCard("Couldn't connect. Check your internet, then close and reopen."); });
+  }
   function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 3200); }
 
   function subj(id) { for (var i = 0; i < S.subjects.length; i++) if (S.subjects[i].id === id) return S.subjects[i]; return null; }
@@ -911,6 +928,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<div class="btns"><button class="btn" type="button" data-act="remsave">Save reminder</button>' + (it.rem ? '<button class="btn ghost" type="button" data-act="remoff">Remove</button><button class="btn ghost" type="button" data-act="remics">Add to calendar</button>' : "") + '<button class="btn ghost" type="button" data-act="closemodal">Cancel</button></div></div></div>';
   }
   function render() {
+    if (VIEW && !S.viewed) { renderRail(); return; }
     renderRail(); renderAlerts();
     var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
     $("main").innerHTML = v(); renderModal(); applyLook();
@@ -958,7 +976,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       S.grades = S.grades.filter(function (x) { return x.s !== id; });
       S.assignments.forEach(function (x) { if (x.s === id) x.s = ""; });
       commit(); toast("Subject deleted");
-    } else if (a === "friend") { if (has(id)) { S.friend = id; commit(); } }
+    } else if (a === "viewpass") { var vp = $("viewPass").value.trim(); if (!vp) { $("viewPass").focus(); return; } lsSet("petal-view-pass", vp); loadView(); }
+    else if (a === "friend") { if (has(id)) { S.friend = id; commit(); } }
     else if (a === "outfit") { if (has(id)) { S.outfit = id; commit(); } }
     else if (a === "addsubj") {
       S.subjects.push({ id: "s" + uid(), n: "New subject", e: "📚", c: S.subjects.length % COLORS, t: "", r: "" }); commit();
@@ -1302,16 +1321,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
   if (VIEW) {
-    document.body.classList.add("viewonly");
-    var pass = ""; try { pass = localStorage.getItem("petal-view-pass") || ""; } catch (e) {}
-    if (!pass) pass = window.prompt("Passcode") || "";
-    sbRpc("get_planner", { p_pass: pass }).then(function (r) {
-      if (!r || !r.data) throw new Error("no access");
-      try { localStorage.setItem("petal-view-pass", pass); } catch (e) {}
-      if (r.data.off) { toast("Sharing is turned off."); return; }
-      var base = seed(); S = r.data; for (var k in base) if (!(k in S)) S[k] = base[k];
-      applyTheme(); render(); toast("View only · updated " + fmtStamp(new Date(r.at).getTime()));
-    }).catch(function () { try { localStorage.removeItem("petal-view-pass"); } catch (e) {} toast("Couldn't load. Check the passcode and reload."); });
+    loadView();
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) loadView(); });
   } else {
     pushShare(true);
     window.addEventListener("online", function () { pushShare(true); });
