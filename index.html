@@ -174,7 +174,24 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 #pet .ear { transform-box: fill-box; transform-origin: 50% 95%; }
 #pet.idle #petBody { animation: idleBreath 3.4s ease-in-out infinite; }
 #pet.idle .ear-l { animation: earSway 4.2s ease-in-out infinite; } #pet.idle .ear-r { animation: earSway 4.2s ease-in-out infinite 1.3s; }
-#pet:not(.bag) #petBag, #pet:not(.bag) #petStrap { display: none; }
+#pet:not(.bag) .bag-only { display: none; }
+.char, .outfit { display: none; }
+[data-char="bunny"] .char-bunny, [data-char="cat"] .char-cat, [data-char="kitten"] .char-kitten, [data-char="plush"] .char-plush { display: inline; }
+[data-outfit="cap"] .outfit-cap, [data-outfit="crown"] .outfit-crown, [data-outfit="bow"] .outfit-bow, [data-outfit="party"] .outfit-party { display: inline; }
+[data-char="kitten"] svg { transform: scale(.8); transform-origin: 50% 100%; }
+#pet:not(.sleep) .buddy-only, #pet:not([data-buddy="1"]) .buddy-only, [data-buddy="1"] .pillow, [data-buddy="1"] .blanket { display: none; }
+.petprev .sail-only, .petprev .bag-only, .petprev:not(.nap) .sleep-only, .petprev:not(.nap) .buddy-only { display: none; }
+.petprev { width: 92px; height: 92px; flex: none; padding-top: 10px; }
+.petprev svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.fcard { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 2px solid transparent; border-radius: 20px; padding: 12px; min-width: 0; }
+.fcard.on { border-color: var(--accent); }
+.fcard.locked .petprev { filter: brightness(0) opacity(.22); }
+.fcard b { font: 700 18px var(--display); font-style: italic; }
+.qrow { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1.5px dashed var(--line); }
+.qrow:last-child { border-bottom: 0; }
+.qbar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.qbar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
 #pet.walk #petBody { animation: bob .36s ease-in-out infinite; } #pet.run #petBody { animation: bob .16s ease-in-out infinite; }
 #pet.walk .foot-l { animation: stepA .36s ease-in-out infinite; } #pet.walk .foot-r { animation: stepA .36s ease-in-out infinite .18s; }
 #pet.run .foot-l { animation: stepA .16s ease-in-out infinite; } #pet.run .foot-r { animation: stepA .16s ease-in-out infinite .08s; }
@@ -196,7 +213,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 #pet.dance #petBody { animation: dance .5s ease-in-out infinite; }
 #pet.dance .arm-l { animation: swing .25s ease-in-out infinite; } #pet.dance .arm-r { animation: swing .25s ease-in-out infinite .12s; }
 #pet.munch #petBody { animation: bob .22s ease-in-out infinite; }
-#pet:not(.sailor) .sail-only, #pet:not(.sleep) .sleep-only, #pet.sailor #petCap { display: none; }
+#pet:not(.sailor) .sail-only, #pet:not(.sleep) .sleep-only, #pet.sailor .outfit { display: none; }
 #pet.sailor #petBody { animation: rock 1.8s ease-in-out infinite; }
 #pet.sailor .wave { animation: wave 1.2s linear infinite; }
 @keyframes rock { 25% { transform: rotate(-4deg) translateY(-2px); } 75% { transform: rotate(4deg) translateY(1px); } }
@@ -265,11 +282,22 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <path d="M68 -10 L68 44 L36 44 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="1.6" stroke-linejoin="round"/>
           <path d="M71 -14 l12 4 l-12 4 Z" fill="#e5484d"/>
         </g>
-        <g class="sleep-only"><rect x="12" y="20" width="56" height="30" rx="13" fill="#fff4f7" stroke="#e9a8bb" stroke-width="2" transform="rotate(-6 40 35)"/><path d="M18 26 q4 2 0 4 M62 40 q-4 2 0 4" stroke="#e9a8bb" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
-        <g id="petBag">
+        <g class="sleep-only pillow"><rect x="12" y="20" width="56" height="30" rx="13" fill="#fff4f7" stroke="#e9a8bb" stroke-width="2" transform="rotate(-6 40 35)"/><path d="M18 26 q4 2 0 4 M62 40 q-4 2 0 4" stroke="#e9a8bb" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+        <g class="buddy-only">
+          <ellipse cx="46" cy="71" rx="31" ry="9.5" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2"/>
+          <path d="M24 66 q20 4 44 0" stroke="#e8e0e6" stroke-width="1.5" fill="none" stroke-dasharray="2 2.5"/>
+          <circle cx="74" cy="66" r="3.2" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/>
+          <path d="M3 57 Q-3 47 4 41 Q6 49 12 53 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="11" cy="64" r="12" fill="#1f1a24" stroke="#0d0a10" stroke-width="2"/>
+          <ellipse cx="12" cy="66.5" rx="8" ry="7" fill="#fffdfd"/>
+          <path d="M7.6 66 q1.6 1.4 3 0 M13.6 66 q1.6 1.4 3 0" stroke="#1f1a24" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M11.4 69 h1.8 l-.9 1 Z" fill="#f6a3bd"/>
+        </g>
+        <g id="petBag" class="bag-only">
           <rect x="57" y="46" width="20" height="24" rx="7" fill="#f08fae" stroke="#b0607a" stroke-width="2.5"/>
           <rect x="61" y="56" width="12" height="8" rx="3" fill="#ffd3df" stroke="#b0607a" stroke-width="1.5"/>
         </g>
+        <g class="char char-bunny">
         <g class="ear ear-l"><ellipse cx="29" cy="14" rx="6.5" ry="14" transform="rotate(-10 29 14)" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.4"/><ellipse cx="29" cy="14" rx="2.8" ry="9" transform="rotate(-10 29 14)" fill="#f4b6c4"/></g>
         <g class="ear ear-r"><ellipse cx="51" cy="14" rx="6.5" ry="14" transform="rotate(10 51 14)" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.4"/><ellipse cx="51" cy="14" rx="2.8" ry="9" transform="rotate(10 51 14)" fill="#f4b6c4"/></g>
         <ellipse class="foot foot-l" cx="31" cy="73" rx="7.5" ry="4.2" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.4"/>
@@ -287,16 +315,89 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <ellipse cx="52.5" cy="54" rx="5.2" ry="4.4" fill="#2b2030" stroke="#120b16" stroke-width="2.2"/>
         </g>
         <path d="M32 49.5 q8 7 16 0 q-8 -1.5 -16 0 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="1.4" stroke-linejoin="round"/>
-        <path id="petStrap" d="M46 50 q7 7 8 17" stroke="#f08fae" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="char char-cat">
+          <path d="M52 70 q16 2 15 -12 q-1 -7 5 -9" stroke="#9a5a24" stroke-width="7.5" fill="none" stroke-linecap="round"/>
+          <path d="M52 70 q16 2 15 -12 q-1 -7 5 -9" stroke="#f2a65a" stroke-width="4.6" fill="none" stroke-linecap="round"/>
+          <path d="M63 66.5 l3 -2.5 M65.5 59 l3.2 .3 M67 52 l3 1.2" stroke="#d17a35" stroke-width="1.6" stroke-linecap="round"/>
+          <g class="ear ear-l"><path d="M22 28 L24 4 L38 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M25.5 22 L26 10 L33 19 Z" fill="#f4a8b8"/></g>
+          <g class="ear ear-r"><path d="M58 28 L56 4 L42 19 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M54.5 22 L54 10 L47 19 Z" fill="#f4a8b8"/></g>
+          <ellipse class="foot foot-l" cx="32" cy="73.5" rx="6.5" ry="4" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/>
+          <ellipse class="foot foot-r" cx="48" cy="73.5" rx="6.5" ry="4" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/>
+          <path d="M29 47 Q22 60 25 73 Q40 78 55 73 Q58 60 51 47 Z" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M34 49 Q40 70 46 49 Z" fill="#fde6c8"/>
+          <path d="M25.5 58 q4 1 6 -1.5 M25 64.5 q4 1 6 -1.5 M54.5 58 q-4 1 -6 -1.5 M55 64.5 q-4 1 -6 -1.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <g class="arm arm-l"><ellipse cx="31" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M27.5 60 h7 M27.5 64 h7" stroke="#d17a35" stroke-width="1.4"/><path d="M29.6 70.4 v1.8 M32.4 70.4 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
+          <g class="arm arm-r"><ellipse cx="49" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M45.5 60 h7 M45.5 64 h7" stroke="#d17a35" stroke-width="1.4"/><path d="M47.6 70.4 v1.8 M50.4 70.4 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
+        </g>
+        <g class="char char-kitten">
+          <path d="M50 71 q11 1 11 -8" stroke="#9a5a24" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M50 71 q11 1 11 -8" stroke="#f5b06a" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+          <g class="ear ear-l"><path d="M20 30 L22 3 L37 18 Z" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 23 L24.5 9 L32.5 18 Z" fill="#f4a8b8"/></g>
+          <g class="ear ear-r"><path d="M60 30 L58 3 L43 18 Z" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/><path d="M56 23 L55.5 9 L47.5 18 Z" fill="#f4a8b8"/></g>
+          <ellipse class="foot foot-l" cx="33" cy="74" rx="6" ry="3.8" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/>
+          <ellipse class="foot foot-r" cx="47" cy="74" rx="6" ry="3.8" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/>
+          <path d="M31 49 Q24 62 27 74 Q40 78 53 74 Q56 62 49 49 Z" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M35 50 Q40 68 45 50 Z" fill="#fde6c8"/>
+          <path d="M27.5 61 q4 1 6 -1.5 M52.5 61 q-4 1 -6 -1.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <g class="arm arm-l"><ellipse cx="33" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M30 63 h6" stroke="#d17a35" stroke-width="1.4"/></g>
+          <g class="arm arm-r"><ellipse cx="47" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M44 63 h6" stroke="#d17a35" stroke-width="1.4"/></g>
+        </g>
+        <g class="char char-plush">
+          <g class="ear ear-l"><path d="M25 26 Q12 14 19 3 Q23 13 33 17 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="2.2" stroke-linejoin="round"/></g>
+          <g class="ear ear-r"><path d="M55 26 Q68 14 61 3 Q57 13 47 17 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="2.2" stroke-linejoin="round"/><circle cx="61" cy="3.5" r="3.4" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/></g>
+          <ellipse class="foot foot-l" cx="33" cy="73" rx="6.5" ry="5" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2"/>
+          <ellipse class="foot foot-r" cx="47" cy="73" rx="6.5" ry="5" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2"/>
+          <path d="M28 49 Q23 62 27 73 Q40 77 53 73 Q57 62 52 49 Z" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M29 58 q11 3 22 0 M28.5 65 q11.5 3 23 0" stroke="#e8e0e6" stroke-width="1.6" fill="none" stroke-dasharray="2 2.5" stroke-linecap="round"/>
+          <g class="arm arm-l"><ellipse cx="25" cy="58" rx="4.4" ry="7" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2" transform="rotate(25 25 58)"/><circle cx="21.5" cy="63.5" r="3.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/></g>
+          <g class="arm arm-r"><ellipse cx="55" cy="58" rx="4.4" ry="7" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2" transform="rotate(-25 55 58)"/><circle cx="58.5" cy="63.5" r="3.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/></g>
+          <path d="M22 49 L58 49 L62 56 L53 54.5 L46.5 59.5 L40 54.5 L33.5 59.5 L27 54.5 L18 56 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="1.8" stroke-linejoin="round"/>
+          <circle cx="33.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/><circle cx="46.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/>
+        </g>
+        <path id="petStrap" class="bag-only" d="M46 50 q7 7 8 17" stroke="#f08fae" stroke-width="3.4" fill="none" stroke-linecap="round"/>
         <g class="sail-only"><path d="M29 48.5 L51 48.5 L47 58 L40 53 L33 58 Z" fill="#2f5fa8" stroke="#1d3c6e" stroke-width="1.6" stroke-linejoin="round"/><path d="M31 51 L49 51" stroke="#fffafa" stroke-width="1.4"/><path d="M38 54 l2 3 l2 -3 Z" fill="#e5484d"/></g>
-        <g class="sleep-only"><path d="M12 56 Q40 49 68 56 L70 79 Q40 83 10 79 Z" fill="#f7a8c0" stroke="#c9718e" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 61 Q40 54 69 61" stroke="#fff4f7" stroke-width="3" fill="none"/><path d="M24 68 h4 M40 70 h4 M56 68 h4 M32 75 h4 M48 75 h4" stroke="#fff4f7" stroke-width="2.4" stroke-linecap="round"/></g>
+        <g class="sleep-only blanket"><path d="M12 56 Q40 49 68 56 L70 79 Q40 83 10 79 Z" fill="#f7a8c0" stroke="#c9718e" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 61 Q40 54 69 61" stroke="#fff4f7" stroke-width="3" fill="none"/><path d="M24 68 h4 M40 70 h4 M56 68 h4 M32 75 h4 M48 75 h4" stroke="#fff4f7" stroke-width="2.4" stroke-linecap="round"/></g>
+        <g class="char char-bunny">
         <ellipse cx="40" cy="35" rx="19.5" ry="16.5" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.4"/>
         <ellipse cx="27" cy="43" rx="4.6" ry="3" fill="#ffb3c6" opacity=".85"/>
         <ellipse cx="53" cy="43" rx="4.6" ry="3" fill="#ffb3c6" opacity=".85"/>
         <ellipse cx="40" cy="42" rx="2.4" ry="1.8" fill="#e58aa0"/>
-        <g id="petFace"></g>
+        </g>
+        <g class="char char-cat">
+          <ellipse cx="40" cy="35" rx="19.5" ry="16" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.4"/>
+          <path d="M34.5 20 q1 4 0 7.5 M40 19 v8.5 M45.5 20 q-1 4 0 7.5" stroke="#d17a35" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+          <path d="M21 33 h5 M21.5 37.5 h4 M59 33 h-5 M58.5 37.5 h-4" stroke="#d17a35" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="36" cy="44" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="44" cy="44" rx="5" ry="3.6" fill="#fde6c8"/>
+          <ellipse cx="26.5" cy="42" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".7"/><ellipse cx="53.5" cy="42" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".7"/>
+          <path d="M37.6 40.6 h4.8 l-2.4 2.8 Z" fill="#f08aa0" stroke="#c45a74" stroke-width=".8" stroke-linejoin="round"/>
+          <path d="M24 42.5 L13 40.5 M24 45 L13 46.5 M56 42.5 L67 40.5 M56 45 L67 46.5" stroke="#9a5a24" stroke-width=".9" opacity=".55" stroke-linecap="round"/>
+        </g>
+        <g class="char char-kitten">
+          <ellipse cx="40" cy="35" rx="20.5" ry="17" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.4"/>
+          <path d="M35 20 q1 3.5 0 6.5 M40 19 v7.5 M45 20 q-1 3.5 0 6.5" stroke="#d17a35" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M20.5 36 l-3.5 2 l3.6 1.6 M59.5 36 l3.5 2 l-3.6 1.6" stroke="#9a5a24" stroke-width="1.6" fill="#f5b06a" stroke-linejoin="round"/>
+          <ellipse cx="36" cy="44.5" rx="5" ry="3.6" fill="#fde6c8"/><ellipse cx="44" cy="44.5" rx="5" ry="3.6" fill="#fde6c8"/>
+          <ellipse cx="26" cy="42.5" rx="3.8" ry="2.5" fill="#ffb3c6" opacity=".8"/><ellipse cx="54" cy="42.5" rx="3.8" ry="2.5" fill="#ffb3c6" opacity=".8"/>
+          <path d="M37.8 41 h4.4 l-2.2 2.6 Z" fill="#f08aa0" stroke="#c45a74" stroke-width=".8" stroke-linejoin="round"/>
+          <path d="M24 43 L14 41.5 M24 45.5 L14 47 M56 43 L66 41.5 M56 45.5 L66 47" stroke="#9a5a24" stroke-width=".9" opacity=".5" stroke-linecap="round"/>
+        </g>
+        <g class="char char-plush">
+          <ellipse cx="40" cy="33" rx="21.5" ry="18" fill="#1f1a24" stroke="#0d0a10" stroke-width="2.2"/>
+          <path d="M24 41 Q24.5 28 34 28.5 Q38 29 40 32.5 Q42 29 46 28.5 Q55.5 28 56 41 Q55.5 51 40 51 Q24.5 51 24 41 Z" fill="#fffdfd" stroke="#d9d0d6" stroke-width="1.2"/>
+          <path d="M28.5 47 q11.5 3.5 23 0" stroke="#efe8ec" stroke-width="1.4" fill="none" stroke-dasharray="2 2.5"/>
+          <ellipse cx="29" cy="44" rx="3.4" ry="2.2" fill="#ffb3c6" opacity=".75"/><ellipse cx="51" cy="44" rx="3.4" ry="2.2" fill="#ffb3c6" opacity=".75"/>
+          <path d="M38.6 41.2 h2.8 l-1.4 1.6 Z" fill="#f6a3bd"/>
+        </g>
+        <g id="petFace" class="face"></g>
         <g class="sail-only"><path d="M28 21 Q40 2 52 21 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="2" stroke-linejoin="round"/><rect x="25" y="18" width="30" height="7" rx="3.5" fill="#fffafa" stroke="#c9b7bd" stroke-width="2"/><path d="M27 21.5 h26" stroke="#2f5fa8" stroke-width="2"/></g>
-        <g id="petCap">
+        <g class="outfit outfit-crown">
+          <path d="M22 26 Q40 12 58 26" stroke="#7fbf7f" stroke-width="2" fill="none"/>
+          <circle cx="23" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="29" cy="20.5" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="35" cy="18" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="41" cy="17.3" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="47" cy="18.4" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="52.5" cy="21" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="57" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/>
+        </g>
+        <g class="outfit outfit-bow"><path d="M52 21 L44 15 L44.5 27.5 Z" fill="#f06c96" stroke="#b8456b" stroke-width="1.6" stroke-linejoin="round"/><path d="M52 21 L60.5 14.5 L60 27.5 Z" fill="#f06c96" stroke="#b8456b" stroke-width="1.6" stroke-linejoin="round"/><circle cx="52" cy="21" r="2.8" fill="#f9a3c0" stroke="#b8456b" stroke-width="1.4"/></g>
+        <g class="outfit outfit-party"><path d="M31 21 L40 -2 L49 21 Z" fill="#8ecdf0" stroke="#4b8fb8" stroke-width="1.8" stroke-linejoin="round"/><path d="M34.5 12.5 L45.5 12.5 M37 6 L43 6" stroke="#fffafa" stroke-width="2"/><circle cx="40" cy="-2.5" r="3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="36" cy="17" r="1.4" fill="#f06c96"/><circle cx="44" cy="15" r="1.4" fill="#f06c96"/></g>
+        <g class="outfit outfit-cap">
         <path d="M30 24 v7 q10 5.5 20 0 v-7 Z" fill="#2b2030" stroke="#120b16" stroke-width="2" stroke-linejoin="round"/>
         <path d="M20 22 L40 13.5 L60 22 L40 30.5 Z" fill="#2b2030" stroke="#120b16" stroke-width="2.2" stroke-linejoin="round"/>
         <path d="M40 22 L56 24.5 L57 33" stroke="#f2c14e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -350,6 +451,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       v: 1, name: "", theme: "", pet: { on: true },
       subjects: d.map(function (x, i) { return { id: "s" + (i + 1), n: x[0], e: x[1], c: x[2], t: "", r: "" }; }),
       tt: {}, slots: [["09:00", "10:30"], ["10:30", "12:00"], ["12:00", "13:30"], ["13:30", "15:00"], ["15:00", "16:30"]].map(function (p) { return { s: p[0], e: p[1] }; }), assignments: [], exams: [], grades: [], seen: [],
+      friend: "bunny", outfit: "cap", stats: { onTime: 0, done: 0, grades: 0, days: [] }, got: [],
       notes: [{ id: uid(), text: "Welcome, beautiful ♡\nThis planner is all yours. Everything you add is saved on this device, even without internet.", at: Date.now() }]
     };
   }
@@ -542,6 +644,41 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     for (var o = 0; o < 7; o++) { var w = (t + o) % 7; for (var si = 0; si < S.slots.length; si++) if (subj(S.tt[w + "-" + si])) return { idx: w, offset: o }; }
     return { idx: t, offset: 0 };
   }
+  /* ---------- friends & quests ---------- */
+  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Plushie", "Handmade with love"], ["kitten", "Kitten", "Tiny, fluffy and curious"], ["cat", "Grown-up cat", "All grown up"]];
+  var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"]];
+  var QUESTS = [
+    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Plushie friend" },
+    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Kitten friend" },
+    { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown" },
+    { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow" },
+    { id: "q5", t: "Unlock the plushie and the kitten", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene" },
+    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Kitten grows up" },
+    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat" }
+  ];
+  function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
+  function qProg(q) {
+    var st = stats();
+    if (q.k === "days") return st.days.length;
+    if (q.k === "pair") return (has("plush") ? 1 : 0) + (has("kitten") ? 1 : 0);
+    return st[q.k] || 0;
+  }
+  function qDone(q) { return qProg(q) >= q.n; }
+  function has(r) { if (r === "bunny" || r === "cap" || r === "none") return true; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return qDone(QUESTS[i]); return false; }
+  function questFor(r) { for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return QUESTS[i].t; return ""; }
+  function checkQuests() {
+    if (!S.got) S.got = [];
+    QUESTS.forEach(function (q) {
+      if (S.got.indexOf(q.id) >= 0 || !qDone(q)) return;
+      S.got.push(q.id); toast("Quest done! New: " + q.rt + " 🎉"); celebrate();
+    });
+  }
+  function markDone(x) {
+    var st = stats();
+    if (!x.cnt) { x.cnt = true; st.done++; }
+    if (!x.ot && daysUntil(x.d) >= 0) { x.ot = true; st.onTime++; }
+  }
+
   /* ---------- notes from home (notes.txt, newest first, split by ---, # lines ignored) ---------- */
   function fetchNotes() {
     if (!window.fetch || location.protocol.indexOf("http") !== 0) return;
@@ -682,6 +819,32 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<section class="card"><h3>All notes</h3><div style="display:grid;gap:26px;padding-top:8px">' + (hist || '<div class="empty">no notes yet</div>') + "</div></section>";
   }
 
+  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy") + "</div>"; }
+  function vFriends() {
+    var h = '<section class="card"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
+    FRIENDS.forEach(function (f) {
+      var ok = has(f[0]), on = S.friend === f[0];
+      h += '<div class="fcard' + (on ? " on" : "") + (ok ? "" : " locked") + '">' + look(f[0]) + '<div style="display:grid;gap:6px;min-width:0"><b>' + f[1] + '</b><div class="stat">' + (ok ? f[2] : "🔒 " + esc(questFor(f[0]))) + "</div>" +
+        (ok ? '<div class="btns"><button class="btn sm' + (on ? "" : " ghost") + '" type="button" data-act="friend" data-id="' + f[0] + '">' + (on ? "With you ♡" : "Choose") + "</button></div>" : "") + "</div></div>";
+    });
+    h += '</div></section><section class="card"><h2>Outfits</h2><div class="btns">';
+    OUTFITS.forEach(function (o) {
+      var ok = has(o[0]);
+      h += '<button class="btn sm' + (S.outfit === o[0] ? "" : " ghost") + '" type="button" data-act="outfit" data-id="' + o[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(o[0])) + '"') + ">" + (ok ? "" : "🔒 ") + o[1] + "</button>";
+    });
+    h += '</div></section><section class="card"><h2>Nap buddies</h2>';
+    h += has("naps") ? '<div class="fcard">' + look(has("cat") ? "cat" : "kitten", true) + '<div class="stat">When your cat naps, the plushie is its pillow ♡</div></div>'
+      : '<div class="fcard locked">' + look("kitten", true) + '<div class="stat">🔒 ' + esc(questFor("naps")) + "</div></div>";
+    return h + "</section>";
+  }
+  function vQuests() {
+    var h = '<section class="card"><h2>Quests</h2><div class="note" style="margin:-6px 0 6px">Little goals, little surprises ♡</div>';
+    QUESTS.forEach(function (q) {
+      var p = Math.min(qProg(q), q.n), done = p >= q.n;
+      h += '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + p + " / " + q.n + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (done ? " · unlocked ♡" : "") + "</div></div>";
+    });
+    return h + "</section>";
+  }
   function vSettings() {
     var np = "Notification" in window ? Notification.permission : "unsupported";
     var ns = np === "granted" ? "Notifications are on." : np === "denied" ? "Notifications are blocked in this browser." : np === "unsupported" ? "This browser has no notifications. Reminders still appear inside the planner." : "Notifications are off.";
@@ -696,7 +859,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["settings", "Settings", ""]];
+    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -718,10 +881,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function render() {
     renderRail(); renderAlerts();
-    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, settings: vSettings }[tab];
-    $("main").innerHTML = v(); renderModal();
+    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
+    $("main").innerHTML = v(); renderModal(); applyLook();
   }
-  function commit() { save(); render(); tick(); }
+  function commit() { checkQuests(); save(); render(); tick(); }
 
   /* ---------- backup ---------- */
   function blobToData(b) { return new Promise(function (res, rej) { var f = new FileReader(); f.onload = function () { res(f.result); }; f.onerror = rej; f.readAsDataURL(b); }); }
@@ -764,7 +927,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       S.grades = S.grades.filter(function (x) { return x.s !== id; });
       S.assignments.forEach(function (x) { if (x.s === id) x.s = ""; });
       commit(); toast("Subject deleted");
-    } else if (a === "addsubj") {
+    } else if (a === "friend") { if (has(id)) { S.friend = id; commit(); } }
+    else if (a === "outfit") { if (has(id)) { S.outfit = id; commit(); } }
+    else if (a === "addsubj") {
       S.subjects.push({ id: "s" + uid(), n: "New subject", e: "📚", c: S.subjects.length % COLORS, t: "", r: "" }); commit();
     }
     else if (a === "add-assign") {
@@ -779,7 +944,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     } else if (a === "add-grade") {
       var v = parseFloat($("gV").value), m = parseFloat($("gM").value), w = parseFloat($("gW").value);
       if (isNaN(v) || isNaN(m) || m <= 0) { $("gV").focus(); toast("Enter a score and what it is out of."); return; }
-      S.grades.push({ id: uid(), s: $("gS").value, n: $("gN").value.trim() || "Grade", v: v, m: m, w: isNaN(w) ? 0 : w }); commit();
+      S.grades.push({ id: uid(), s: $("gS").value, n: $("gN").value.trim() || "Grade", v: v, m: m, w: isNaN(w) ? 0 : w }); stats().grades++; commit();
     } else if (a === "addslot") {
       var lastE = S.slots.length ? S.slots[S.slots.length - 1].e : "09:00", pp = lastE.split(":"), mm = (+pp[0] * 60 + +pp[1] + 90) % 1440;
       S.slots.push({ s: lastE, e: pad(Math.floor(mm / 60)) + ":" + pad(mm % 60) }); commit();
@@ -796,7 +961,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (a === "remics") { var it2 = findItem(modal.k, modal.id); makeIcs(modal.k, it2); }
     else if (a === "snooze") { findItem(k, id).rem.snooze = Date.now() + 3600000; commit(); }
     else if (a === "dismiss") { findItem(k, id).rem.done = true; commit(); }
-    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; ai.rem.done = true; commit(); celebrate(); }
+    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; markDone(ai); ai.rem.done = true; commit(); celebrate(); }
     else if (a === "addphoto") { $("photoIn").click(); }
     else if (a === "shuffle") { pickRandom(); render(); }
     else if (a === "zoom") { modal = { t: "zoom", id: id }; renderModal(); }
@@ -819,7 +984,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   document.addEventListener("change", function (e) {
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id");
-    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked && x.rem) x.rem.done = true; } }); commit(); if (el.checked) celebrate(); }
+    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked) markDone(x); if (el.checked && x.rem) x.rem.done = true; } }); commit(); if (el.checked) celebrate(); }
     else if (a === "field") { var s = subj(id), p = el.getAttribute("data-p"); s[p] = el.value.trim() || (p === "n" ? "Subject" : ""); commit(); }
     else if (a === "slotT") { var sl2 = S.slots[+el.getAttribute("data-i")]; if (el.value) sl2[el.getAttribute("data-f")] = el.value; commit(); }
     else if (a === "slot") { var key = el.getAttribute("data-key"); if (el.value) S.tt[key] = el.value; else delete S.tt[key]; commit(); }
@@ -855,6 +1020,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     chew: '<path d="M29 39.5 q4 -5 8 0 M43 39.5 q4 -5 8 0" stroke="' + INK + '" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="46.5" rx="3.4" ry="2.2" fill="#c2415f"/><circle cx="29" cy="44" r="3" fill="#ffb3c6" opacity=".8"/><circle cx="51" cy="44" r="3" fill="#ffb3c6" opacity=".8"/>',
     cry: '<path d="M29 35.5 l7 3 l-7 3 M51 35.5 l-7 3 l7 3" stroke="' + INK + '" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse class="tear" cx="31.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><ellipse class="tear t2" cx="48.5" cy="44" rx="1.9" ry="3.2" fill="#8ecdf0"/><path d="M35 49.5 q5 -5 10 0" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round"/>'
   };
+  var PREV = $("petBody").innerHTML.replace(/ id="[^"]*"/g, "");
+  function prevSVG(face) { return PREV.replace('<g class="face"></g>', '<g class="face">' + FACES[face] + "</g>"); }
+  function applyLook() {
+    if (!has(S.friend)) S.friend = "bunny";
+    if (!has(S.outfit)) S.outfit = "cap";
+    petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit);
+    petEl.setAttribute("data-buddy", (S.friend === "kitten" || S.friend === "cat") && has("naps") ? "1" : "0");
+  }
   var PT = { x: 24, y: 0, dir: 1, st: "idle", t: 0, next: 2500, tg: null, sp: 70, after: null, bT: 0, hT: 0, face: "", lastCurse: Date.now() - 52000, v: 0, taps: [], dismissed: {}, lecKey: "", lx: 0, sleepGet: null };
   function psize() { return petEl.offsetWidth || 72; }
   function restY() { return window.innerHeight - psize() - 6; }
@@ -905,7 +1078,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function startSnack() { PT.st = "snack"; PT.t = 3600; PT.hT = 0; zEl.hidden = true; setCls("munch"); setFace("chew"); say(pick(["nom nom 🥕", "snack time! 🥕", "crunchy 🥕"]), 2600); }
   function sweetTalk() {
     var h = new Date().getHours(), n = S.name ? ", " + S.name : "";
-    var lines = ["you've got this" + n + " ♡", "drink some water 💧", "proud of you ♡", "one step at a time 🌸", "take a little break? ☕", "you're doing great" + n + "!"];
+    var lines = S.friend === "plush" ? ["*squish* ♡", "hug me? 🤍"] : S.friend === "bunny" ? [] : ["meow ♡", "purrr…", "mrrp? 🐾"];
+    lines = lines.concat(["you've got this" + n + " ♡", "drink some water 💧", "proud of you ♡", "one step at a time 🌸", "take a little break? ☕", "you're doing great" + n + "!"]);
     if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
     say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
   }
@@ -1082,6 +1256,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   requestAnimationFrame(frame);
   setInterval(checkEvents, 1500);
 
+  (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } checkQuests(); save(); })();
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
