@@ -192,6 +192,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .qrow { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1.5px dashed var(--line); }
 .qrow:last-child { border-bottom: 0; }
 .viewonly main input, .viewonly main select, .viewonly main textarea, .viewonly main button { pointer-events: none; }
+.viewonly main .vtool textarea, .viewonly main .vtool button { pointer-events: auto; }
 .qbar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
 .qbar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
 .hdr-r { display: flex; gap: 8px; align-items: center; }
@@ -565,9 +566,16 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (!pushIsOn() || VIEW) return;
     navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (s) { return pushRem(s ? s.toJSON() : null); }).catch(function () {});
   }
+  var viewAt = 0;
   function viewCard(msg, ask) {
     $("main").innerHTML = '<section class="card"><h2>Petal View</h2><div class="note">' + esc(msg) + "</div>" +
-      (ask ? '<div class="btns" style="margin-top:12px"><input id="viewPass" type="password" placeholder="Passcode" style="max-width:220px"><button class="btn" type="button" data-act="viewpass">Open</button></div>' : "") + "</section>";
+      (ask ? '<div class="btns" style="margin-top:12px"><input id="viewPass" type="password" placeholder="Passcode" style="max-width:220px"><button class="btn" type="button" data-act="viewpass">Open</button></div>' : "") + "</section>" + (ask ? "" : viewTools());
+  }
+  function viewTools() {
+    return '<section class="card vtool"><h2>Write her a note ♡</h2><textarea id="vNote" dir="auto" placeholder="Write something sweet…"></textarea>' +
+      '<div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="vnote">Send note</button></div>' +
+      '<div class="stat" style="margin-top:12px">' + (viewAt ? "Her planner last updated " + esc(fmtStamp(viewAt)) + "." : "Her planner hasn't sent anything yet.") +
+      ' Not updating? <button class="btn ghost sm" type="button" data-act="vreset">' + (confirmKey === "vreset" ? "Tap again to reset" : "Reset connection") + "</button></div></section>";
   }
   function loadView() {
     var pass = lsGet("petal-view-pass") || "";
@@ -575,10 +583,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (!S.viewed) viewCard("Loading…");
     sbRpc("get_planner", { p_pass: pass }).then(function (r) {
       if (!r) { try { localStorage.removeItem("petal-view-pass"); } catch (e) {} viewCard("That passcode didn't work. Try again.", true); return; }
+      viewAt = r.at ? new Date(r.at).getTime() : 0;
       if (!r.data) { viewCard("Nothing shared yet. It shows up after she opens the planner with internet (twice after an update)."); return; }
       if (r.data.off) { viewCard("Sharing is turned off."); return; }
       var base = seed(); S = r.data; for (var k in base) if (!(k in S)) S[k] = base[k]; S.viewed = true;
-      document.body.classList.add("viewonly"); applyTheme(); render(); toast("Updated " + fmtStamp(new Date(r.at).getTime()));
+      document.body.classList.add("viewonly"); applyTheme(); render();
     }).catch(function () { if (!S.viewed) viewCard("Couldn't connect. Check your internet, then close and reopen."); });
   }
   function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 3200); }
@@ -910,6 +919,12 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       got.forEach(function (t) { var id = "r" + hash(t); if (S.seen.indexOf(id) >= 0) return; S.seen.push(id); S.notes.unshift({ id: id, text: t, at: Date.now() }); added++; });
       if (added) { commit(); toast(added === 1 ? "A new note for you ♡" : added + " new notes for you ♡"); }
     }).catch(function () {});
+    if (!SB_URL || lsGet("petal-viewer")) return;
+    sbRpc("get_notes", { p_dev: devId() }).then(function (list) {
+      var added = 0; if (!S.seen) S.seen = [];
+      (list || []).forEach(function (n) { var id = "n" + n.id; if (S.seen.indexOf(id) >= 0) return; S.seen.push(id); S.notes.unshift({ id: id, text: n.text, at: Date.parse(n.at) || Date.now() }); added++; });
+      if (added) { commit(); toast(added === 1 ? "A new note for you ♡" : added + " new notes for you ♡"); }
+    }).catch(function () {});
   }
   function noteCard(n) {
     return '<div class="paper"><span class="tape"></span><div class="msg" dir="auto">' + esc(n.text) + '</div><div class="meta">' + esc(fmtStamp(n.at)) + "</div></div>";
@@ -1156,7 +1171,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (VIEW && !S.viewed) { renderRail(); return; }
     renderRail(); renderAlerts(); renderStreak();
     var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
-    $("main").innerHTML = v(); renderModal(); applyLook();
+    $("main").innerHTML = (VIEW && (tab === "overview" || tab === "notes") ? viewTools() : "") + v(); renderModal(); applyLook();
   }
   function commit() { checkQuests(); save(); render(); tick(); }
 
@@ -1194,6 +1209,21 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (a === "wnAll") { startTour(news().map(function (w) { return w[0]; })); return; }
     if (a === "streak") { modal = { t: "streak" }; renderModal(); return; }
     if (a === "pushOn") { enablePush(); return; }
+    if (a === "vnote") {
+      var vt = $("vNote").value.trim(); if (!vt) { $("vNote").focus(); return; }
+      sbRpc("add_note", { p_pass: lsGet("petal-view-pass") || "", p_text: vt }).then(function (ok) {
+        if (ok) { $("vNote").value = ""; toast("Sent ♡ She'll see it next time she opens the planner online."); } else toast("Couldn't send. Check your passcode.");
+      }).catch(function () { toast("Couldn't send. Check your internet."); });
+      return;
+    }
+    if (a === "vreset") {
+      if (confirmKey !== "vreset") { confirmKey = "vreset"; el.textContent = "Tap again to reset"; return; }
+      confirmKey = null;
+      sbRpc("reset_share", { p_pass: lsGet("petal-view-pass") || "" }).then(function (ok) {
+        toast(ok ? "Reset. Ask her to open the planner with internet." : "Couldn't reset. Check your passcode."); S.viewed = false; viewAt = 0; loadView();
+      }).catch(function () { toast("Couldn't reset. Check your internet."); });
+      return;
+    }
     if (a === "pushOff") { disablePush(); return; }
     if (a === "addangel") { $("angelIn").click(); return; }
     if (a === "angelsave") { saveAngel(); return; }
