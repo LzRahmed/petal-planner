@@ -525,8 +525,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function devId() { var d = lsGet("petal-dev"); if (!d) { d = uid() + uid(); lsSet("petal-dev", d); } return d; }
+  // Only a planner someone actually uses may send (and so claim) the shared copy; a fresh copy opened on another phone stays quiet.
+  function hasOwnData() { return !!(S.assignments.length || S.exams.length || S.grades.length || (S.angels || []).length || (S.streak && S.streak.last)); }
   function pushShare(now) {
-    if (VIEW || !SB_URL || S.share === false || !navigator.onLine || lsGet("petal-viewer")) return;
+    if (VIEW || !SB_URL || S.share === false || !navigator.onLine || lsGet("petal-viewer") || !hasOwnData()) return;
     clearTimeout(shareT);
     shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S, p_dev: devId() }).catch(function () {}); }, now ? 0 : 4000);
   }
@@ -542,7 +544,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { due: S.assignments.filter(function (a) { return !a.done && a.d && a.d <= lim; }).map(function (a) { return { t: a.t, d: a.d }; }), streak: { last: st.last || "", count: st.count || 0 } };
   }
   function pushRem(sub) {
-    if (VIEW || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine) return Promise.resolve();
+    if (VIEW || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine || !hasOwnData()) return Promise.resolve();
     var tz = null; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch (e) {}
     return sbRpc("set_push", { p_sub: sub || null, p_tz: tz, p_rem: remPayload(), p_dev: devId() });
   }
