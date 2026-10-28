@@ -194,6 +194,41 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .viewonly main input, .viewonly main select, .viewonly main textarea, .viewonly main button { pointer-events: none; }
 .qbar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
 .qbar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+.hdr-r { display: flex; gap: 8px; align-items: center; }
+.streak-chip { font: 800 15px var(--body); border-radius: 999px; padding: 5px 12px; border: 2px solid #ffb347; background: #fff3e0; color: #e8590c; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; }
+.streak-chip.cold { filter: grayscale(1); opacity: .75; }
+.streak-chip.hot .fl { display: inline-block; animation: flick 1.2s ease-in-out infinite; }
+@keyframes flick { 50% { transform: scale(1.2) rotate(-6deg); } }
+.sbig { text-align: center; }
+.sbig .flame { font-size: 76px; line-height: 1; animation: popIn .7s cubic-bezier(.3, 1.6, .5, 1) both; }
+.sbig .cnt { font: 900 46px/1 var(--display); color: #e8590c; }
+@keyframes popIn { from { transform: scale(.3); opacity: 0; } to { transform: none; opacity: 1; } }
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.week div { display: grid; gap: 4px; font: 700 11px var(--body); color: var(--muted); }
+.week span { width: 32px; height: 32px; margin: auto; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 2px dashed var(--line); font-size: 15px; }
+.week span.on { background: #ffd8a8; border: 2px solid #ffb347; }
+.week span.today { border-color: #e8590c; border-style: solid; }
+.nudge { background: linear-gradient(135deg, #fff3e0, #ffe0e9); color: #8a3b12; border-radius: 18px; padding: 12px 14px; font-weight: 700; display: flex; gap: 10px; align-items: center; cursor: pointer; margin-bottom: 16px; }
+.angel-hero { background: linear-gradient(135deg, #ece5ff, #ffe3f0 60%, #fff4d6); color: #4a3a6b; border: 0; position: relative; overflow: hidden; }
+.angel-hero h2 { color: #6b4fa8; }
+.angel-hero .spark { position: absolute; font-size: 20px; animation: twinkle 2.4s ease-in-out infinite; pointer-events: none; }
+@keyframes twinkle { 50% { opacity: .25; transform: scale(.7) rotate(20deg); } }
+.abadges { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+.abadge { border-radius: 18px; padding: 10px 4px; text-align: center; background: var(--bg); border: 2px dashed var(--line); color: var(--muted); font: 800 17px var(--display); opacity: .7; }
+.abadge.got { opacity: 1; background: linear-gradient(160deg, #f3edff, #ffe6f1); border: 2px solid #c7b4f5; color: #6b4fa8; box-shadow: 0 0 0 3px rgba(199, 180, 245, .3); }
+.abadge small { display: block; font: 700 10px var(--body); margin-top: 2px; }
+.acards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.acard { background: linear-gradient(170deg, #fbf8ff, #fff0f6); border: 2px solid #e4d9fb; border-radius: 22px; padding: 12px; display: grid; gap: 4px; color: #4a3a6b; position: relative; }
+.acard img { width: 100%; height: 160px; object-fit: cover; border-radius: 14px; cursor: zoom-in; }
+.acard .num { font: 900 34px var(--display); color: #6b4fa8; }
+.acard .num::before { content: "😇 "; font-size: 22px; }
+.acard .stat { color: #8a7aa8; }
+.acard .mean { font-family: var(--hand); font-weight: 700; font-size: 18px; }
+.acard .x { position: absolute; top: 8px; right: 10px; background: #fff; border-radius: 99px; padding: 2px 8px; }
+.tour-hi { outline: 3px solid var(--accent) !important; outline-offset: 4px; border-radius: 16px; animation: tourPulse 1.2s ease-in-out infinite !important; }
+@keyframes tourPulse { 50% { outline-color: transparent; } }
+#tourBox { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(440px, calc(100% - 32px)); background: var(--surface); color: var(--fg); border: 2px solid var(--accent); border-radius: 20px; padding: 14px 16px; box-shadow: var(--shadow); z-index: 60; display: grid; gap: 10px; font-weight: 600; }
+[data-outfit="halo"] .outfit-halo, [data-outfit="star"] .outfit-star { display: inline; }
 #pet.walk #petBody { animation: bob .36s ease-in-out infinite; } #pet.run #petBody { animation: bob .16s ease-in-out infinite; }
 #pet.walk .foot-l { animation: stepA .36s ease-in-out infinite; } #pet.walk .foot-r { animation: stepA .36s ease-in-out infinite .18s; }
 #pet.run .foot-l { animation: stepA .16s ease-in-out infinite; } #pet.run .foot-r { animation: stepA .16s ease-in-out infinite .08s; }
@@ -264,7 +299,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       </svg>
       <div><h1>Petal Planner</h1><div class="sub">my semester, one soft step at a time</div></div>
     </div>
-    <button class="theme-btn" id="themeBtn" type="button">Dark mode</button>
+    <div class="hdr-r"><button class="streak-chip cold" id="streakChip" type="button" data-act="streak" aria-label="Streak"><span class="fl">🔥</span>0</button><button class="theme-btn" id="themeBtn" type="button">Dark mode</button></div>
   </header>
   <div id="alerts" aria-live="polite"></div>
   <div class="shell">
@@ -409,6 +444,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         </g>
         <g class="outfit outfit-bow"><path d="M52 21 L44 15 L44.5 27.5 Z" fill="#f06c96" stroke="#b8456b" stroke-width="1.6" stroke-linejoin="round"/><path d="M52 21 L60.5 14.5 L60 27.5 Z" fill="#f06c96" stroke="#b8456b" stroke-width="1.6" stroke-linejoin="round"/><circle cx="52" cy="21" r="2.8" fill="#f9a3c0" stroke="#b8456b" stroke-width="1.4"/></g>
         <g class="outfit outfit-party"><path d="M31 21 L40 -2 L49 21 Z" fill="#8ecdf0" stroke="#4b8fb8" stroke-width="1.8" stroke-linejoin="round"/><path d="M34.5 12.5 L45.5 12.5 M37 6 L43 6" stroke="#fffafa" stroke-width="2"/><circle cx="40" cy="-2.5" r="3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="36" cy="17" r="1.4" fill="#f06c96"/><circle cx="44" cy="15" r="1.4" fill="#f06c96"/></g>
+        <g class="outfit outfit-halo"><ellipse cx="40" cy="7" rx="14" ry="3.8" fill="none" stroke="#fff3b0" stroke-width="5" opacity=".6"/><ellipse cx="40" cy="7" rx="14" ry="3.8" fill="none" stroke="#f2c14e" stroke-width="2.6"/></g>
+        <g class="outfit outfit-star"><path d="M55 16 L56.53 19.9 L60.71 20.15 L57.47 22.8 L58.53 26.85 L55 24.6 L51.47 26.85 L52.53 22.8 L49.29 20.15 L53.47 19.9 Z" fill="#f2c14e" stroke="#b88a1c" stroke-width="1.2" stroke-linejoin="round"/></g>
         <g class="outfit outfit-cap">
         <path d="M30 24 v7 q10 5.5 20 0 v-7 Z" fill="#2b2030" stroke="#120b16" stroke-width="2" stroke-linejoin="round"/>
         <path d="M20 22 L40 13.5 L60 22 L40 30.5 Z" fill="#2b2030" stroke="#120b16" stroke-width="2.2" stroke-linejoin="round"/>
@@ -429,6 +466,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 <div id="modalRoot"></div>
 <div id="toast" hidden></div>
 <input type="file" id="photoIn" accept="image/*" multiple hidden>
+<input type="file" id="angelIn" accept="image/*" hidden>
 <input type="file" id="importIn" accept="application/json,.json" hidden>
 
 <script>
@@ -586,17 +624,22 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (dbp) return dbp;
     dbp = new Promise(function (res, rej) {
       if (!window.indexedDB) { rej(new Error("no idb")); return; }
-      var r = indexedDB.open("petal-photos", 1);
-      r.onupgradeneeded = function () { r.result.createObjectStore("p", { keyPath: "id" }); };
+      var r = indexedDB.open("petal-photos", 2);
+      r.onupgradeneeded = function () {
+        var db = r.result;
+        if (!db.objectStoreNames.contains("p")) db.createObjectStore("p", { keyPath: "id" });
+        if (!db.objectStoreNames.contains("a")) db.createObjectStore("a", { keyPath: "id" });
+      };
       r.onsuccess = function () { res(r.result); };
       r.onerror = function () { rej(r.error); };
     });
     return dbp;
   }
-  function tx(mode, fn) {
+  function tx(mode, fn, name) {
+    name = name || "p";
     return idb().then(function (db) {
       return new Promise(function (res, rej) {
-        var t = db.transaction("p", mode), out = fn(t.objectStore("p"));
+        var t = db.transaction(name, mode), out = fn(t.objectStore(name));
         t.oncomplete = function () { res(out && out.result); };
         t.onerror = function () { rej(t.error); }; t.onabort = function () { rej(t.error); };
       });
@@ -655,6 +698,63 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       (full ? '<button type="button" class="del' + (confirmKey === p.id ? " arm" : "") + '" data-act="delphoto" data-id="' + p.id + '">' + (confirmKey === p.id ? "Tap again" : "Remove") + "</button>" : "") + "</figure>";
   }
 
+  /* ---------- angel numbers (screenshots live in IndexedDB store "a") ---------- */
+  var ANGELS = [["1:11", "New beginnings, make a wish ✨"], ["2:22", "Balance and trust, things are lining up"], ["3:33", "You're surrounded by love and support"], ["4:44", "You're protected, keep going"], ["5:55", "A big, good change is coming"], ["10:10", "Stay positive, you're on the right path"], ["11:11", "Make a wish! The universe is listening ✨"], ["12:12", "Trust yourself, you're growing"], ["12:34", "Step by step, it all comes together"], ["20:20", "Clarity is on its way"], ["21:21", "Good things are coming to you"], ["22:22", "Your dreams are being built, be patient"], ["23:23", "Keep shining, someone is proud of you ♡"], ["00:00", "A fresh start, a clean page"]];
+  var angelImgs = {}, pendingAngel = null;
+  function angelMeaning(k) { for (var i = 0; i < ANGELS.length; i++) if (ANGELS[i][0] === k) return ANGELS[i][1]; return ""; }
+  function angelKey(d) {
+    var h = d.getHours(), m = pad(d.getMinutes()), k24 = pad(h) + ":" + m, k12 = (h % 12 || 12) + ":" + m;
+    var keys = ANGELS.map(function (a) { return a[0]; });
+    return keys.indexOf(k24) >= 0 ? k24 : keys.indexOf(k12) >= 0 ? k12 : null;
+  }
+  function loadAngels() {
+    return tx("readonly", function (st) { return st.getAll(); }, "a").then(function (list) {
+      (list || []).forEach(function (r) { angelImgs[r.id] = URL.createObjectURL(r.blob); });
+      if (tab === "angels") render();
+    }).catch(function () {});
+  }
+  function pickAngel(file) {
+    if (!file) return;
+    var d = new Date(file.lastModified || Date.now());
+    resizeImg(file).then(function (blob) {
+      pendingAngel = { blob: blob, url: URL.createObjectURL(blob), k: angelKey(d), d: iso(d) };
+      modal = { t: "angel" }; renderModal();
+    }).catch(function () { toast("That picture could not be read."); });
+  }
+  function saveAngel() {
+    var p = pendingAngel; if (!p) return;
+    var rec = { id: uid(), k: $("anK").value, d: $("anD").value || iso(new Date()), at: Date.now() };
+    tx("readwrite", function (st) { return st.put({ id: rec.id, blob: p.blob }); }, "a").then(function () { angelImgs[rec.id] = p.url; render(); }).catch(function () { toast("Saved, but the picture could not be stored."); });
+    if (!S.angels) S.angels = [];
+    S.angels.unshift(rec); stats().angels = (stats().angels || 0) + 1;
+    pendingAngel = null; modal = null; markActive(); commit(); toast(rec.k + " caught! ✨");
+  }
+
+  /* ---------- streak ---------- */
+  function streak() { if (!S.streak) S.streak = { last: "", count: 0, best: 0, freeze: 0, hist: [] }; return S.streak; }
+  function daysBetween(a, b) { return Math.round((parseD(b) - parseD(a)) / 86400000); }
+  function streakNow() {
+    var st = streak(); if (!st.last) return 0;
+    var gap = daysBetween(st.last, iso(new Date()));
+    return gap <= 1 || gap - 1 <= st.freeze ? st.count : 0;
+  }
+  function markActive() {
+    if (VIEW) return;
+    var st = streak(), today = iso(new Date()); if (st.last === today) return;
+    var gap = st.last ? daysBetween(st.last, today) : 0, used = 0;
+    if (gap === 1) st.count++;
+    else if (gap > 1 && gap - 1 <= st.freeze) { used = gap - 1; st.freeze -= used; st.count++; }
+    else st.count = 1;
+    st.last = today; st.hist.push(today); if (st.hist.length > 60) st.hist.shift();
+    st.best = Math.max(st.best, st.count);
+    var earned = st.count % 7 === 0 && st.freeze < 2; if (earned) st.freeze++;
+    modal = { t: "streak", fresh: true, used: used, earned: earned };
+  }
+  function renderStreak() {
+    var c = $("streakChip"), hot = streak().last === iso(new Date());
+    c.className = "streak-chip " + (hot ? "hot" : "cold"); c.innerHTML = '<span class="fl">🔥</span>' + streakNow();
+  }
+
   /* ---------- grades ---------- */
   function letter(p) { return p >= 90 ? "A" : p >= 80 ? "B" : p >= 70 ? "C" : p >= 60 ? "D" : "F"; }
   function subjStats(id) {
@@ -690,9 +790,42 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     for (var o = 0; o < 7; o++) { var w = (t + o) % 7; for (var si = 0; si < S.slots.length; si++) if (subj(S.tt[w + "-" + si])) return { idx: w, offset: o }; }
     return { idx: t, offset: 0 };
   }
+  /* ---------- what's new & guided tours ---------- */
+  var WN = 1;
+  function news() {
+    return [["streak", "🔥 Streaks", "Do one thing in your planner every day to keep your streak alive, like Duolingo."],
+      ["angels", "😇 Angel numbers", "Caught 11:11 or 3:33 on the clock? Add the screenshot and collect them all."],
+      ["friends", "🐱 New friends", "Meet Kuromi, Tofe and Big Ass Tofe, plus outfits to dress them up."],
+      ["quests", "🏆 Quests", "Little goals that unlock friends, outfits and surprises."]]
+      .concat(SB_URL ? [["share", "💌 Sharing", "A view-only copy of your planner is shared with " + SHARE_WITH + ". You can turn it off in Settings."]] : []);
+  }
+  var TOURS = {
+    streak: [["overview", "#streakChip", "This is your streak 🔥 Do one thing in your planner every day to keep it going. Tap it any time to see your week."]],
+    angels: [["angels", "#tAngelAdd", "Saw a magic time like 11:11? Screenshot it, then tap Add a screenshot. I read the time from it ✨"], ["angels", "#tAngelBadges", "Every number you catch lights up here. Can you collect them all?"]],
+    friends: [["friends", "#tFriends", "Your friends live here. Finish quests to unlock them, then tap Choose to pick who walks around your planner."], ["friends", "#tOutfits", "Dress them up! New outfits unlock with quests too."]],
+    quests: [["quests", "#tQuests", "Your quests 🏆 Finish assignments before the deadline, catch angel numbers and keep your streak to unlock surprises."]],
+    share: [["settings", "#tShare", "Your planner is shared view-only with " + SHARE_WITH + ". Photos are never shared, and you can switch it off here."]]
+  };
+  var tourQ = [], tourI = 0;
+  function startTour(keys) {
+    S.wn = WN; save(); modal = null; renderModal();
+    tourQ = []; keys.forEach(function (k) { tourQ = tourQ.concat(TOURS[k] || []); }); tourI = 0; showTour();
+  }
+  function showTour() {
+    var old = document.querySelector(".tour-hi"); if (old) old.classList.remove("tour-hi");
+    var box = $("tourBox");
+    if (tourI >= tourQ.length) { if (box) box.parentNode.removeChild(box); tourQ = []; return; }
+    var s = tourQ[tourI];
+    if (tab !== s[0]) { tab = s[0]; render(); window.scrollTo(0, 0); }
+    var el = document.querySelector(s[1]);
+    if (el) { el.classList.add("tour-hi"); el.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    if (!box) { box = document.createElement("div"); box.id = "tourBox"; document.body.appendChild(box); }
+    box.innerHTML = "<div>" + esc(s[2]) + '</div><div class="btns" style="justify-content:space-between"><span class="stat">' + (tourI + 1) + " / " + tourQ.length + '</span><span class="btns"><button class="btn ghost sm" type="button" data-act="tourEnd">Skip</button><button class="btn sm" type="button" data-act="tourNext">' + (tourI + 1 < tourQ.length ? "Next" : "Done ♡") + "</button></span></div>";
+  }
+
   /* ---------- friends & quests ---------- */
   var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"]];
-  var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"]];
+  var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"]];
   var QUESTS = [
     { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi" },
     { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe" },
@@ -700,13 +833,16 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow" },
     { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene" },
     { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe" },
-    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat" }
+    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat" },
+    { id: "q8", t: "Catch 3 angel numbers", k: "angels", n: 3, r: "halo", rt: "Angel halo" },
+    { id: "q9", t: "Reach a 7-day streak", k: "best", n: 7, r: "star", rt: "Star clip" }
   ];
   function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
   function qProg(q) {
     var st = stats();
     if (q.k === "days") return st.days.length;
     if (q.k === "pair") return (has("plush") ? 1 : 0) + (has("kitten") ? 1 : 0);
+    if (q.k === "best") return streak().best;
     return st[q.k] || 0;
   }
   function qDone(q) { return qProg(q) >= q.n; }
@@ -757,7 +893,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (!photos.length) gal = '<div class="empty">no photos yet, add your favorites ♡</div><div class="btns"><button class="btn" type="button" data-act="addphoto">Add photos</button></div>';
     else gal = '<div class="polas">' + shown.map(function (p, i) { return pol(p, false, i); }).join("") + '</div><div class="btns"><button class="btn ghost" type="button" data-act="shuffle">Shuffle</button><button class="btn" type="button" data-act="tab" data-tab="photos">See all ' + photos.length + '</button><button class="btn ghost" type="button" data-act="addphoto">Add photos</button></div>';
     var hi = "Hi, " + (S.name ? esc(S.name) : "beautiful") + " ♡";
-    return '<section class="card hello"><div class="sub">' + esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })) + '</div><div class="big">' + hi + '</div><div>' + esc(line) + (ov ? " · overall " + r1(ov.pct) + "% (" + letter(ov.pct) + ")" : "") + "</div></section>" +
+    var sn = streakNow(), nudge = !VIEW && sn && streak().last !== iso(new Date()) ? '<div class="nudge" data-act="streak">🔥 Your ' + sn + '-day streak is waiting! Do one thing today to keep it.</div>' : "";
+    return nudge + '<section class="card hello"><div class="sub">' + esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })) + '</div><div class="big">' + hi + '</div><div>' + esc(line) + (ov ? " · overall " + r1(ov.pct) + "% (" + letter(ov.pct) + ")" : "") + "</div></section>" +
       (S.notes.length ? noteCard(S.notes[0]) : "") +
       '<section class="card"><h3>Our little gallery</h3>' + gal + "</section>" +
       '<div class="grid2"><section class="card"><h3>' + dl + "'s classes</h3>" + (nd.offset > 1 ? '<div class="note">free day today, next up is ' + DAYFULL[nd.idx] + "</div>" : "") +
@@ -866,15 +1003,31 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<section class="card"><h3>All notes</h3><div style="display:grid;gap:26px;padding-top:8px">' + (hist || '<div class="empty">no notes yet</div>') + "</div></section>";
   }
 
+  function vAngels() {
+    var list = S.angels || [], got = {};
+    list.forEach(function (a) { got[a.k] = (got[a.k] || 0) + 1; });
+    var h = '<section class="card angel-hero" id="tAngelAdd"><span class="spark" style="top:12px;right:18px">✨</span><span class="spark" style="top:46px;right:70px;animation-delay:.8s">⭐</span><span class="spark" style="bottom:14px;right:28px;animation-delay:1.5s">💫</span>' +
+      '<h2>Angel numbers 😇</h2><div class="note" style="color:#6b5a8a;margin:-4px 0 14px;max-width:520px">Caught the clock on a magic time like 11:11 or 3:33? Take a screenshot and add it here. I read the time for you ✨</div>' +
+      '<button class="btn" type="button" data-act="addangel">Add a screenshot ✨</button></section>';
+    h += '<section class="card" id="tAngelBadges"><h2>My collection</h2><div class="stat" style="margin:-6px 0 12px">' + Object.keys(got).length + " of " + ANGELS.length + ' collected</div><div class="abadges">' +
+      ANGELS.map(function (a) { return '<div class="abadge' + (got[a[0]] ? " got" : "") + '">' + a[0] + "<small>" + (got[a[0]] ? "caught ×" + got[a[0]] : "not yet") + "</small></div>"; }).join("") + "</div></section>";
+    h += '<section class="card"><h2>My catches</h2>' + (list.length ? '<div class="acards">' + list.map(function (a) {
+      var img = angelImgs[a.id];
+      return '<div class="acard">' + (img ? '<img src="' + img + '" alt="Screenshot of ' + esc(a.k) + '" data-act="angelzoom" data-id="' + a.id + '">' : "") +
+        '<div class="num">' + esc(a.k) + '</div><div class="stat">' + esc(fmtDate(a.d)) + '</div><div class="mean">' + esc(angelMeaning(a.k)) + "</div>" +
+        '<button type="button" class="x" data-act="delangel" data-id="' + a.id + '">' + (confirmKey === "an" + a.id ? "Tap again" : "×") + "</button></div>";
+    }).join("") + "</div>" : '<div class="empty">no angel numbers yet ✨</div>') + "</section>";
+    return h;
+  }
   function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
   function vFriends() {
-    var h = '<section class="card"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
+    var h = '<section class="card" id="tFriends"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
     FRIENDS.forEach(function (f) {
       var ok = has(f[0]), on = S.friend === f[0];
       h += '<div class="fcard' + (on ? " on" : "") + (ok ? "" : " locked") + '">' + look(f[0]) + '<div style="display:grid;gap:6px;min-width:0"><b>' + f[1] + '</b><div class="stat">' + (ok ? f[2] : "🔒 " + esc(questFor(f[0]))) + "</div>" +
         (ok ? '<div class="btns"><button class="btn sm' + (on ? "" : " ghost") + '" type="button" data-act="friend" data-id="' + f[0] + '">' + (on ? "With you ♡" : "Choose") + "</button></div>" : "") + "</div></div>";
     });
-    h += '</div></section><section class="card"><h2>Outfits</h2><div class="btns">';
+    h += '</div></section><section class="card" id="tOutfits"><h2>Outfits</h2><div class="btns">';
     OUTFITS.forEach(function (o) {
       var ok = has(o[0]);
       h += '<button class="btn sm' + (S.outfit === o[0] ? "" : " ghost") + '" type="button" data-act="outfit" data-id="' + o[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(o[0])) + '"') + ">" + (ok ? "" : "🔒 ") + o[1] + "</button>";
@@ -885,7 +1038,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return h + "</section>";
   }
   function vQuests() {
-    var h = '<section class="card"><h2>Quests</h2><div class="note" style="margin:-6px 0 6px">Little goals, little surprises ♡</div>';
+    var h = '<section class="card" id="tQuests"><h2>Quests</h2><div class="note" style="margin:-6px 0 6px">Little goals, little surprises ♡</div>';
     QUESTS.forEach(function (q) {
       var p = Math.min(qProg(q), q.n), done = p >= q.n;
       h += '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + p + " / " + q.n + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (done ? " · unlocked ♡" : "") + "</div></div>";
@@ -897,7 +1050,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var ns = np === "granted" ? "Notifications are on." : np === "denied" ? "Notifications are blocked in this browser." : np === "unsupported" ? "This browser has no notifications. Reminders still appear inside the planner." : "Notifications are off.";
     return '<section class="card"><h2>Settings</h2><div style="display:grid;gap:18px">' +
       '<div class="form" style="grid-template-columns:1fr;margin:0"><label>Her name<input type="text" dir="auto" id="nameIn" value="' + esc(S.name) + '" placeholder="Shown in the greeting" data-act="name"></label></div>' +
-      (SB_URL ? '<div><h3>Sharing</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="shareOn"' + (S.share === false ? "" : " checked") + "> Share a view-only copy of my planner with " + esc(SHARE_WITH) + ' ♡</label><div class="stat" style="margin-top:6px">They can see your planner but can’t change anything. Photos are never shared. Turn this off any time.</div></div>' : "") +
+      (SB_URL ? '<div id="tShare"><h3>Sharing</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="shareOn"' + (S.share === false ? "" : " checked") + "> Share a view-only copy of my planner with " + esc(SHARE_WITH) + ' ♡</label><div class="stat" style="margin-top:6px">They can see your planner but can’t change anything. Photos are never shared. Turn this off any time.</div></div>' : "") +
       '<div><h3>Little friend</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="petOn"' + (S.pet && S.pet.on === false ? "" : " checked") + '> Show my little bunny on the planner</label><div class="stat" style="margin-top:6px">She kisses your photos, naps on top of things, runs when tapped (tap her three times and she trips and cries until you give her a kiss), grumbles about unfinished assignments, and sprints with her bag before a class.</div></div>' +
       '<div><h3>Reminders</h3><div class="stat" style="margin-bottom:8px">' + ns + " Reminders show up inside the planner whenever it is open, and when it opens after the time has passed. For alerts while it is closed, use “Add to calendar” on any reminder.</div>" +
       '<div class="btns"><button class="btn ghost" type="button" data-act="notif">Turn on notifications</button></div></div>' +
@@ -907,7 +1060,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
+    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -915,6 +1068,36 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function renderModal() {
     var root = $("modalRoot");
     if (!modal) { root.innerHTML = ""; return; }
+    if (modal.t === "streak") {
+      var st = streak(), n = streakNow(), doneToday = st.last === iso(new Date()), wk = "";
+      for (var wi = 6; wi >= 0; wi--) { var wd = addDays(-wi), on = st.hist.indexOf(wd) >= 0; wk += "<div>" + DAYS[parseD(wd).getDay()] + '<span class="' + (on ? "on" : "") + (wi === 0 ? " today" : "") + '">' + (on ? "🔥" : "") + "</span></div>"; }
+      var mile = [7, 14, 30, 50, 100, 200, 365].indexOf(n) >= 0;
+      var head = modal.fresh ? (mile ? "WOW! " + n + " days! 🎉" : n === 1 ? "Streak started!" : "Streak extended!") : doneToday ? "You're on fire!" : n ? "Keep your streak alive!" : "Start a streak today!";
+      var msg = modal.fresh ? (modal.used ? "A streak freeze 🧊 saved your streak!" : "See you tomorrow ♡") : doneToday ? "All done for today. Come back tomorrow ♡" : "Do one thing in your planner today: tick a task, add an exam, grade or note, or catch an angel number.";
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal sbig" role="dialog" aria-modal="true" aria-label="Streak"><div class="flame">' + (n ? "🔥" : "🩶") + '</div><div class="cnt">' + n + '</div><div class="stat">day streak</div><h2>' + esc(head) + "</h2><div>" + esc(msg) + "</div>" +
+        (modal.earned ? "<div><b>You earned a streak freeze 🧊</b></div>" : "") + '<div class="week">' + wk + '</div><div class="stat">Best: ' + st.best + " days · Freezes: " + (st.freeze ? "🧊".repeat(st.freeze) : "none") + " (one every 7 days, saves a missed day)</div>" +
+        '<div class="btns" style="justify-content:center"><button class="btn" type="button" data-act="closemodal">' + (modal.fresh ? "Continue" : "Got it") + "</button></div></div></div>";
+      return;
+    }
+    if (modal.t === "angel") {
+      var pa = pendingAngel; if (!pa) { modal = null; root.innerHTML = ""; return; }
+      var opts = ANGELS.map(function (a) { return "<option" + (a[0] === pa.k ? " selected" : "") + ">" + a[0] + "</option>"; }).join("");
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal" role="dialog" aria-modal="true" aria-label="New angel number"><h2>' + (pa.k ? "You caught " + pa.k + "! ✨" : "Which angel number? ✨") + '</h2><img src="' + pa.url + '" alt="" style="max-height:220px;width:100%;object-fit:contain;border-radius:14px">' +
+        (pa.k ? "" : "<div class=\"stat\">I couldn't read the time from this picture, so pick the number.</div>") +
+        '<label>Angel number<select id="anK">' + opts + '</select></label><label>Day<input type="date" id="anD" value="' + pa.d + '"></label><div class="btns"><button class="btn" type="button" data-act="angelsave">Save ✨</button><button class="btn ghost" type="button" data-act="closemodal">Cancel</button></div></div></div>';
+      return;
+    }
+    if (modal.t === "azoom") {
+      var au = angelImgs[modal.id]; if (!au) { modal = null; root.innerHTML = ""; return; }
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal zoom" role="dialog" aria-modal="true" aria-label="Screenshot"><img src="' + au + '" alt=""><div class="btns" style="justify-content:center"><button class="btn" type="button" data-act="closemodal">Close</button></div></div></div>';
+      return;
+    }
+    if (modal.t === "whatsnew") {
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal" role="dialog" aria-modal="true" aria-label="What\'s new"><h2>What\'s new ✨</h2>' +
+        news().map(function (w) { return '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + w[1] + '</b><button class="btn ghost sm" type="button" data-act="wnShow" data-id="' + w[0] + '">Show me</button></div><div class="stat">' + esc(w[2]) + "</div></div>"; }).join("") +
+        '<div class="btns"><button class="btn" type="button" data-act="wnAll">Show me everything</button><button class="btn ghost" type="button" data-act="closemodal">Later</button></div></div></div>';
+      return;
+    }
     if (modal.t === "zoom") {
       var p = photos.filter(function (x) { return x.id === modal.id; })[0];
       if (!p) { modal = null; root.innerHTML = ""; return; }
@@ -929,8 +1112,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function render() {
     if (VIEW && !S.viewed) { renderRail(); return; }
-    renderRail(); renderAlerts();
-    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
+    renderRail(); renderAlerts(); renderStreak();
+    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
     $("main").innerHTML = v(); renderModal(); applyLook();
   }
   function commit() { checkQuests(); save(); render(); tick(); }
@@ -962,7 +1145,22 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   document.addEventListener("click", function (e) {
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id"), k = el.getAttribute("data-k");
-    if (a === "closemodal") { if (e.target === el || el.tagName === "BUTTON") { modal = null; renderModal(); } return; }
+    if (a === "closemodal") { if (e.target === el || el.tagName === "BUTTON") { if (modal && modal.t === "whatsnew") { S.wn = WN; save(); } modal = null; renderModal(); } return; }
+    if (a === "tourNext") { tourI++; showTour(); return; }
+    if (a === "tourEnd") { tourI = tourQ.length; showTour(); return; }
+    if (a === "wnShow") { startTour([id]); return; }
+    if (a === "wnAll") { startTour(news().map(function (w) { return w[0]; })); return; }
+    if (a === "streak") { modal = { t: "streak" }; renderModal(); return; }
+    if (a === "addangel") { $("angelIn").click(); return; }
+    if (a === "angelsave") { saveAngel(); return; }
+    if (a === "angelzoom") { modal = { t: "azoom", id: id }; renderModal(); return; }
+    if (a === "delangel") {
+      if (confirmKey !== "an" + id) { confirmKey = "an" + id; render(); return; }
+      confirmKey = null; S.angels = (S.angels || []).filter(function (x) { return x.id !== id; });
+      if (angelImgs[id]) { URL.revokeObjectURL(angelImgs[id]); delete angelImgs[id]; }
+      tx("readwrite", function (st) { return st.delete(id); }, "a").catch(function () {});
+      commit(); return;
+    }
     if (a === "tab") { tab = el.getAttribute("data-tab"); confirmKey = null; render(); window.scrollTo(0, 0); }
     else if (a === "color") { subj(id).c = +el.getAttribute("data-c"); commit(); }
     else if (a === "del") { S[k] = S[k].filter(function (x) { return x.id !== id; }); commit(); }
@@ -986,15 +1184,15 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       var t = $("aT").value.trim(); if (!t) { $("aT").focus(); return; }
       var o = $("aO").value, item = { id: uid(), t: t, s: $("aS").value, d: $("aD").value || addDays(3), done: false, rem: null };
       if (o !== "") item.rem = { off: +o, time: $("aTm").value || "09:00", done: false, snooze: 0 };
-      S.assignments.push(item); commit();
+      S.assignments.push(item); markActive(); commit();
     } else if (a === "add-exam") {
       var o2 = $("eO").value, ex = { id: uid(), s: $("eS").value, k: $("eK").value.trim() || "Exam", d: $("eD").value || addDays(14), rem: null };
       if (o2 !== "") ex.rem = { off: +o2, time: $("eTm").value || "09:00", done: false, snooze: 0 };
-      S.exams.push(ex); commit();
+      S.exams.push(ex); markActive(); commit();
     } else if (a === "add-grade") {
       var v = parseFloat($("gV").value), m = parseFloat($("gM").value), w = parseFloat($("gW").value);
       if (isNaN(v) || isNaN(m) || m <= 0) { $("gV").focus(); toast("Enter a score and what it is out of."); return; }
-      S.grades.push({ id: uid(), s: $("gS").value, n: $("gN").value.trim() || "Grade", v: v, m: m, w: isNaN(w) ? 0 : w }); stats().grades++; commit();
+      S.grades.push({ id: uid(), s: $("gS").value, n: $("gN").value.trim() || "Grade", v: v, m: m, w: isNaN(w) ? 0 : w }); stats().grades++; markActive(); commit();
     } else if (a === "addslot") {
       var lastE = S.slots.length ? S.slots[S.slots.length - 1].e : "09:00", pp = lastE.split(":"), mm = (+pp[0] * 60 + +pp[1] + 90) % 1440;
       S.slots.push({ s: lastE, e: pad(Math.floor(mm / 60)) + ":" + pad(mm % 60) }); commit();
@@ -1011,7 +1209,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (a === "remics") { var it2 = findItem(modal.k, modal.id); makeIcs(modal.k, it2); }
     else if (a === "snooze") { findItem(k, id).rem.snooze = Date.now() + 3600000; commit(); }
     else if (a === "dismiss") { findItem(k, id).rem.done = true; commit(); }
-    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; markDone(ai); ai.rem.done = true; commit(); celebrate(); }
+    else if (a === "adone") { var ai = findItem("a", id); ai.done = true; markDone(ai); ai.rem.done = true; markActive(); commit(); celebrate(); }
     else if (a === "addphoto") { $("photoIn").click(); }
     else if (a === "shuffle") { pickRandom(); render(); }
     else if (a === "zoom") { modal = { t: "zoom", id: id }; renderModal(); }
@@ -1023,7 +1221,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       }).catch(function () { toast("Could not remove that photo."); });
     } else if (a === "addnote") {
       var tx2 = $("noteText").value.trim(); if (!tx2) { $("noteText").focus(); return; }
-      S.notes.unshift({ id: uid(), text: tx2, at: Date.now() }); commit(); toast("Note saved ♡");
+      S.notes.unshift({ id: uid(), text: tx2, at: Date.now() }); markActive(); commit(); toast("Note saved ♡");
     } else if (a === "delnote") { S.notes = S.notes.filter(function (n) { return n.id !== id; }); commit(); }
     else if (a === "notif") {
       if (!("Notification" in window)) { toast("This browser has no notifications."); return; }
@@ -1034,7 +1232,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   document.addEventListener("change", function (e) {
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id");
-    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked) markDone(x); if (el.checked && x.rem) x.rem.done = true; } }); commit(); if (el.checked) celebrate(); }
+    if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked) markDone(x); if (el.checked && x.rem) x.rem.done = true; } }); if (el.checked) markActive(); commit(); if (el.checked) celebrate(); }
     else if (a === "field") { var s = subj(id), p = el.getAttribute("data-p"); s[p] = el.value.trim() || (p === "n" ? "Subject" : ""); commit(); }
     else if (a === "slotT") { var sl2 = S.slots[+el.getAttribute("data-i")]; if (el.value) sl2[el.getAttribute("data-f")] = el.value; commit(); }
     else if (a === "slot") { var key = el.getAttribute("data-key"); if (el.value) S.tt[key] = el.value; else delete S.tt[key]; commit(); }
@@ -1047,6 +1245,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     }
   });
   $("photoIn").addEventListener("change", function (e) { addPhotos(e.target.files); e.target.value = ""; });
+  $("angelIn").addEventListener("change", function (e) { pickAngel(e.target.files[0]); e.target.value = ""; });
   $("importIn").addEventListener("change", function (e) { if (e.target.files[0]) importAll(e.target.files[0]); e.target.value = ""; });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal) { modal = null; renderModal(); } });
   document.addEventListener("visibilitychange", function () { if (!document.hidden) tick(); });
@@ -1140,6 +1339,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function sweetTalk() {
     var h = new Date().getHours(), n = S.name ? ", " + S.name : "";
     var lines = S.friend === "plush" ? ["*squish* ♡", "hug me? 🤍"] : S.friend === "bunny" ? [] : ["meow ♡", "purrr…", "mrrp? 🐾"];
+    var sk = streakNow(); if (sk && streak().last !== iso(new Date()) && h >= 16) lines.push("don't lose your " + sk + "-day streak! 🔥", "our streak! do one thing today? 🔥");
     lines = lines.concat(["you've got this" + n + " ♡", "drink some water 💧", "proud of you ♡", "one step at a time 🌸", "take a little break? ☕", "you're doing great" + n + "!"]);
     if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
     say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
@@ -1329,6 +1529,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
   loadPhotos();
+  loadAngels();
+  if (!VIEW && (S.wn || 0) < WN) setTimeout(function () { if (!modal) { modal = { t: "whatsnew" }; renderModal(); } }, 4200);
   fetchNotes();
   window.addEventListener("online", fetchNotes);
   document.addEventListener("visibilitychange", function () { if (!document.hidden) fetchNotes(); });
