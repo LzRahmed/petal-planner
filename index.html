@@ -512,7 +512,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   var VIEW = /[?&]view\b/.test(location.search);
   var S = VIEW ? seed() : load();
-  function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); }
+  function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); queueRem(); }
 
   /* ---------- sharing: a view-only copy (no photos) for one person, via Supabase ---------- */
   var SB_URL = "https://scrmqwetvtlscsiqhsny.supabase.co", SB_KEY = "sb_publishable_ymbj3CZKK_TUeV4ivNZIXA_vAW901ig", SHARE_WITH = "ZoZo";
@@ -530,6 +530,41 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S, p_dev: devId() }).catch(function () {}); }, now ? 0 : 4000);
   }
   if (VIEW) lsSet("petal-viewer", "1");
+
+  /* ---------- push reminders: due-today assignments + streak, sent hourly by a Supabase job ---------- */
+  var VAPID_PUBLIC = "BGK8QxnhLHeIkF2KRLVZg2l3FeQis2eiM2vEQd6CRB7iBdN6poa5ZLfZ96woNSU95u51h-l7osfplE0Gkhsx2mI", remT = null;
+  var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  function pushSupported() { return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window; }
+  function pushIsOn() { return !!S.pushOn && pushSupported() && Notification.permission === "granted"; }
+  function remPayload() {
+    var lim = addDays(7), st = S.streak || {};
+    return { due: S.assignments.filter(function (a) { return !a.done && a.d && a.d <= lim; }).map(function (a) { return { t: a.t, d: a.d }; }), streak: { last: st.last || "", count: st.count || 0 } };
+  }
+  function pushRem(sub) {
+    if (VIEW || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine) return Promise.resolve();
+    var tz = null; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch (e) {}
+    return sbRpc("set_push", { p_sub: sub || null, p_tz: tz, p_rem: remPayload(), p_dev: devId() });
+  }
+  function queueRem() { if (!S.pushOn) return; clearTimeout(remT); remT = setTimeout(function () { pushRem().catch(function () {}); }, 5000); }
+  function b64u(s) { var b = atob((s + "===".slice((s.length + 3) % 4)).replace(/-/g, "+").replace(/_/g, "/")), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  function enablePush() {
+    if (!pushSupported()) { toast(isIOS ? "On iPhone, add the planner to your Home Screen first, then turn this on from there." : "This browser can't show notifications."); return; }
+    Notification.requestPermission().then(function (p) {
+      if (p !== "granted") { toast("Notifications are blocked. Allow them in your phone settings."); render(); return; }
+      return navigator.serviceWorker.ready.then(function (reg) {
+        return reg.pushManager.getSubscription().then(function (s) { return s || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(VAPID_PUBLIC) }); });
+      }).then(function (sub) { S.pushOn = true; save(); render(); return pushRem(sub.toJSON()); }).then(function () { toast("Reminders on 🔔"); });
+    }).catch(function () { toast("Couldn't turn on reminders. Try again while online."); });
+  }
+  function disablePush() {
+    S.pushOn = false; save(); render();
+    if (SB_URL && navigator.onLine && !lsGet("petal-viewer")) sbRpc("set_push", { p_sub: {}, p_tz: null, p_rem: null, p_dev: devId() }).catch(function () {});
+    if (pushSupported()) navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (s) { if (s) s.unsubscribe(); }).catch(function () {});
+  }
+  function refreshPush() {
+    if (!pushIsOn() || VIEW) return;
+    navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (s) { return pushRem(s ? s.toJSON() : null); }).catch(function () {});
+  }
   function viewCard(msg, ask) {
     $("main").innerHTML = '<section class="card"><h2>Petal View</h2><div class="note">' + esc(msg) + "</div>" +
       (ask ? '<div class="btns" style="margin-top:12px"><input id="viewPass" type="password" placeholder="Passcode" style="max-width:220px"><button class="btn" type="button" data-act="viewpass">Open</button></div>' : "") + "</section>";
@@ -791,15 +826,19 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { idx: t, offset: 0 };
   }
   /* ---------- what's new & guided tours ---------- */
-  var WN = 1;
+  var WN = 2;
   function news() {
-    return [["streak", "🔥 Streaks", "Do one thing in your planner every day to keep your streak alive, like Duolingo."],
-      ["angels", "😇 Angel numbers", "Caught 11:11 or 3:33 on the clock? Add the screenshot and collect them all."],
-      ["friends", "🐱 New friends", "Meet Kuromi, Tofe and Big Ass Tofe, plus outfits to dress them up."],
-      ["quests", "🏆 Quests", "Little goals that unlock friends, outfits and surprises."]]
-      .concat(SB_URL ? [["share", "💌 Sharing", "A view-only copy of your planner is shared with " + SHARE_WITH + ". You can turn it off in Settings."]] : []);
+    var seen = S.wn || 0;
+    return [["push", "🔔 Reminders", "Get a notification when an assignment is due today and when your streak needs you.", 2],
+      ["streak", "🔥 Streaks", "Do one thing in your planner every day to keep your streak alive, like Duolingo.", 1],
+      ["angels", "😇 Angel numbers", "Caught 11:11 or 3:33 on the clock? Add the screenshot and collect them all.", 1],
+      ["friends", "🐱 New friends", "Meet Kuromi, Tofe and Big Ass Tofe, plus outfits to dress them up.", 1],
+      ["quests", "🏆 Quests", "Little goals that unlock friends, outfits and surprises.", 1],
+      ["share", "💌 Sharing", "A view-only copy of your planner is shared with " + SHARE_WITH + ". You can turn it off in Settings.", 1]]
+      .filter(function (w) { return w[3] > seen && (SB_URL || (w[0] !== "share" && w[0] !== "push")); });
   }
   var TOURS = {
+    push: [["settings", "#tPush", "Tap Turn on reminders and allow notifications. You'll get a nudge when something is due today and when your streak needs you 🔔"]],
     streak: [["overview", "#streakChip", "This is your streak 🔥 Do one thing in your planner every day to keep it going. Tap it any time to see your week."]],
     angels: [["angels", "#tAngelAdd", "Saw a magic time like 11:11? Screenshot it, then tap Add a screenshot. I read the time from it ✨"], ["angels", "#tAngelBadges", "Every number you catch lights up here. Can you collect them all?"]],
     friends: [["friends", "#tFriends", "Your friends live here. Finish quests to unlock them, then tap Choose to pick who walks around your planner."], ["friends", "#tOutfits", "Dress them up! New outfits unlock with quests too."]],
@@ -1050,6 +1089,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var ns = np === "granted" ? "Notifications are on." : np === "denied" ? "Notifications are blocked in this browser." : np === "unsupported" ? "This browser has no notifications. Reminders still appear inside the planner." : "Notifications are off.";
     return '<section class="card"><h2>Settings</h2><div style="display:grid;gap:18px">' +
       '<div class="form" style="grid-template-columns:1fr;margin:0"><label>Her name<input type="text" dir="auto" id="nameIn" value="' + esc(S.name) + '" placeholder="Shown in the greeting" data-act="name"></label></div>' +
+      (SB_URL ? '<div id="tPush"><h3>Reminders 🔔</h3>' + (pushIsOn()
+        ? '<div class="btns"><span>On: assignments due today (9 am and 6 pm) and your streak (8 pm).</span><button class="btn ghost sm" type="button" data-act="pushOff">Turn off</button></div>'
+        : '<button class="btn sm" type="button" data-act="pushOn">Turn on reminders</button><div class="stat" style="margin-top:6px">Get a notification when an assignment is due today and when your streak needs you, even when the planner is closed.' + (isIOS ? " On iPhone, open the planner from your Home Screen first." : "") + "</div>") + "</div>" : "") +
       (SB_URL ? '<div id="tShare"><h3>Sharing</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="shareOn"' + (S.share === false ? "" : " checked") + "> Share a view-only copy of my planner with " + esc(SHARE_WITH) + ' ♡</label><div class="stat" style="margin-top:6px">They can see your planner but can’t change anything. Photos are never shared. Turn this off any time.</div></div>' : "") +
       '<div><h3>Little friend</h3><label class="btns" style="cursor:pointer"><input type="checkbox" data-act="petOn"' + (S.pet && S.pet.on === false ? "" : " checked") + '> Show my little bunny on the planner</label><div class="stat" style="margin-top:6px">She kisses your photos, naps on top of things, runs when tapped (tap her three times and she trips and cries until you give her a kiss), grumbles about unfinished assignments, and sprints with her bag before a class.</div></div>' +
       '<div><h3>Reminders</h3><div class="stat" style="margin-bottom:8px">' + ns + " Reminders show up inside the planner whenever it is open, and when it opens after the time has passed. For alerts while it is closed, use “Add to calendar” on any reminder.</div>" +
@@ -1151,6 +1193,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (a === "wnShow") { startTour([id]); return; }
     if (a === "wnAll") { startTour(news().map(function (w) { return w[0]; })); return; }
     if (a === "streak") { modal = { t: "streak" }; renderModal(); return; }
+    if (a === "pushOn") { enablePush(); return; }
+    if (a === "pushOff") { disablePush(); return; }
     if (a === "addangel") { $("angelIn").click(); return; }
     if (a === "angelsave") { saveAngel(); return; }
     if (a === "angelzoom") { modal = { t: "azoom", id: id }; renderModal(); return; }
@@ -1524,7 +1568,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     loadView();
     document.addEventListener("visibilitychange", function () { if (!document.hidden) loadView(); });
   } else {
-    pushShare(true);
+    pushShare(true); refreshPush();
     window.addEventListener("online", function () { pushShare(true); });
   }
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
