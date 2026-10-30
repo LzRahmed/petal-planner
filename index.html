@@ -246,7 +246,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .goalpick small { display: block; font-weight: 700; font-size: 11px; }
 .cele { background: rgba(30, 10, 25, .78); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: fadeIn .4s both; overflow: hidden; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.cele-box { position: relative; z-index: 1; color: #fff; text-align: center; display: grid; gap: 10px; justify-items: center; width: min(420px, 100%); }
+.cele-box { position: relative; z-index: 1; color: #fff; text-align: center; display: grid; gap: 10px; justify-items: center; width: min(420px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; padding: 4px; }
 .cele-box h2 { font: 900 30px var(--display); font-style: italic; margin: 0; color: #ffd1e1; animation: popIn .6s .3s both; }
 .cele-char .petprev { width: 150px; height: 150px; animation: celeHop .55s ease-in-out .2s 5; }
 @keyframes celeHop { 50% { transform: translateY(-22px) rotate(-4deg); } }
@@ -563,9 +563,22 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     try { var r = localStorage.getItem(KEY); if (r) { var o = JSON.parse(r); if (o && o.subjects && o.subjects.length) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; } } } catch (e) {}
     return base;
   }
-  var VIEW = /[?&]view\b/.test(location.search);
-  var S = VIEW ? seed() : load();
-  function save() { if (VIEW) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); queueRem(); }
+  var VIEW = /[?&]view\b/.test(location.search), DEMO = !VIEW && /[?&]demo\b/.test(location.search);
+  // Demo mode: everything unlocked to try out; nothing is saved or sent anywhere.
+  function demoState() {
+    var d = seed(), days = [], yest = new Date(); yest.setDate(yest.getDate() - 1);
+    for (var i = 0; i < 30; i++) { var x = new Date(); x.setDate(x.getDate() - i); days.push(iso(x)); }
+    d.stats = { onTime: 40, done: 40, grades: 10, days: days, angels: 5 };
+    d.angels = ["1:11", "2:22", "3:33", "11:11", "12:12"].map(function (k, i) { return { id: "demo" + i, k: k, d: days[i], at: Date.now() }; });
+    d.streak = { last: iso(yest), count: 60, best: 60, freeze: 1, hist: days.slice(1, 8) };
+    d.coupons = [{ id: "dc1", k: "hug", at: Date.now(), used: Date.now() }, { id: "dc2", k: "kiss", at: Date.now(), used: Date.now() }, { id: "dc3", k: "movie", at: Date.now(), used: Date.now() }];
+    d.toHim = { notes: [], last: iso(yest), run: 9 };
+    for (var n = 0; n < 30; n++) d.toHim.notes.push({ id: "dn" + n, text: "Demo note " + (n + 1) + " ♡", at: Date.now() - n * 86400000 });
+    d.hearts = 1000;
+    return d;
+  }
+  var S = VIEW ? seed() : DEMO ? demoState() : load();
+  function save() { if (VIEW || DEMO) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast("Could not save. Try Settings, then Back up."); } pushShare(); queueRem(); }
 
   /* ---------- sharing: a view-only copy (no photos) for one person, via Supabase ---------- */
   var SB_URL = "https://scrmqwetvtlscsiqhsny.supabase.co", SB_KEY = "sb_publishable_ymbj3CZKK_TUeV4ivNZIXA_vAW901ig", SHARE_WITH = "ZoZo";
@@ -580,7 +593,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   // Only a planner someone actually uses may send (and so claim) the shared copy; a fresh copy opened on another phone stays quiet.
   function hasOwnData() { return !!(S.assignments.length || S.exams.length || S.grades.length || (S.angels || []).length || (S.streak && S.streak.last)); }
   function pushShare(now) {
-    if (VIEW || !SB_URL || S.share === false || !navigator.onLine || lsGet("petal-viewer") || !hasOwnData()) return;
+    if (VIEW || DEMO || !SB_URL || S.share === false || !navigator.onLine || lsGet("petal-viewer") || !hasOwnData()) return;
     clearTimeout(shareT);
     shareT = setTimeout(function () { sbRpc("put_planner", { p_data: S, p_dev: devId() }).catch(function () {}); }, now ? 0 : 4000);
   }
@@ -596,13 +609,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { ver: APP_VER, due: S.assignments.filter(function (a) { return !a.done && a.d && a.d <= lim; }).map(function (a) { return { t: a.t, d: a.d }; }), streak: { last: st.last || "", count: st.count || 0 } };
   }
   function pushRem(sub) {
-    if (VIEW || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine || !hasOwnData()) return Promise.resolve();
+    if (VIEW || DEMO || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine || !hasOwnData()) return Promise.resolve();
     var tz = null; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch (e) {}
     return sbRpc("set_push", { p_sub: sub || null, p_tz: tz, p_rem: remPayload(), p_dev: devId() });
   }
   function queueRem() { if (!S.pushOn) return; clearTimeout(remT); remT = setTimeout(function () { pushRem().catch(function () {}); }, 5000); }
   function b64u(s) { var b = atob((s + "===".slice((s.length + 3) % 4)).replace(/-/g, "+").replace(/_/g, "/")), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
   function enablePush() {
+    if (DEMO) { toast("Reminders are off in demo mode."); return; }
     if (!pushSupported()) { toast(isIOS ? "On iPhone, add the planner to your Home Screen first, then turn this on from there." : "This browser can't show notifications."); return; }
     Notification.requestPermission().then(function (p) {
       if (p !== "granted") { toast("Notifications are blocked. Allow them in your phone settings."); render(); return; }
@@ -838,7 +852,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   var ACTS_NEEDED = 2, GOALS = { 14: 60, 30: 180, 50: 500 };
   function addHearts(n) { S.hearts = (S.hearts || 0) + n; S.heartsEarned = (S.heartsEarned || 0) + n; }
-  function dailyHearts() { var t = iso(new Date()); if (VIEW || S.lastDaily === t) return; S.lastDaily = t; addHearts(5); toast("Daily love: +5 💗"); }
+  function dailyHearts() { var t = iso(new Date()); if (VIEW || DEMO || S.lastDaily === t) return; S.lastDaily = t; addHearts(5); toast("Daily love: +5 💗"); }
   function actsToday() { var a = streak().acts; return a && a.d === iso(new Date()) ? a.n : 0; }
   function goalTarget(n) { var c = streakNow(); return n > c ? n : c + n; }
   function markActive() {
@@ -1029,7 +1043,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   /* ---------- notes from home (notes.txt, newest first, split by ---, # lines ignored) ---------- */
   function fetchNotes() {
-    if (VIEW || !window.fetch || location.protocol.indexOf("http") !== 0) return;
+    if (VIEW || DEMO || !window.fetch || location.protocol.indexOf("http") !== 0) return;
     fetch("notes.txt?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : ""; }).then(function (txt) {
       var got = txt.replace(/\r/g, "").replace(/^#.*$/gm, "").split(/^-{3,}[ \t]*$/m).map(function (s) { return s.trim(); }).filter(Boolean).reverse(), added = 0;
       if (!S.seen) S.seen = [];
@@ -1812,6 +1826,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } dailyHearts(); checkQuests(); save(); })();
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
+  if (DEMO) { var dm = document.createElement("div"); dm.textContent = "Demo mode: nothing is saved or sent ♡"; dm.style.cssText = "position:fixed;top:0;left:50%;transform:translateX(-50%);background:#e8590c;color:#fff;font:700 12px sans-serif;padding:4px 12px;border-radius:0 0 12px 12px;z-index:70"; document.body.appendChild(dm); }
   if (VIEW) {
     loadView();
     document.addEventListener("visibilitychange", function () { if (!document.hidden) loadView(); });
