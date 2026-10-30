@@ -177,7 +177,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 #pet.idle .ear-l { animation: earSway 4.2s ease-in-out infinite; } #pet.idle .ear-r { animation: earSway 4.2s ease-in-out infinite 1.3s; }
 #pet:not(.bag) .bag-only { display: none; }
 .char, .outfit { display: none; }
-[data-char="bunny"] .char-bunny, [data-char="cat"] .char-cat, [data-char="kitten"] .char-kitten, [data-char="plush"] .char-plush { display: inline; }
+[data-char="him"] .char-him, [data-char="bunny"] .char-bunny, [data-char="cat"] .char-cat, [data-char="kitten"] .char-kitten, [data-char="plush"] .char-plush { display: inline; }
 [data-outfit="cap"] .outfit-cap, [data-outfit="crown"] .outfit-crown, [data-outfit="bow"] .outfit-bow, [data-outfit="party"] .outfit-party { display: inline; }
 [data-char="kitten"] svg { transform: scale(.8); transform-origin: 50% 100%; }
 #pet:not(.sleep) .buddy-only, #pet:not([data-buddy="1"]) .buddy-only, [data-buddy="1"] .pillow, [data-buddy="1"] .blanket { display: none; }
@@ -230,6 +230,56 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 @keyframes tourPulse { 50% { outline-color: transparent; } }
 #tourBox { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(440px, calc(100% - 32px)); background: var(--surface); color: var(--fg); border: 2px solid var(--accent); border-radius: 20px; padding: 14px 16px; box-shadow: var(--shadow); z-index: 60; display: grid; gap: 10px; font-weight: 600; }
 [data-outfit="halo"] .outfit-halo, [data-outfit="star"] .outfit-star { display: inline; }
+.hdr-r { flex-wrap: wrap; justify-content: flex-end; }
+.heart-chip { font: 800 15px var(--body); border-radius: 999px; padding: 5px 12px; border: 2px solid #f7a8c0; background: #ffe6ef; color: #c2185b; cursor: pointer; }
+.streak-chip .part { font-size: 11px; margin-left: 4px; background: #fff; border-radius: 99px; padding: 0 5px; color: #e8590c; }
+.acc-bracelet { display: none; }
+[data-acc="bracelet"] .acc-bracelet { display: inline; }
+.ignite .flame { animation: ignite 1.5s cubic-bezier(.3, 1.4, .5, 1) both; display: inline-block; }
+@keyframes ignite { 0% { transform: scale(.15) translateY(30px); filter: grayscale(1) brightness(.6); opacity: .3; } 45% { transform: scale(.7) translateY(6px); filter: grayscale(.6); opacity: 1; } 75% { transform: scale(1.35); filter: none; } 100% { transform: scale(1); } }
+.ignite .flamebox { position: relative; display: inline-block; }
+.ignite .spark2 { position: absolute; left: 50%; top: 50%; font-size: 18px; opacity: 0; animation: burst 1.1s ease-out .9s both; }
+@keyframes burst { 0% { opacity: 1; transform: translate(-50%, -50%) scale(.4); } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); } }
+.ignite .cnt { animation: popIn .6s 1.1s both; }
+.goalpick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.goalpick button { border-radius: 16px; padding: 10px 4px; border: 2px solid #ffb347; background: #fff3e0; color: #8a3b12; font: 800 16px var(--body); cursor: pointer; }
+.goalpick small { display: block; font-weight: 700; font-size: 11px; }
+.cele { background: rgba(30, 10, 25, .78); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: fadeIn .4s both; overflow: hidden; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.cele-box { position: relative; z-index: 1; color: #fff; text-align: center; display: grid; gap: 10px; justify-items: center; width: min(420px, 100%); }
+.cele-box h2 { font: 900 30px var(--display); font-style: italic; margin: 0; color: #ffd1e1; animation: popIn .6s .3s both; }
+.cele-char .petprev { width: 150px; height: 150px; animation: celeHop .55s ease-in-out .2s 5; }
+@keyframes celeHop { 50% { transform: translateY(-22px) rotate(-4deg); } }
+.cele-q { font-weight: 700; opacity: .85; animation: popIn .5s .5s both; }
+.rewards { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.reward { background: #fff; color: #4a2a3a; border-radius: 20px; padding: 12px 16px; display: grid; gap: 4px; justify-items: center; font-size: 34px; min-width: 120px; box-shadow: 0 0 0 4px rgba(255, 209, 225, .5), 0 10px 30px rgba(0, 0, 0, .3); animation: popIn .6s cubic-bezier(.3, 1.6, .5, 1) both; }
+.reward b { font: 800 13px var(--body); max-width: 160px; }
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti span { position: absolute; top: -40px; font-size: 22px; animation: fall linear both; pointer-events: none; }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+.tickets { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.ticket { position: relative; background: linear-gradient(160deg, #fff, #ffeef4); color: #6a2a45; border: 2px dashed #f2a3bf; border-radius: 18px; padding: 14px 10px 10px; text-align: center; display: grid; gap: 4px; justify-items: center; }
+.ticket::before, .ticket::after { content: ""; position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); transform: translateY(-50%); }
+.ticket::before { left: -9px; } .ticket::after { right: -9px; }
+.ticket .em { font-size: 34px; }
+.ticket b { font: 800 14px var(--body); }
+.ticket .price { font: 800 13px var(--body); color: #c2185b; }
+.ticket.used { opacity: .55; filter: grayscale(.6); }
+.wallet { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.wallet .big { font: 900 40px var(--display); color: #c2185b; }
+.emotes { display: flex; flex-wrap: wrap; gap: 8px; }
+.duo { position: absolute; left: 0; top: 0; pointer-events: none; }
+.duo svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.duo-body { width: 100%; height: 100%; transform-origin: 50% 100%; transition: transform .5s ease; }
+.duo.walk .duo-body { animation: bob .36s ease-in-out infinite; }
+.duo .sail-only, .duo .sleep-only, .duo .bag-only, .duo .buddy-only { display: none; }
+#pet.waving .arm-r { animation: waveArm .5s ease-in-out infinite; }
+@keyframes waveArm { 0%, 100% { transform: rotate(-125deg); } 50% { transform: rotate(-165deg); } }
+#pet.twirl #petBody { animation: twirl .8s ease-in-out infinite; }
+@keyframes twirl { 0%, 100% { transform: scaleX(1); } 25% { transform: scaleX(.1); } 50% { transform: scaleX(-1); } 75% { transform: scaleX(.1); } }
+#pet.shy #petBody { animation: shy 1.4s ease-in-out infinite; }
+@keyframes shy { 50% { transform: rotate(-6deg) translateY(2px); } }
+#pet.duoing #petBody { transition: transform .5s ease; transform: rotate(var(--lean, 0deg)); }
 #pet.walk #petBody { animation: bob .36s ease-in-out infinite; } #pet.run #petBody { animation: bob .16s ease-in-out infinite; }
 #pet.walk .foot-l { animation: stepA .36s ease-in-out infinite; } #pet.walk .foot-r { animation: stepA .36s ease-in-out infinite .18s; }
 #pet.run .foot-l { animation: stepA .16s ease-in-out infinite; } #pet.run .foot-r { animation: stepA .16s ease-in-out infinite .08s; }
@@ -300,7 +350,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       </svg>
       <div><h1>Petal Planner</h1><div class="sub">my semester, one soft step at a time</div></div>
     </div>
-    <div class="hdr-r"><button class="streak-chip cold" id="streakChip" type="button" data-act="streak" aria-label="Streak"><span class="fl">🔥</span>0</button><button class="theme-btn" id="themeBtn" type="button">Dark mode</button></div>
+    <div class="hdr-r"><button class="streak-chip cold" id="streakChip" type="button" data-act="streak" aria-label="Streak"><span class="fl">🔥</span>0</button><button class="heart-chip" id="heartChip" type="button" data-act="tab" data-tab="coupons" aria-label="Hearts">💗 0</button><button class="theme-btn" type="button" data-act="whatsnew" aria-label="What's new">✨</button><button class="theme-btn" id="themeBtn" type="button">Dark mode</button></div>
   </header>
   <div id="alerts" aria-live="polite"></div>
   <div class="shell">
@@ -346,7 +396,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <ellipse cx="25" cy="62" rx="4.2" ry="5.2" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.2" transform="rotate(10 25 62)"/>
           <path d="M23.2 61.2 v2.4 M26.6 61.6 v2.2" stroke="#8d6e4f" stroke-width="1.1" stroke-linecap="round"/>
           <ellipse cx="27.5" cy="54" rx="5.2" ry="4.4" fill="#2b2030" stroke="#120b16" stroke-width="2.2"/>
-        </g>
+        <g class="acc-bracelet"><ellipse cx="25.5" cy="58.6" rx="4.3" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="25.5" cy="58.6" rx="4.3" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M25.50 58.20 L26.00 59.51 L27.40 59.58 L26.31 60.46 L26.68 61.82 L25.50 61.05 L24.32 61.82 L24.69 60.46 L23.60 59.58 L25.00 59.51 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g>
         <g class="arm arm-r">
           <ellipse cx="55" cy="62" rx="4.2" ry="5.2" fill="#e9d2b0" stroke="#8d6e4f" stroke-width="2.2" transform="rotate(-10 55 62)"/>
           <path d="M53.4 61.6 v2.2 M56.8 61.2 v2.4" stroke="#8d6e4f" stroke-width="1.1" stroke-linecap="round"/>
@@ -367,7 +417,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <path d="M33 48 Q35 55 33.4 59 Q37.4 62 40 67.5 Q42.6 62 46.6 59 Q45 55 47 48 Z" fill="#fde6c8"/>
           <path d="M35.4 58.6 l1.4 1.6 M44.6 58.6 l-1.4 1.6 M38.6 63.6 l1.4 1.4 l1.4 -1.4" stroke="#f2c99a" stroke-width="1" fill="none" stroke-linecap="round"/>
           <path d="M25.8 54.6 q4 1.2 6.4 -1.2 M25 60.4 q4.6 1.2 7 -1.4 M25.2 66.6 q4.6 1 6.6 -1.6 M54.2 54.6 q-4 1.2 -6.4 -1.2 M55 60.4 q-4.6 1.2 -7 -1.4 M54.8 66.6 q-4.6 1 -6.6 -1.6" stroke="#c8692a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <g class="arm arm-l"><ellipse cx="31" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M27.4 57.6 h7.2 M27 61.4 h8 M27.2 65.2 h7.6" stroke="#c8692a" stroke-width="1.4"/><ellipse cx="31" cy="70.6" rx="3.2" ry="1.6" fill="#fde6c8"/><path d="M29.6 70 v1.8 M32.4 70 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
+          <g class="arm arm-l"><ellipse cx="31" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M27.4 57.6 h7.2 M27 61.4 h8 M27.2 65.2 h7.6" stroke="#c8692a" stroke-width="1.4"/><ellipse cx="31" cy="70.6" rx="3.2" ry="1.6" fill="#fde6c8"/><path d="M29.6 70 v1.8 M32.4 70 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/><g class="acc-bracelet"><ellipse cx="31" cy="68" rx="4.4" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="31" cy="68" rx="4.4" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M31.00 67.60 L31.50 68.91 L32.90 68.98 L31.81 69.86 L32.18 71.22 L31.00 70.45 L29.82 71.22 L30.19 69.86 L29.10 68.98 L30.50 68.91 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g>
           <g class="arm arm-r"><ellipse cx="49" cy="63" rx="4.3" ry="9" fill="#f2a65a" stroke="#9a5a24" stroke-width="2.2"/><path d="M45.4 57.6 h7.2 M45 61.4 h8 M45.2 65.2 h7.6" stroke="#c8692a" stroke-width="1.4"/><ellipse cx="49" cy="70.6" rx="3.2" ry="1.6" fill="#fde6c8"/><path d="M47.6 70 v1.8 M50.4 70 v1.8" stroke="#9a5a24" stroke-width="1" stroke-linecap="round"/></g>
         </g>
         <g class="char char-kitten">
@@ -381,7 +431,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <path d="M34.4 50 Q36 56 34.8 59.4 Q38 62 40 66 Q42 62 45.2 59.4 Q44 56 45.6 50 Z" fill="#fde6c8"/>
           <path d="M28.6 56.6 q3.6 1 5.4 -1.2 M27.5 61 q4 1 6 -1.5 M27.6 66 q4 .8 5.8 -1.4 M51.4 56.6 q-3.6 1 -5.4 -1.2 M52.5 61 q-4 1 -6 -1.5 M52.4 66 q-4 .8 -5.8 -1.4" stroke="#d17a35" stroke-width="1.6" fill="none" stroke-linecap="round"/>
           <path d="M53 70 l1.6 -2.6 M57.4 68.4 l2.6 -1.4" stroke="#d17a35" stroke-width="1.5" stroke-linecap="round"/>
-          <g class="arm arm-l"><ellipse cx="33" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M30 61 h6 M29.6 64.6 h6.8" stroke="#d17a35" stroke-width="1.4"/><ellipse cx="33" cy="71" rx="2.8" ry="1.4" fill="#fde6c8"/></g>
+          <g class="arm arm-l"><ellipse cx="33" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M30 61 h6 M29.6 64.6 h6.8" stroke="#d17a35" stroke-width="1.4"/><ellipse cx="33" cy="71" rx="2.8" ry="1.4" fill="#fde6c8"/><g class="acc-bracelet"><ellipse cx="33" cy="69" rx="4.0" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="33" cy="69" rx="4.0" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M33.00 68.60 L33.50 69.91 L34.90 69.98 L33.81 70.86 L34.18 72.22 L33.00 71.45 L31.82 72.22 L32.19 70.86 L31.10 69.98 L32.50 69.91 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g>
           <g class="arm arm-r"><ellipse cx="47" cy="65" rx="4" ry="7.5" fill="#f5b06a" stroke="#9a5a24" stroke-width="2.2"/><path d="M44 61 h6 M43.6 64.6 h6.8" stroke="#d17a35" stroke-width="1.4"/><ellipse cx="47" cy="71" rx="2.8" ry="1.4" fill="#fde6c8"/></g>
         </g>
         <g class="char char-plush">
@@ -391,11 +441,12 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <ellipse class="foot foot-r" cx="47" cy="73" rx="6.5" ry="5" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2"/>
           <path d="M28 49 Q23 62 27 73 Q40 77 53 73 Q57 62 52 49 Z" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.4" stroke-linejoin="round"/>
           <path d="M29 58 q11 3 22 0 M28.5 65 q11.5 3 23 0" stroke="#e8e0e6" stroke-width="1.6" fill="none" stroke-dasharray="2 2.5" stroke-linecap="round"/>
-          <g class="arm arm-l"><ellipse cx="25" cy="58" rx="4.4" ry="7" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2" transform="rotate(25 25 58)"/><circle cx="21.5" cy="63.5" r="3.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/></g>
+          <g class="arm arm-l"><ellipse cx="25" cy="58" rx="4.4" ry="7" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2" transform="rotate(25 25 58)"/><circle cx="21.5" cy="63.5" r="3.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/><g class="acc-bracelet" transform="rotate(25 23.2 61.4)"><ellipse cx="23.2" cy="61.4" rx="4.2" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="23.2" cy="61.4" rx="4.2" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M23.20 61.00 L23.70 62.31 L25.10 62.38 L24.01 63.26 L24.38 64.62 L23.20 63.85 L22.02 64.62 L22.39 63.26 L21.30 62.38 L22.70 62.31 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g>
           <g class="arm arm-r"><ellipse cx="55" cy="58" rx="4.4" ry="7" fill="#fffdfd" stroke="#bdb3bb" stroke-width="2.2" transform="rotate(-25 55 58)"/><circle cx="58.5" cy="63.5" r="3.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1.2"/></g>
           <path d="M22 49 L58 49 L62 56 L53 54.5 L46.5 59.5 L40 54.5 L33.5 59.5 L27 54.5 L18 56 Z" fill="#1f1a24" stroke="#0d0a10" stroke-width="1.8" stroke-linejoin="round"/>
           <circle cx="33.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/><circle cx="46.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/>
         </g>
+        <g class="char char-him"><ellipse class="foot foot-l" cx="31" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><ellipse class="foot foot-r" cx="49" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><path d="M28 47 L52 47 Q58 60 58 73 Q40 78 22 73 Q22 60 28 47 Z" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.4" stroke-linejoin="round"/><path d="M34 47 L40 61 L46 47 Z" fill="#2c2a31"/><path d="M34 47 L37.5 58 L30.5 52 Z M46 47 L42.5 58 L49.5 52 Z" fill="#26232a" stroke="#0b0a0c" stroke-width=".9" stroke-linejoin="round"/><circle cx="40" cy="64" r=".95" fill="#5a5660"/><circle cx="40" cy="69" r=".95" fill="#5a5660"/><g class="arm arm-l"><ellipse cx="25" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="27.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/><g class="acc-bracelet"><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M25.20 59.00 L25.70 60.31 L27.10 60.38 L26.01 61.26 L26.38 62.62 L25.20 61.85 L24.02 62.62 L24.39 61.26 L23.30 60.38 L24.70 60.31 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g><g class="arm arm-r"><ellipse cx="55" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="52.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/></g></g>
         <path id="petStrap" class="bag-only" d="M46 50 q7 7 8 17" stroke="#f08fae" stroke-width="3.4" fill="none" stroke-linecap="round"/>
         <g class="sail-only"><path d="M29 48.5 L51 48.5 L47 58 L40 53 L33 58 Z" fill="#2f5fa8" stroke="#1d3c6e" stroke-width="1.6" stroke-linejoin="round"/><path d="M31 51 L49 51" stroke="#fffafa" stroke-width="1.4"/><path d="M38 54 l2 3 l2 -3 Z" fill="#e5484d"/></g>
         <g class="sleep-only blanket"><path d="M12 56 Q40 49 68 56 L70 79 Q40 83 10 79 Z" fill="#f7a8c0" stroke="#c9718e" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 61 Q40 54 69 61" stroke="#fff4f7" stroke-width="3" fill="none"/><path d="M24 68 h4 M40 70 h4 M56 68 h4 M32 75 h4 M48 75 h4" stroke="#fff4f7" stroke-width="2.4" stroke-linecap="round"/></g>
@@ -437,6 +488,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <ellipse cx="29" cy="44" rx="3.4" ry="2.2" fill="#ffb3c6" opacity=".75"/><ellipse cx="51" cy="44" rx="3.4" ry="2.2" fill="#ffb3c6" opacity=".75"/>
           <path d="M38.6 41.2 h2.8 l-1.4 1.6 Z" fill="#f6a3bd"/>
         </g>
+        <g class="char char-him"><ellipse cx="20.8" cy="37.5" rx="3" ry="4.2" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="59.2" cy="37.5" rx="3" ry="4.2" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="40" cy="35" rx="19.5" ry="16.5" fill="#e6b48a" stroke="#8a5634" stroke-width="2.4"/><path d="M21.4 34.5 Q20.8 27 24.6 23 L26 31 Z M58.6 34.5 Q59.2 27 55.4 23 L54 31 Z" fill="#2a1d17" opacity=".45"/><circle cx="26" cy="22" r="5" fill="#2a1d17"/><circle cx="31" cy="17.5" r="5.5" fill="#2a1d17"/><circle cx="37" cy="15.5" r="5.6" fill="#2a1d17"/><circle cx="43" cy="15.5" r="5.6" fill="#2a1d17"/><circle cx="49" cy="17.5" r="5.5" fill="#2a1d17"/><circle cx="54" cy="22" r="5" fill="#2a1d17"/><circle cx="40" cy="19.5" r="6" fill="#2a1d17"/><circle cx="29.5" cy="24.5" r="4" fill="#2a1d17"/><circle cx="50.5" cy="24.5" r="4" fill="#2a1d17"/><circle cx="34" cy="25.5" r="3.3" fill="#2a1d17"/><circle cx="40" cy="26" r="3.4" fill="#2a1d17"/><circle cx="46" cy="25.5" r="3.3" fill="#2a1d17"/><path d="M28 18 q2 -2 4 0 M36 13 q2 -2 4 0 M44 14 q2 -2 4 0 M51 19 q2 -1.6 3.6 .6 M37.6 24 q1.6 -1.6 3.2 0" stroke="#4a3328" stroke-width="1.1" fill="none" stroke-linecap="round"/><path d="M29.4 32.8 q3.6 -2 7 -.4 M43.6 32.4 q3.4 -1.6 7 .4" stroke="#2a1d17" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M21.5 39 Q22 50 31 53 Q40 56 49 53 Q58 50 58.5 39 Q56 46 50 47.6 Q45 46.5 40 47.8 Q35 46.5 30 47.6 Q24 46 21.5 39 Z" fill="#3a2a22" opacity=".8"/><path d="M35.4 43.4 Q40 41.8 44.6 43.4 Q40 44.6 35.4 43.4 Z" fill="#3a2a22" opacity=".85"/><ellipse cx="27" cy="42.5" rx="3.6" ry="2.2" fill="#f2a0a8" opacity=".35"/><ellipse cx="53" cy="42.5" rx="3.6" ry="2.2" fill="#f2a0a8" opacity=".35"/></g>
         <g id="petFace" class="face"></g>
         <g class="sail-only"><path d="M28 21 Q40 2 52 21 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="2" stroke-linejoin="round"/><rect x="25" y="18" width="30" height="7" rx="3.5" fill="#fffafa" stroke="#c9b7bd" stroke-width="2"/><path d="M27 21.5 h26" stroke="#2f5fa8" stroke-width="2"/></g>
         <g class="outfit outfit-crown">
@@ -541,7 +593,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function pushIsOn() { return !!S.pushOn && pushSupported() && Notification.permission === "granted"; }
   function remPayload() {
     var lim = addDays(7), st = S.streak || {};
-    return { due: S.assignments.filter(function (a) { return !a.done && a.d && a.d <= lim; }).map(function (a) { return { t: a.t, d: a.d }; }), streak: { last: st.last || "", count: st.count || 0 } };
+    return { ver: APP_VER, due: S.assignments.filter(function (a) { return !a.done && a.d && a.d <= lim; }).map(function (a) { return { t: a.t, d: a.d }; }), streak: { last: st.last || "", count: st.count || 0 } };
   }
   function pushRem(sub) {
     if (VIEW || !SB_URL || !S.pushOn || lsGet("petal-viewer") || !navigator.onLine || !hasOwnData()) return Promise.resolve();
@@ -784,9 +836,17 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var gap = daysBetween(st.last, iso(new Date()));
     return gap <= 1 || gap - 1 <= st.freeze ? st.count : 0;
   }
+  var ACTS_NEEDED = 2, GOALS = { 14: 60, 30: 180, 50: 500 };
+  function addHearts(n) { S.hearts = (S.hearts || 0) + n; S.heartsEarned = (S.heartsEarned || 0) + n; }
+  function dailyHearts() { var t = iso(new Date()); if (VIEW || S.lastDaily === t) return; S.lastDaily = t; addHearts(5); toast("Daily love: +5 💗"); }
+  function actsToday() { var a = streak().acts; return a && a.d === iso(new Date()) ? a.n : 0; }
+  function goalTarget(n) { var c = streakNow(); return n > c ? n : c + n; }
   function markActive() {
     if (VIEW) return;
     var st = streak(), today = iso(new Date()); if (st.last === today) return;
+    if (!st.acts || st.acts.d !== today) st.acts = { d: today, n: 0 };
+    st.acts.n++;
+    if (st.acts.n < ACTS_NEEDED) { toast("One more thing today to light your streak 🔥"); return; }
     var gap = st.last ? daysBetween(st.last, today) : 0, used = 0;
     if (gap === 1) st.count++;
     else if (gap > 1 && gap - 1 <= st.freeze) { used = gap - 1; st.freeze -= used; st.count++; }
@@ -794,12 +854,32 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     st.last = today; st.hist.push(today); if (st.hist.length > 60) st.hist.shift();
     st.best = Math.max(st.best, st.count);
     var earned = st.count % 7 === 0 && st.freeze < 2; if (earned) st.freeze++;
-    modal = { t: "streak", fresh: true, used: used, earned: earned };
+    var msgs = [], bonus = 0;
+    if (st.count % 7 === 0) { bonus += 40; msgs.push("Perfect week! +40 💗"); }
+    if (S.goal && !S.goal.done && st.count >= S.goal.target) { var gb = GOALS[S.goal.n] || 0; bonus += gb; S.goal.done = true; stats().goals = (stats().goals || 0) + 1; msgs.push("You reached your " + S.goal.target + "-day goal! +" + gb + " 💗"); }
+    if (bonus) addHearts(bonus);
+    modal = { t: "streak", fresh: true, used: used, earned: earned, msgs: msgs };
   }
   function renderStreak() {
-    var c = $("streakChip"), hot = streak().last === iso(new Date());
-    c.className = "streak-chip " + (hot ? "hot" : "cold"); c.innerHTML = '<span class="fl">🔥</span>' + streakNow();
+    var c = $("streakChip"), hot = streak().last === iso(new Date()), a = actsToday();
+    c.className = "streak-chip " + (hot ? "hot" : "cold"); c.innerHTML = '<span class="fl">🔥</span>' + streakNow() + (!hot && a ? '<small class="part">' + a + "/" + ACTS_NEEDED + "</small>" : "");
+    $("heartChip").innerHTML = "💗 " + fmtNum(S.hearts || 0);
   }
+
+  /* ---------- coupons (bought with hearts; the bracelet one is a quest reward) ---------- */
+  var COUPONS = [["kiss", "💋", "Kiss", 20], ["hug", "🤗", "Hug", 15], ["cuddle", "🫂", "Cuddle", 30], ["movie", "🎬", "Movie pick", 60], ["massage", "💆", "Massage", 80], ["breakfast", "🥞", "Breakfast in bed", 90], ["date", "🌙", "Date night", 120], ["gift", "🎁", "Surprise gift", 200], ["argue", "🏆", "You win an argument", 1000000]];
+  function couponInfo(k) { if (k === "bracelet") return ["bracelet", "🤍", "White star bracelet (the real one!)", 0]; for (var i = 0; i < COUPONS.length; i++) if (COUPONS[i][0] === k) return COUPONS[i]; return [k, "🎟️", k, 0]; }
+  function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function buyCoupon(k) {
+    var c = couponInfo(k), have = S.hearts || 0;
+    if (have < c[3]) { toast("You need " + fmtNum(c[3] - have) + " more 💗"); return; }
+    S.hearts = have - c[3]; if (!S.coupons) S.coupons = [];
+    S.coupons.unshift({ id: uid(), k: k, at: Date.now() }); commit(); toast(c[2] + " coupon is yours! " + c[1]);
+  }
+
+  /* ---------- notes she sends to him (they travel with the shared copy) ---------- */
+  function toHim() { if (!S.toHim) S.toHim = { notes: [], last: "", run: 0 }; return S.toHim; }
+  function toHimRun() { var t = toHim(); if (!t.last) return 0; var g = daysBetween(t.last, iso(new Date())); return g <= 1 ? t.run : 0; }
 
   /* ---------- grades ---------- */
   function letter(p) { return p >= 90 ? "A" : p >= 80 ? "B" : p >= 70 ? "C" : p >= 60 ? "D" : "F"; }
@@ -837,10 +917,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { idx: t, offset: 0 };
   }
   /* ---------- what's new & guided tours ---------- */
-  var WN = 2;
-  function news() {
-    var seen = S.wn || 0;
-    return [["push", "🔔 Reminders", "Get a notification when an assignment is due today and when your streak needs you.", 2],
+  var WN = 3, APP_VER = 3;
+  function news(all) {
+    var seen = all ? 0 : S.wn || 0;
+    return [["coupons", "💗 Hearts & coupons", "Earn hearts every day and from quests, then trade them for kiss, hug and date coupons.", 3],
+      ["streak2", "🔥 Streak goals", "Your streak now lights after 2 things a day. Pick a 14, 30 or 50-day goal for a big heart bonus.", 3],
+      ["notehim", "💌 Notes to ZoZo", "Write ZoZo a note from the Notes page. Can you write one 10 days in a row?", 3],
+      ["emotes", "🎭 Emotes & 10 new quests", "New quests unlock emotes for your friends, a white star bracelet and… ZoZo himself 👀", 3],
+      ["push", "🔔 Reminders", "Get a notification when an assignment is due today and when your streak needs you.", 2],
       ["streak", "🔥 Streaks", "Do one thing in your planner every day to keep your streak alive, like Duolingo.", 1],
       ["angels", "😇 Angel numbers", "Caught 11:11 or 3:33 on the clock? Add the screenshot and collect them all.", 1],
       ["friends", "🐱 New friends", "Meet Kuromi, Tofe and Big Ass Tofe, plus outfits to dress them up.", 1],
@@ -849,6 +933,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       .filter(function (w) { return w[3] > seen && (SB_URL || (w[0] !== "share" && w[0] !== "push")); });
   }
   var TOURS = {
+    coupons: [["coupons", "#tWallet", "These are your hearts 💗 You get 5 every day, 40 for a perfect week, and more from quests and streak goals."], ["coupons", "#tShop", "Trade hearts for coupons here. Tap Use when you want to cash one in, and ZoZo will see it 😘"]],
+    streak2: [["overview", "#streakChip", "Do 2 things in your planner each day to light your streak. Tap it to pick your goal: 14, 30 or 50 days 🎯"]],
+    notehim: [["notes", "#tHim", "Write ZoZo a little note here 💌 He sees it on his side. Write one every day to keep your note streak going."]],
+    emotes: [["quests", "#tQuests", "10 new quests! They unlock emotes, a bracelet, hearts… and one is soooo hard 💀"], ["friends", "#tEmotes", "Play the emotes you've unlocked here, and dress your friends up with accessories."]],
     push: [["settings", "#tPush", "Tap Turn on reminders and allow notifications. You'll get a nudge when something is due today and when your streak needs you 🔔"]],
     streak: [["overview", "#streakChip", "This is your streak 🔥 Do one thing in your planner every day to keep it going. Tap it any time to see your week."]],
     angels: [["angels", "#tAngelAdd", "Saw a magic time like 11:11? Screenshot it, then tap Add a screenshot. I read the time from it ✨"], ["angels", "#tAngelBadges", "Every number you catch lights up here. Can you collect them all?"]],
@@ -877,34 +965,61 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"]];
   var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"]];
   var QUESTS = [
-    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi" },
-    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe" },
-    { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown" },
-    { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow" },
-    { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene" },
-    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe" },
-    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat" },
-    { id: "q8", t: "Catch 3 angel numbers", k: "angels", n: 3, r: "halo", rt: "Angel halo" },
-    { id: "q9", t: "Reach a 7-day streak", k: "best", n: 7, r: "star", rt: "Star clip" }
+    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi", h: 20 },
+    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe", h: 30 },
+    { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown", h: 15 },
+    { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow", h: 15 },
+    { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene", h: 25 },
+    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe", h: 60 },
+    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat", h: 80 },
+    { id: "q8", t: "Catch 3 angel numbers", k: "angels", n: 3, r: "halo", rt: "Angel halo", h: 25 },
+    { id: "q9", t: "Reach a 7-day streak", k: "best", n: 7, r: "star", rt: "Star clip", h: 40 },
+    { id: "q10", t: "Light your streak 3 days in a row", k: "best", n: 3, r: "e_wave", rt: "Wave emote 👋", h: 20 },
+    { id: "q11", t: "Write ZoZo a note 10 days in a row (miss a day and it starts over!)", k: "toHimRun", n: 10, r: "e_blowkiss", rt: "Blow-a-kiss emote 😘", h: 60 },
+    { id: "q12", t: "Catch 5 different angel numbers", k: "angelKinds", n: 5, r: "e_hearthands", rt: "Heart hands emote 🫶", h: 40 },
+    { id: "q13", t: "Finish 15 assignments before their deadline", k: "onTime", n: 15, r: "bracelet", rt: "White star bracelet 🤍 + a coupon for the real one", h: 80 },
+    { id: "q14", t: "Reach a streak goal you picked", k: "goals", n: 1, r: "e_cheer", rt: "Cheer emote 🎉", h: 50 },
+    { id: "q15", t: "Use 3 coupons", k: "usedCoupons", n: 3, r: "e_hug", rt: "Hug ZoZo emote 🤗", h: 30 },
+    { id: "q16", t: "Add 10 grades", k: "grades", n: 10, r: "e_twirl", rt: "Twirl emote 💫", h: 30 },
+    { id: "q17", t: "Open your planner on 30 different days", k: "days", n: 30, r: "e_letter", rt: "Love letter emote 💌", h: 100 },
+    { id: "q18", t: "Send ZoZo 30 notes", k: "toHimTotal", n: 30, r: "e_shy", rt: "Shy emote 😊", h: 60 },
+    { id: "q19", t: "💀 The hardest quest: keep a 60-day streak AND finish 40 assignments before their deadline", k: "hard", n: 100, r: "e_makeout", rt: "Making out with ZoZo emote 💋", h: 500 }
   ];
+  var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"]];
+  var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍" };
+  EMOTES.forEach(function (e) { REWARD_ICON[e[0]] = e[1]; });
   function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
   function qProg(q) {
     var st = stats();
     if (q.k === "days") return st.days.length;
     if (q.k === "pair") return (has("plush") ? 1 : 0) + (has("kitten") ? 1 : 0);
     if (q.k === "best") return streak().best;
+    if (q.k === "toHimRun") return toHimRun();
+    if (q.k === "toHimTotal") return toHim().notes.length;
+    if (q.k === "angelKinds") { var u = {}; (S.angels || []).forEach(function (a) { u[a.k] = 1; }); return Object.keys(u).length; }
+    if (q.k === "usedCoupons") return (S.coupons || []).filter(function (c) { return c.used; }).length;
+    if (q.k === "hard") return Math.floor(Math.min(streak().best / 60, 1) * 50 + Math.min((st.onTime || 0) / 40, 1) * 50);
     return st[q.k] || 0;
   }
   function qDone(q) { return qProg(q) >= q.n; }
-  function has(r) { if (r === "bunny" || r === "cap" || r === "none") return true; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return qDone(QUESTS[i]); return false; }
+  function has(r) { if (r === "bunny" || r === "cap" || r === "none" || r === "") return true; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return qDone(QUESTS[i]); return false; }
   function questFor(r) { for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return QUESTS[i].t; return ""; }
+  var celebQ = [];
   function checkQuests() {
     if (VIEW) return;
-    if (!S.got) S.got = [];
+    if (!S.got) S.got = []; if (!S.paid) S.paid = [];
+    var fresh = [], back = 0;
     QUESTS.forEach(function (q) {
-      if (S.got.indexOf(q.id) >= 0 || !qDone(q)) return;
-      S.got.push(q.id); toast("Quest done! New: " + q.rt + " 🎉"); celebrate();
+      if (S.got.indexOf(q.id) < 0) { if (!qDone(q)) return; S.got.push(q.id); fresh.push(q.id); }
+      if (S.paid.indexOf(q.id) >= 0) return;
+      S.paid.push(q.id); addHearts(q.h || 0);
+      if (fresh.indexOf(q.id) < 0) back += q.h || 0;
+      if (q.r === "bracelet") { if (!S.coupons) S.coupons = []; S.coupons.unshift({ id: uid(), k: "bracelet", at: Date.now() }); }
     });
+    if (back) toast("Hearts for quests you already finished: +" + back + " 💗");
+    if (!fresh.length) return;
+    celebrate();
+    if (modal) celebQ = celebQ.concat(fresh); else modal = { t: "quest", qs: fresh };
   }
   function markDone(x) {
     var st = stats();
@@ -1052,9 +1167,27 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       (photos.length ? '<div class="polas">' + photos.slice().reverse().map(function (p, i) { return pol(p, true, i); }).join("") + "</div>" : '<div class="empty">Add your first photo ♡</div>') + "</section>";
   }
 
+  function vCoupons() {
+    var have = S.hearts || 0, mine = (S.coupons || []).filter(function (c) { return !c.used; }), used = (S.coupons || []).filter(function (c) { return c.used; });
+    var ticket = function (c, btn) { var ci = couponInfo(c.k); return '<div class="ticket' + (c.used ? " used" : "") + '"><div class="em">' + ci[1] + "</div><b>" + esc(ci[2]) + "</b>" + btn + "</div>"; };
+    var h = '<section class="card" id="tWallet"><h2>My hearts</h2><div class="wallet"><div class="big">💗 ' + fmtNum(have) + '</div><div class="stat">+5 every day · +40 for a perfect week · quests · streak goals (14 days +60, 30 days +180, 50 days +500)</div></div></section>';
+    h += '<section class="card" id="tShop"><h2>Coupon shop</h2><div class="tickets">' + COUPONS.map(function (c) {
+      return ticket({ k: c[0] }, '<div class="price">' + fmtNum(c[3]) + ' 💗</div><button class="btn sm' + (have >= c[3] ? "" : " ghost") + '" type="button" data-act="buy" data-id="' + c[0] + '">Buy</button>');
+    }).join("") + "</div></section>";
+    h += '<section class="card"><h2>My coupons</h2>' + (mine.length ? '<div class="tickets">' + mine.map(function (c) {
+      return ticket(c, '<button class="btn sm" type="button" data-act="usecoupon" data-id="' + c.id + '">' + (confirmKey === "cp" + c.id ? "Tap again to use" : "Use now") + "</button>");
+    }).join("") + "</div>" : '<div class="empty">no coupons yet, buy one with your hearts ♡</div>') + "</section>";
+    if (used.length) h += '<section class="card"><h3>Used</h3><div class="tickets">' + used.map(function (c) { return ticket(c, '<div class="stat">used ' + esc(fmtStamp(c.used)) + "</div>"); }).join("") + "</div></section>";
+    return h;
+  }
   function vNotes() {
     var hist = S.notes.map(function (n, i) { return '<div style="display:grid;gap:6px">' + noteCard(n) + '<div class="btns"><button class="x" type="button" data-act="delnote" data-id="' + n.id + '" aria-label="Delete note">Delete note ×</button></div></div>'; }).join("");
-    return '<section class="card"><h2>A note for you</h2><div class="note" style="margin:-6px 0 10px">The newest note shows on the Overview page.</div>' +
+    var th = toHim(), run = toHimRun(), sent = th.notes.slice(0, 20).map(function (n) { return '<div style="display:grid;gap:6px">' + noteCard(n) + "</div>"; }).join("");
+    var him = VIEW ? '<section class="card"><h2>Notes she sent you 💌</h2><div style="display:grid;gap:26px;padding-top:8px">' + (sent || '<div class="empty">no notes yet</div>') + "</div></section>"
+      : '<section class="card" id="tHim"><h2>Write ' + esc(SHARE_WITH) + ' a note 💌</h2><div class="note" style="margin:-6px 0 10px">' + (run ? "🔥 " + run + "-day note streak. Write one tomorrow to keep it!" : "Write one every day for a note streak ♡") + "</div>" +
+        '<textarea id="himText" dir="auto" placeholder="Write something for ' + esc(SHARE_WITH) + '…"></textarea><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="sendhim">Send to ' + esc(SHARE_WITH) + "</button></div>" +
+        (sent ? '<div style="display:grid;gap:26px;padding-top:18px">' + sent + "</div>" : "") + "</section>";
+    return him + '<section class="card"><h2>A note for you</h2><div class="note" style="margin:-6px 0 10px">The newest note shows on the Overview page.</div>' +
       '<textarea id="noteText" dir="auto" placeholder="Write something sweet…"></textarea><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="addnote">Save note</button></div></section>' +
       '<section class="card"><h3>All notes</h3><div style="display:grid;gap:26px;padding-top:8px">' + (hist || '<div class="empty">no notes yet</div>') + "</div></section>";
   }
@@ -1075,7 +1208,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     }).join("") + "</div>" : '<div class="empty">no angel numbers yet ✨</div>') + "</section>";
     return h;
   }
-  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
+  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-acc="' + (nap ? "" : S.acc || "") + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
   function vFriends() {
     var h = '<section class="card" id="tFriends"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
     FRIENDS.forEach(function (f) {
@@ -1088,7 +1221,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       var ok = has(o[0]);
       h += '<button class="btn sm' + (S.outfit === o[0] ? "" : " ghost") + '" type="button" data-act="outfit" data-id="' + o[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(o[0])) + '"') + ">" + (ok ? "" : "🔒 ") + o[1] + "</button>";
     });
-    h += '</div></section><section class="card"><h2>Nap buddies</h2>';
+    h += '</div><h3 style="margin-top:16px">Accessories</h3><div class="btns">' + [["", "None"], ["bracelet", "White star bracelet 🤍"]].map(function (a) {
+      var ok = has(a[0]); return '<button class="btn sm' + ((S.acc || "") === a[0] ? "" : " ghost") + '" type="button" data-act="acc" data-id="' + a[0] + '"' + (ok ? "" : " disabled") + ">" + (ok ? "" : "🔒 ") + a[1] + "</button>";
+    }).join("") + '</div></section><section class="card" id="tEmotes"><h2>Emotes</h2><div class="note" style="margin:-6px 0 12px">Tap one and your friend does it ♡</div><div class="emotes">' + EMOTES.map(function (e) {
+      var ok = has(e[0]); return '<button class="btn sm' + (ok ? "" : " ghost") + '" type="button" data-act="emote" data-id="' + e[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(e[0])) + '"') + ">" + (ok ? e[1] + " " : "🔒 ") + e[2] + "</button>";
+    }).join("") + '</div></section><section class="card"><h2>Nap buddies</h2>';
     h += has("naps") ? '<div class="fcard">' + look(has("cat") ? "cat" : "kitten", true) + '<div class="stat">When Tofe naps, Kuromi is his pillow ♡</div></div>'
       : '<div class="fcard locked">' + look("kitten", true) + '<div class="stat">🔒 ' + esc(questFor("naps")) + "</div></div>";
     return h + "</section>";
@@ -1097,7 +1234,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var h = '<section class="card" id="tQuests"><h2>Quests</h2><div class="note" style="margin:-6px 0 6px">Little goals, little surprises ♡</div>';
     QUESTS.forEach(function (q) {
       var p = Math.min(qProg(q), q.n), done = p >= q.n;
-      h += '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + p + " / " + q.n + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (done ? " · unlocked ♡" : "") + "</div></div>";
+      h += '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + (q.k === "hard" ? p + "%" : p + " / " + q.n) + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (q.h ? " + " + q.h + " 💗" : "") + (done ? " · unlocked ♡" : "") + "</div></div>";
     });
     return h + "</section>";
   }
@@ -1119,7 +1256,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
+    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["coupons", "Coupons", (S.coupons || []).filter(function (c) { return !c.used; }).length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -1132,10 +1269,25 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       for (var wi = 6; wi >= 0; wi--) { var wd = addDays(-wi), on = st.hist.indexOf(wd) >= 0; wk += "<div>" + DAYS[parseD(wd).getDay()] + '<span class="' + (on ? "on" : "") + (wi === 0 ? " today" : "") + '">' + (on ? "🔥" : "") + "</span></div>"; }
       var mile = [7, 14, 30, 50, 100, 200, 365].indexOf(n) >= 0;
       var head = modal.fresh ? (mile ? "WOW! " + n + " days! 🎉" : n === 1 ? "Streak started!" : "Streak extended!") : doneToday ? "You're on fire!" : n ? "Keep your streak alive!" : "Start a streak today!";
-      var msg = modal.fresh ? (modal.used ? "A streak freeze 🧊 saved your streak!" : "See you tomorrow ♡") : doneToday ? "All done for today. Come back tomorrow ♡" : "Do one thing in your planner today: tick a task, add an exam, grade or note, or catch an angel number.";
-      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal sbig" role="dialog" aria-modal="true" aria-label="Streak"><div class="flame">' + (n ? "🔥" : "🩶") + '</div><div class="cnt">' + n + '</div><div class="stat">day streak</div><h2>' + esc(head) + "</h2><div>" + esc(msg) + "</div>" +
+      var msg = modal.fresh ? (modal.used ? "A streak freeze 🧊 saved your streak!" : "See you tomorrow ♡") : doneToday ? "All done for today. Come back tomorrow ♡" : "Do 2 things in your planner today to light it: tick a task, add an exam, grade or note, write ZoZo a note, or catch an angel number.";
+      var sparks = modal.fresh ? [[-60, -50], [60, -50], [-75, 10], [75, 10], [-40, 55], [40, 55]].map(function (d) { return '<span class="spark2" style="--dx:' + d[0] + "px;--dy:" + d[1] + 'px">✨</span>'; }).join("") : "";
+      var goal = S.goal && !S.goal.done ? '<div class="stat">🎯 Goal: a ' + S.goal.target + "-day streak (" + n + "/" + S.goal.target + ") · bonus " + GOALS[S.goal.n] + " 💗</div>"
+        : '<div><b>Pick your streak goal 🎯</b></div><div class="goalpick">' + [14, 30, 50].map(function (g) { return '<button type="button" data-act="goal" data-id="' + g + '">' + g + " days<small>+" + GOALS[g] + " 💗</small></button>"; }).join("") + "</div>";
+      if (!modal.fresh && !doneToday && actsToday()) msg = "1 of " + ACTS_NEEDED + " done today. One more thing to light it 🔥";
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal sbig' + (modal.fresh && !modal.still ? " ignite" : "") + '" role="dialog" aria-modal="true" aria-label="Streak"><div class="flamebox"><div class="flame">' + (n ? "🔥" : "🩶") + "</div>" + sparks + '</div><div class="cnt">' + n + '</div><div class="stat">day streak</div><h2>' + esc(head) + "</h2><div>" + esc(msg) + "</div>" +
+        (modal.msgs || []).map(function (m) { return "<div><b>" + esc(m) + "</b></div>"; }).join("") + goal +
         (modal.earned ? "<div><b>You earned a streak freeze 🧊</b></div>" : "") + '<div class="week">' + wk + '</div><div class="stat">Best: ' + st.best + " days · Freezes: " + (st.freeze ? "🧊".repeat(st.freeze) : "none") + " (one every 7 days, saves a missed day)</div>" +
         '<div class="btns" style="justify-content:center"><button class="btn" type="button" data-act="closemodal">' + (modal.fresh ? "Continue" : "Got it") + "</button></div></div></div>";
+      return;
+    }
+    if (modal.t === "quest") {
+      var qs = modal.qs.map(function (id) { return QUESTS.filter(function (q) { return q.id === id; })[0]; }).filter(Boolean);
+      var hs = qs.reduce(function (a, q) { return a + (q.h || 0); }, 0), conf = "";
+      for (var ci = 0; ci < 26; ci++) conf += '<span style="left:' + (ci * 37 % 100) + "%;animation-duration:" + (2.2 + (ci % 5) * .45) + "s;animation-delay:" + (ci % 7) * .18 + 's">' + ["🎉", "💗", "✨", "🌸", "⭐"][ci % 5] + "</span>";
+      root.innerHTML = '<div class="modal-bg cele" data-act="closemodal"><div class="confetti">' + conf + '</div><div class="cele-box" role="dialog" aria-modal="true" aria-label="Quest complete"><div class="cele-char">' + look(S.friend) + "</div><h2>Quest complete!</h2>" +
+        qs.map(function (q) { return '<div class="cele-q">' + esc(q.t) + "</div>"; }).join("") + '<div class="rewards">' +
+        qs.map(function (q, i) { return '<div class="reward" style="animation-delay:' + (0.8 + i * 0.25) + 's">' + (REWARD_ICON[q.r] || "🎁") + "<b>" + esc(q.rt) + "</b></div>"; }).join("") +
+        (hs ? '<div class="reward" style="animation-delay:' + (0.8 + qs.length * 0.25) + 's">💗<b>+' + hs + " hearts</b></div>" : "") + '</div><button class="btn" type="button" data-act="closemodal" style="animation:popIn .5s 1.4s both">Yay ♡</button></div></div>';
       return;
     }
     if (modal.t === "angel") {
@@ -1153,7 +1305,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     }
     if (modal.t === "whatsnew") {
       root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal" role="dialog" aria-modal="true" aria-label="What\'s new"><h2>What\'s new ✨</h2>' +
-        news().map(function (w) { return '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + w[1] + '</b><button class="btn ghost sm" type="button" data-act="wnShow" data-id="' + w[0] + '">Show me</button></div><div class="stat">' + esc(w[2]) + "</div></div>"; }).join("") +
+        news(modal.all).map(function (w) { return '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + w[1] + '</b><button class="btn ghost sm" type="button" data-act="wnShow" data-id="' + w[0] + '">Show me</button></div><div class="stat">' + esc(w[2]) + "</div></div>"; }).join("") +
         '<div class="btns"><button class="btn" type="button" data-act="wnAll">Show me everything</button><button class="btn ghost" type="button" data-act="closemodal">Later</button></div></div></div>';
       return;
     }
@@ -1172,8 +1324,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function render() {
     if (VIEW && !S.viewed) { renderRail(); return; }
     renderRail(); renderAlerts(); renderStreak();
-    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
-    $("main").innerHTML = (VIEW && (tab === "overview" || tab === "notes") ? viewTools() : "") + v(); renderModal(); applyLook();
+    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, coupons: vCoupons, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
+    $("main").innerHTML = (VIEW && (tab === "overview" || tab === "notes") ? viewTools() : "") + (v || vOverview)(); renderModal(); applyLook();
   }
   function commit() { checkQuests(); save(); render(); tick(); }
 
@@ -1204,7 +1356,23 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   document.addEventListener("click", function (e) {
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id"), k = el.getAttribute("data-k");
-    if (a === "closemodal") { if (e.target === el || el.tagName === "BUTTON") { if (modal && modal.t === "whatsnew") { S.wn = WN; save(); } modal = null; renderModal(); } return; }
+    if (a === "closemodal") { if (e.target === el || el.tagName === "BUTTON") { if (modal && modal.t === "whatsnew") { S.wn = WN; save(); } modal = celebQ.length ? { t: "quest", qs: celebQ.splice(0) } : null; renderModal(); } return; }
+    if (a === "whatsnew") { modal = { t: "whatsnew", all: true }; renderModal(); return; }
+    if (a === "goal") { var gn = +id; S.goal = { n: gn, target: goalTarget(gn), done: false }; save(); if (modal) modal.still = true; renderModal(); toast("Goal set: " + S.goal.target + " days 🎯"); return; }
+    if (a === "buy") { buyCoupon(id); return; }
+    if (a === "usecoupon") {
+      if (confirmKey !== "cp" + id) { confirmKey = "cp" + id; render(); return; }
+      confirmKey = null; (S.coupons || []).forEach(function (c) { if (c.id === id) c.used = Date.now(); });
+      commit(); toast("Coupon used! " + SHARE_WITH + " will see it 😘"); return;
+    }
+    if (a === "sendhim") {
+      var ht = $("himText").value.trim(); if (!ht) { $("himText").focus(); return; }
+      var th = toHim(), td = iso(new Date());
+      if (th.last !== td) { th.run = th.last && daysBetween(th.last, td) === 1 ? th.run + 1 : 1; th.last = td; }
+      th.notes.unshift({ id: uid(), text: ht, at: Date.now() }); markActive(); commit(); toast("Sent to " + SHARE_WITH + " 💌"); return;
+    }
+    if (a === "acc") { if (has(id)) { S.acc = id; commit(); } return; }
+    if (a === "emote") { if (has(id)) playEmote(id); return; }
     if (a === "tourNext") { tourI++; showTour(); return; }
     if (a === "tourEnd") { tourI = tourQ.length; showTour(); return; }
     if (a === "wnShow") { startTour([id]); return; }
@@ -1360,7 +1528,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function applyLook() {
     if (!has(S.friend)) S.friend = "bunny";
     if (!has(S.outfit)) S.outfit = "cap";
-    petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit);
+    petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit); petEl.setAttribute("data-acc", has(S.acc || "") ? S.acc || "" : "");
     petEl.setAttribute("data-buddy", (S.friend === "kitten" || S.friend === "cat") && has("naps") ? "1" : "0");
     if (PT.fName) setFace(PT.fName);
   }
@@ -1435,6 +1603,46 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     lastAct = Date.now();
     if (PT.st === "sleep" && PT.nap) { PT.woke = lastAct; say("*yawn* oh, hi ♡", 1800); toIdle(2500); }
   }
+  var EMO = {
+    e_wave: ["waving", "happy", "hi hi! 👋", ["👋", "♡"]], e_blowkiss: ["idle", "kiss", "mwah! 😘", ["💋", "♡", "💗"]],
+    e_hearthands: ["hop", "kiss", "love you 🫶", ["🫶", "♡", "💗"]], e_cheer: ["hop", "happy", "yay!! 🎉", ["🎉", "✨", "⭐"]],
+    e_twirl: ["twirl", "happy", "wheee 💫", ["💫", "✨"]], e_letter: ["idle", "happy", "a letter for " + SHARE_WITH + " 💌", ["💌", "♡"]],
+    e_shy: ["shy", "kiss", "hehe… 😊", ["💗", "♡"]]
+  };
+  var himEl = null;
+  function playEmote(id) {
+    if (layer.hidden) { toast("Turn on your little friend in Settings first ♡"); return; }
+    if (PT.st === "duo") return;
+    if (id === "e_hug" || id === "e_makeout") { startDuo(id); return; }
+    var c = EMO[id]; if (!c) return;
+    PT.st = "emote"; PT.t = 3400; PT.hT = 0; PT.eF = c[3]; PT.tg = null; PT.after = null; PT.sleepGet = null; zEl.hidden = true;
+    setCls(c[0]); setFace(c[1]); say(c[2], 3000);
+  }
+  function startDuo(id) {
+    var s = psize(), fromLeft = PT.x > window.innerWidth / 2, gap = id === "e_makeout" ? 0.48 : 0.6;
+    var sx = fromLeft ? -s - 30 : window.innerWidth + 30, tx = fromLeft ? PT.x - s * gap : PT.x + s * gap;
+    PT.st = "duo"; PT.duoId = id; PT.t = id === "e_makeout" ? 7000 : 4600; PT.hT = 0; PT.duoSx = sx; PT.duoArr = false;
+    PT.tg = null; PT.after = null; PT.sleepGet = null; zEl.hidden = true; PT.y = restY(); setCls("idle"); setFace("happy");
+    say(id === "e_makeout" ? SHARE_WITH + "!! 😳" : SHARE_WITH + "! 🤗", 1600);
+    himEl = document.createElement("div"); himEl.className = "duo walk"; himEl.setAttribute("data-char", "him"); himEl.setAttribute("data-outfit", "none");
+    himEl.innerHTML = '<div class="duo-flip" style="width:100%;height:100%;transform:scaleX(' + (fromLeft ? 1 : -1) + ')"><div class="duo-body">' + prevSVG("happy", "him") + "</div></div>";
+    himEl.style.width = himEl.style.height = s + "px"; himEl.style.transform = "translate(" + sx + "px," + PT.y + "px)"; layer.appendChild(himEl);
+    var lean = (fromLeft ? -1 : 1) * (id === "e_makeout" ? 14 : 9);
+    setTimeout(function () { if (!himEl) return; himEl.style.transition = "transform 1.6s linear"; himEl.style.transform = "translate(" + tx + "px," + PT.y + "px)"; }, 30);
+    setTimeout(function () {
+      if (!himEl || PT.st !== "duo") return;
+      PT.duoArr = true; himEl.classList.remove("walk");
+      himEl.querySelector(".duo-body").style.transform = "rotate(" + (-lean) + "deg)";
+      petEl.style.setProperty("--lean", lean + "deg"); setCls("duoing");
+      var f = id === "e_makeout" ? "kiss" : "blink"; setFace(f); himEl.querySelector(".face").innerHTML = faceFor(f, "him");
+      say(id === "e_makeout" ? "💋💋💋" : "hug time 🤗", 2600);
+    }, 1700);
+  }
+  function endDuo() {
+    var el = himEl; himEl = null; petEl.style.removeProperty("--lean");
+    if (el) { el.classList.add("walk"); el.querySelector(".duo-body").style.transform = ""; el.style.transform = "translate(" + PT.duoSx + "px," + PT.y + "px)"; setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1700); }
+    toIdle(3000); say(PT.duoId === "e_makeout" ? "*blushing* 🥰" : "♡", 2000);
+  }
   function celebrate() {
     if (layer.hidden || PT.st === "trip" || PT.st === "cry" || PT.st === "lecture") return;
     PT.st = "party"; PT.t = 2600; PT.sleepGet = null; zEl.hidden = true; setCls("hop"); setFace("kiss"); say(pick(["Yay! One done! 🎉", "Proud of you ♡", "Woohoo! ✨"]), 2400);
@@ -1491,7 +1699,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function checkEvents() {
     if (S.pet && S.pet.on === false) return;
-    if (PT.st === "trip" || PT.st === "cry" || PT.st === "forgive") return;
+    if (PT.st === "trip" || PT.st === "cry" || PT.st === "forgive" || PT.st === "duo" || PT.st === "emote") return;
     var lec = activeLecture();
     if (lec) { if (PT.st !== "lecture") startLecture(lec); else if (bubbleEl.hidden) say(lecText(lec), 3500); return; }
     if (PT.st === "lecture") { toIdle(2000); say("Phew, made it!", 2500); return; }
@@ -1506,7 +1714,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   petEl.addEventListener("click", function (e) {
     e.stopPropagation();
     var now = Date.now();
-    if (now - (PT.woke || 0) < 600) return;
+    if (now - (PT.woke || 0) < 600 || PT.st === "duo" || PT.st === "emote") return;
     if (PT.st === "cry") { forgive(); return; }
     if (PT.st === "trip" || PT.st === "forgive") return;
     if (PT.st === "lecture") PT.dismissed[PT.lecKey] = true;
@@ -1564,6 +1772,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       if (PT.t <= 0) { PT.t = 4200; say(SHANTY[PT.i++ % SHANTY.length], 4000); }
       if (PT.hT <= 0) { PT.hT = 650; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize(), PT.y + 2, pick(["💋", "♡", "🌊"])); }
       if (reduce || moveP(PT.lx, restY(), 55, dt, true)) toIdle(3000);
+    } else if (PT.st === "emote") {
+      PT.t -= dt * 1000; PT.hT -= dt * 1000;
+      if (PT.hT <= 0) { PT.hT = 380; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize(), PT.y + 6, pick(PT.eF)); }
+      if (PT.t <= 0) toIdle();
+    } else if (PT.st === "duo") {
+      PT.t -= dt * 1000; PT.hT -= dt * 1000;
+      if (PT.duoArr && PT.hT <= 0) { PT.hT = PT.duoId === "e_makeout" ? 170 : 420; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize() * 1.4, PT.y + 4 + Math.random() * 20, PT.duoId === "e_makeout" ? pick(["💋", "💗", "♡", "💕"]) : pick(["♡", "🤍", "💗"])); }
+      if (PT.t <= 0) endDuo();
     } else if (PT.st === "party") {
       PT.t -= dt * 1000; if (PT.t <= 0) toIdle(2500);
     } else if (PT.st === "lecture") {
@@ -1593,7 +1809,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   requestAnimationFrame(frame);
   setInterval(checkEvents, 1500);
 
-  (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } checkQuests(); save(); })();
+  (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } dailyHearts(); checkQuests(); save(); })();
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
   if (VIEW) {
