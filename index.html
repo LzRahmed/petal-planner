@@ -850,9 +850,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var gap = daysBetween(st.last, iso(new Date()));
     return gap <= 1 || gap - 1 <= st.freeze ? st.count : 0;
   }
-  var ACTS_NEEDED = 2, GOALS = { 14: 60, 30: 180, 50: 500 };
+  var ACTS_NEEDED = 2, GOALS = { 14: 40, 30: 100, 50: 250 };
   function addHearts(n) { S.hearts = (S.hearts || 0) + n; S.heartsEarned = (S.heartsEarned || 0) + n; }
-  function dailyHearts() { var t = iso(new Date()); if (VIEW || DEMO || S.lastDaily === t) return; S.lastDaily = t; addHearts(5); toast("Daily love: +5 💗"); }
+  function dailyHearts() { var t = iso(new Date()); if (VIEW || DEMO || S.lastDaily === t) return; S.lastDaily = t; addHearts(2); toast("Daily love: +2 💗"); }
   function actsToday() { var a = streak().acts; return a && a.d === iso(new Date()) ? a.n : 0; }
   function goalTarget(n) { var c = streakNow(); return n > c ? n : c + n; }
   function markActive() {
@@ -869,7 +869,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     st.best = Math.max(st.best, st.count);
     var earned = st.count % 7 === 0 && st.freeze < 2; if (earned) st.freeze++;
     var msgs = [], bonus = 0;
-    if (st.count % 7 === 0) { bonus += 40; msgs.push("Perfect week! +40 💗"); }
+    bonus += 2; msgs.push("Streak lit: +2 💗");
+    if (st.count % 7 === 0) { bonus += 25; msgs.push("Perfect week! +25 💗"); }
     if (S.goal && !S.goal.done && st.count >= S.goal.target) { var gb = GOALS[S.goal.n] || 0; bonus += gb; S.goal.done = true; stats().goals = (stats().goals || 0) + 1; msgs.push("You reached your " + S.goal.target + "-day goal! +" + gb + " 💗"); }
     if (bonus) addHearts(bonus);
     modal = { t: "streak", fresh: true, used: used, earned: earned, msgs: msgs };
@@ -881,7 +882,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
 
   /* ---------- coupons (bought with hearts; the bracelet one is a quest reward) ---------- */
-  var COUPONS = [["kiss", "💋", "Kiss", 20], ["hug", "🤗", "Hug", 15], ["cuddle", "🫂", "Cuddle", 30], ["movie", "🎬", "Movie pick", 60], ["massage", "💆", "Massage", 80], ["breakfast", "🥞", "Breakfast in bed", 90], ["date", "🌙", "Date night", 120], ["gift", "🎁", "Surprise gift", 200], ["argue", "🏆", "You win an argument", 1000000]];
+  var COUPONS = [["kiss", "💋", "Kiss", 30], ["hug", "🤗", "Hug", 25], ["cuddle", "🫂", "Cuddle", 45], ["movie", "🎬", "Movie pick", 80], ["massage", "💆", "Massage", 120], ["breakfast", "🥞", "Breakfast in bed", 150], ["date", "🌙", "Date night", 200], ["gift", "🎁", "Surprise gift", 350], ["argue", "🏆", "You win an argument", 1000000]];
   function couponInfo(k) { if (k === "bracelet") return ["bracelet", "🤍", "White star bracelet (the real one!)", 0]; for (var i = 0; i < COUPONS.length; i++) if (COUPONS[i][0] === k) return COUPONS[i]; return [k, "🎟️", k, 0]; }
   function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
   function buyCoupon(k) {
@@ -934,7 +935,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   var WN = 3, APP_VER = 3;
   function news(all) {
     var seen = all ? 0 : S.wn || 0;
-    return [["coupons", "💗 Hearts & coupons", "Earn hearts every day and from quests, then trade them for kiss, hug and date coupons.", 3],
+    return [["coupons", "💗 Hearts & coupons", "Earn hearts every day, from your streak and from quests, then save up for kiss, hug and date coupons.", 3],
       ["streak2", "🔥 Streak goals", "Your streak now lights after 2 things a day. Pick a 14, 30 or 50-day goal for a big heart bonus.", 3],
       ["notehim", "💌 Notes to ZoZo", "Write ZoZo a note from the Notes page. Can you write one 10 days in a row?", 3],
       ["emotes", "🎭 Emotes & 10 new quests", "New quests unlock emotes for your friends, a white star bracelet and… ZoZo himself 👀", 3],
@@ -947,7 +948,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       .filter(function (w) { return w[3] > seen && (SB_URL || (w[0] !== "share" && w[0] !== "push")); });
   }
   var TOURS = {
-    coupons: [["coupons", "#tWallet", "These are your hearts 💗 You get 5 every day, 40 for a perfect week, and more from quests and streak goals."], ["coupons", "#tShop", "Trade hearts for coupons here. Tap Use when you want to cash one in, and ZoZo will see it 😘"]],
+    coupons: [["coupons", "#tWallet", "These are your hearts 💗 You get a few every day, more when you light your streak, 25 for a perfect week, and extra from quests and streak goals."], ["coupons", "#tShop", "Trade hearts for coupons here. Tap Use when you want to cash one in, and ZoZo will see it 😘"]],
     streak2: [["overview", "#streakChip", "Do 2 things in your planner each day to light your streak. Tap it to pick your goal: 14, 30 or 50 days 🎯"]],
     notehim: [["notes", "#tHim", "Write ZoZo a little note here 💌 He sees it on his side. Write one every day to keep your note streak going."]],
     emotes: [["quests", "#tQuests", "10 new quests! They unlock emotes, a bracelet, hearts… and one is soooo hard 💀"], ["friends", "#tEmotes", "Play the emotes you've unlocked here, and dress your friends up with accessories."]],
@@ -979,25 +980,25 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"]];
   var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"]];
   var QUESTS = [
-    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi", h: 20 },
-    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe", h: 30 },
-    { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown", h: 15 },
-    { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow", h: 15 },
-    { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene", h: 25 },
-    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe", h: 60 },
-    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat", h: 80 },
-    { id: "q8", t: "Catch 3 angel numbers", k: "angels", n: 3, r: "halo", rt: "Angel halo", h: 25 },
-    { id: "q9", t: "Reach a 7-day streak", k: "best", n: 7, r: "star", rt: "Star clip", h: 40 },
-    { id: "q10", t: "Light your streak 3 days in a row", k: "best", n: 3, r: "e_wave", rt: "Wave emote 👋", h: 20 },
-    { id: "q11", t: "Write ZoZo a note 10 days in a row (miss a day and it starts over!)", k: "toHimRun", n: 10, r: "e_blowkiss", rt: "Blow-a-kiss emote 😘", h: 60 },
-    { id: "q12", t: "Catch 5 different angel numbers", k: "angelKinds", n: 5, r: "e_hearthands", rt: "Heart hands emote 🫶", h: 40 },
-    { id: "q13", t: "Finish 15 assignments before their deadline", k: "onTime", n: 15, r: "bracelet", rt: "White star bracelet 🤍 + a coupon for the real one", h: 80 },
-    { id: "q14", t: "Reach a streak goal you picked", k: "goals", n: 1, r: "e_cheer", rt: "Cheer emote 🎉", h: 50 },
-    { id: "q15", t: "Use 3 coupons", k: "usedCoupons", n: 3, r: "e_hug", rt: "Hug ZoZo emote 🤗", h: 30 },
-    { id: "q16", t: "Add 10 grades", k: "grades", n: 10, r: "e_twirl", rt: "Twirl emote 💫", h: 30 },
-    { id: "q17", t: "Open your planner on 30 different days", k: "days", n: 30, r: "e_letter", rt: "Love letter emote 💌", h: 100 },
-    { id: "q18", t: "Send ZoZo 30 notes", k: "toHimTotal", n: 30, r: "e_shy", rt: "Shy emote 😊", h: 60 },
-    { id: "q19", t: "💀 The hardest quest: keep a 60-day streak AND finish 40 assignments before their deadline", k: "hard", n: 100, r: "e_makeout", rt: "Making out with ZoZo emote 💋", h: 500 }
+    { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi", h: 15 },
+    { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe", h: 20 },
+    { id: "q3", t: "Open your planner on 5 different days", k: "days", n: 5, r: "crown", rt: "Flower crown", h: 10 },
+    { id: "q4", t: "Add 5 grades", k: "grades", n: 5, r: "bow", rt: "Pink bow", h: 10 },
+    { id: "q5", t: "Unlock Kuromi and Tofe", k: "pair", n: 2, r: "naps", rt: "Nap buddies scene", h: 20 },
+    { id: "q6", t: "Finish 10 assignments before their deadline", k: "onTime", n: 10, r: "cat", rt: "Tofe grows up into Big Ass Tofe", h: 40 },
+    { id: "q7", t: "Finish 20 assignments", k: "done", n: 20, r: "party", rt: "Party hat", h: 60 },
+    { id: "q8", t: "Catch 3 angel numbers", k: "angels", n: 3, r: "halo", rt: "Angel halo", h: 20 },
+    { id: "q9", t: "Reach a 7-day streak", k: "best", n: 7, r: "star", rt: "Star clip", h: 30 },
+    { id: "q10", t: "Light your streak 3 days in a row", k: "best", n: 3, r: "e_wave", rt: "Wave emote 👋", h: 15 },
+    { id: "q11", t: "Write ZoZo a note 10 days in a row (miss a day and it starts over!)", k: "toHimRun", n: 10, r: "e_blowkiss", rt: "Blow-a-kiss emote 😘", h: 40 },
+    { id: "q12", t: "Catch 5 different angel numbers", k: "angelKinds", n: 5, r: "e_hearthands", rt: "Heart hands emote 🫶", h: 30 },
+    { id: "q13", t: "Finish 15 assignments before their deadline", k: "onTime", n: 15, r: "bracelet", rt: "White star bracelet 🤍 + a coupon for the real one", h: 60 },
+    { id: "q14", t: "Reach a streak goal you picked", k: "goals", n: 1, r: "e_cheer", rt: "Cheer emote 🎉", h: 35 },
+    { id: "q15", t: "Use 3 coupons", k: "usedCoupons", n: 3, r: "e_hug", rt: "Hug ZoZo emote 🤗", h: 20 },
+    { id: "q16", t: "Add 10 grades", k: "grades", n: 10, r: "e_twirl", rt: "Twirl emote 💫", h: 20 },
+    { id: "q17", t: "Open your planner on 30 different days", k: "days", n: 30, r: "e_letter", rt: "Love letter emote 💌", h: 70 },
+    { id: "q18", t: "Send ZoZo 30 notes", k: "toHimTotal", n: 30, r: "e_shy", rt: "Shy emote 😊", h: 40 },
+    { id: "q19", t: "💀 The hardest quest: keep a 60-day streak AND finish 40 assignments before their deadline", k: "hard", n: 100, r: "e_makeout", rt: "Making out with ZoZo emote 💋", h: 300 }
   ];
   var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"]];
   var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍" };
@@ -1184,7 +1185,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function vCoupons() {
     var have = S.hearts || 0, mine = (S.coupons || []).filter(function (c) { return !c.used; }), used = (S.coupons || []).filter(function (c) { return c.used; });
     var ticket = function (c, btn) { var ci = couponInfo(c.k); return '<div class="ticket' + (c.used ? " used" : "") + '"><div class="em">' + ci[1] + "</div><b>" + esc(ci[2]) + "</b>" + btn + "</div>"; };
-    var h = '<section class="card" id="tWallet"><h2>My hearts</h2><div class="wallet"><div class="big">💗 ' + fmtNum(have) + '</div><div class="stat">+5 every day · +40 for a perfect week · quests · streak goals (14 days +60, 30 days +180, 50 days +500)</div></div></section>';
+    var h = '<section class="card" id="tWallet"><h2>My hearts</h2><div class="wallet"><div class="big">💗 ' + fmtNum(have) + '</div><div class="stat">+2 every day you open the planner · +2 when you light your streak · +25 for a perfect week · quests · streak goals (14 days +40, 30 days +100, 50 days +250)</div></div></section>';
     h += '<section class="card" id="tShop"><h2>Coupon shop</h2><div class="tickets">' + COUPONS.map(function (c) {
       return ticket({ k: c[0] }, '<div class="price">' + fmtNum(c[3]) + ' 💗</div><button class="btn sm' + (have >= c[3] ? "" : " ghost") + '" type="button" data-act="buy" data-id="' + c[0] + '">Buy</button>');
     }).join("") + "</div></section>";
