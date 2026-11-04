@@ -192,7 +192,71 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .qrow { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1.5px dashed var(--line); }
 .qrow:last-child { border-bottom: 0; }
 .viewonly main input, .viewonly main select, .viewonly main textarea, .viewonly main button { pointer-events: none; }
-.viewonly main .vtool textarea, .viewonly main .vtool button { pointer-events: auto; }
+.viewonly main .vtool textarea, .viewonly main .vtool button, .viewonly main .vtool input, .viewonly main .vtool select { pointer-events: auto; }
+[data-outfit="shades"] .outfit-shades, [data-outfit="beanie"] .outfit-beanie, [data-outfit="hearts"] .outfit-hearts, [data-outfit="witch"] .outfit-witch, [data-outfit="horse"] .outfit-horse, [data-outfit="pumpkin"] .outfit-pumpkin, [data-outfit="mummy"] .outfit-mummy, [data-outfit="sheet"] .outfit-sheet { display: inline; }
+[data-char="vamp"] .char-him, [data-char="vamp"] .char-vamp, [data-char="boo"] .char-boo { display: inline; }
+.sig { display: none; }
+[data-spooky="1"][data-char="bunny"] .sig-bunny, [data-spooky="1"][data-char="cat"] .sig-cat, [data-spooky="1"][data-char="kitten"] .sig-kitten, [data-spooky="1"][data-char="plush"] .sig-plush { display: inline; }
+[data-outfit="horse"] .sig-head, [data-outfit="pumpkin"] .sig-head, [data-outfit="sheet"] .sig-head, [data-outfit="mummy"] .sig-head { display: none; }
+#pet[data-char="boo"].idle #petBody { animation: booFloat 2.4s ease-in-out infinite; }
+@keyframes booFloat { 50% { transform: translateY(-6px); } }
+:root[data-spooky="1"] {
+  --bg: #1a1024; --surface: #261833; --fg: #f6e9ff; --muted: #b89bc9; --line: #3d2850;
+  --accent: #ff8a2a; --accent-ink: #1a1024; --accent-soft: #3f2a2a; --warn: #fdba74;
+  --p0-bg: #4a2433; --p0-ink: #ffd6e0; --p1-bg: #3b2c5c; --p1-ink: #e6d9fb; --p2-bg: #233d58; --p2-ink: #d3e8fb; --p3-bg: #54421a; --p3-ink: #fff0bf;
+  --p4-bg: #24493a; --p4-ink: #d3f0e0; --p5-bg: #5a3420; --p5-ink: #ffdcc8; --p6-bg: #4f2645; --p6-ink: #fbdcee; --p7-bg: #3a4724; --p7-ink: #e2ecd0;
+  --paper: #2e1d3d; --tape: rgba(255, 138, 42, .45); --tape2: rgba(170, 120, 230, .45); --tape3: rgba(120, 200, 140, .45);
+  --shadow: 0 6px 18px rgba(0, 0, 0, .55);
+}
+:root[data-spooky="1"] body { background: radial-gradient(ellipse at top, #2c1640, var(--bg) 60%); background-attachment: fixed; }
+:root[data-spooky="1"] .card { box-shadow: 0 0 0 1px rgba(255, 138, 42, .14), var(--shadow); }
+:root[data-spooky="1"] h1::after { content: " 🎃"; }
+#spooky { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+#spooky .web { position: absolute; top: 0; width: 130px; height: 130px; }
+#spooky .web.l { left: 0; } #spooky .web.r { right: 0; transform: scaleX(-1); }
+#spooky .bat { position: absolute; top: 70px; left: 0; font-size: 22px; animation: batfly 16s linear infinite; }
+#spooky .bat.b2 { top: 140px; font-size: 16px; animation-duration: 21s; animation-delay: -7s; }
+@keyframes batfly { 0% { transform: translate(-60px, 0); } 25% { transform: translate(25vw, 30px); } 50% { transform: translate(55vw, -10px); } 75% { transform: translate(80vw, 40px); } 100% { transform: translate(110vw, 0); } }
+#spooky .ghost { position: absolute; top: 55%; left: 0; font-size: 34px; opacity: .45; animation: ghostfly 30s linear infinite; }
+@keyframes ghostfly { 0% { transform: translate(-80px, 0); } 50% { transform: translate(50vw, -60px); } 100% { transform: translate(110vw, 0); } }
+#spooky .spider { position: absolute; right: 34px; top: 0; width: 1.5px; height: 70px; background: rgba(255, 255, 255, .4); transform-origin: top; animation: spiderdrop 7s ease-in-out infinite; }
+#spooky .spider::after { content: "🕷️"; position: absolute; left: -9px; bottom: -14px; font-size: 18px; }
+@keyframes spiderdrop { 0%, 100% { height: 40px; } 50% { height: 110px; } }
+#evBtn { position: fixed; right: 16px; bottom: 116px; width: 60px; height: 60px; border-radius: 50%; border: 3px solid #ffb066; background: radial-gradient(circle at 35% 30%, #ffb066, #ff7a1a 60%, #b8460f); font-size: 30px; cursor: pointer; z-index: 45; box-shadow: 0 0 0 0 rgba(255, 138, 42, .6); animation: evPulse 2s infinite; }
+#evBtn .evn { position: absolute; top: -4px; right: -4px; background: #8e44ad; color: #fff; font: 800 12px var(--body); border-radius: 99px; padding: 1px 6px; }
+@keyframes evPulse { 70% { box-shadow: 0 0 0 14px rgba(255, 138, 42, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 138, 42, 0); } }
+.ev-hero { background: linear-gradient(135deg, #3a1d55, #6b2a1d 70%, #ff8a2a); color: #fff3e6; border: 0; position: relative; overflow: hidden; }
+.ev-hero h2 { color: #ffd1a1; }
+.ev-hero .spark { position: absolute; font-size: 22px; animation: twinkle 2.6s ease-in-out infinite; pointer-events: none; }
+.ev-rewards { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.ev-rewards .fcard { background: rgba(0, 0, 0, .25); padding: 6px 10px; }
+.ev-rewards .fcard b { color: #ffd1a1; }
+.ring { width: 210px; height: 210px; margin: 10px auto; border-radius: 50%; background: conic-gradient(var(--accent) calc(var(--p, 0) * 360deg), var(--accent-soft) 0); display: grid; place-items: center; }
+.ring .t { width: 170px; height: 170px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font: 900 42px var(--display); color: var(--accent); }
+.ggoal { width: 64px; padding: 3px 6px; border-radius: 10px; text-align: center; }
+.recap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+.recap .reward { min-width: 0; font-size: 26px; padding: 10px 6px; }
+.recap .reward small { font: 700 11px var(--body); }
+.cdown { display: flex; gap: 16px; align-items: center; background: linear-gradient(135deg, #ffe0ec, #f3e6ff); color: #5a2a48; border: 0; }
+.cdown .cd-num { font: 900 46px/1 var(--display); color: #c2185b; min-width: 64px; text-align: center; }
+.cdown .stat { color: #8a5a78; }
+.qcard .qtext { font: 700 22px var(--hand); margin: 4px 0 10px; }
+.qcard .qans { background: var(--bg); border-radius: 14px; padding: 10px 12px; font-weight: 600; margin-bottom: 6px; }
+.gifts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gift { background: var(--bg); border: 2px dashed var(--line); border-radius: 18px; padding: 12px; text-align: center; display: grid; gap: 4px; justify-items: center; }
+.gift .gbox { font-size: 40px; filter: grayscale(.7); opacity: .7; }
+.gift.ready { border: 2px solid var(--accent); } .gift.ready .gbox { filter: none; opacity: 1; animation: gshake 1.2s ease-in-out infinite; }
+.gift.open .gbox { filter: none; opacity: 1; }
+.giftm { position: relative; min-height: 260px; }
+.gbox-wrap { position: absolute; left: 0; right: 0; top: 40px; display: none; justify-content: center; pointer-events: none; }
+.giftm.fresh .gbox-wrap { display: flex; }
+.gbox-big { font-size: 110px; animation: gshake .45s ease-in-out 3, gpop .45s 1.35s forwards; }
+@keyframes gshake { 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+@keyframes gpop { to { transform: scale(2); opacity: 0; } }
+.gift-content { display: grid; gap: 10px; justify-items: center; }
+.giftm.fresh .gift-content { animation: popIn .7s 1.7s both; }
+.g-emoji { font-size: 80px; line-height: 1; }
+.g-msg { font: 700 22px/1.35 var(--hand); color: #fff; max-width: 360px; white-space: pre-wrap; }
 .qbar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
 .qbar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
 .hdr-r { display: flex; gap: 8px; align-items: center; }
@@ -381,6 +445,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <path d="M7.6 66 q1.6 1.4 3 0 M13.6 66 q1.6 1.4 3 0" stroke="#1f1a24" stroke-width="1.2" fill="none" stroke-linecap="round"/>
           <path d="M11.4 69 h1.8 l-.9 1 Z" fill="#f6a3bd"/>
         </g>
+        <g class="sig sig-bunny"><path d="M26 52 Q12 40 4 46 Q8 50 6 55 Q12 53 14 58 Q19 54 26 58 Z M54 52 Q68 40 76 46 Q72 50 74 55 Q68 53 66 58 Q61 54 54 58 Z" fill="#3a2350" stroke="#1d1030" stroke-width="1.6" stroke-linejoin="round"/></g><g class="sig sig-cat"><path d="M19 46 Q9 62 13 78 L67 78 Q71 62 61 46 Q51 51 40 51 Q29 51 19 46 Z" fill="#1d1018" stroke="#0a0508" stroke-width="1.6"/><path d="M22 48 Q14 62 17 76 L63 76 Q66 62 58 48 Q49 52 40 52 Q31 52 22 48 Z" fill="#b3123a"/><path d="M24 46 L13 30 L30 41 Z M56 46 L67 30 L50 41 Z" fill="#1d1018" stroke="#0a0508" stroke-width="1.4" stroke-linejoin="round"/></g><g class="char char-vamp"><path d="M18 46 Q8 62 12 78 L68 78 Q72 62 62 46 Q51 51 40 51 Q29 51 18 46 Z" fill="#14090f" stroke="#050204" stroke-width="1.6"/><path d="M21 48 Q13 62 16 76 L64 76 Q67 62 59 48 Q49 52 40 52 Q31 52 21 48 Z" fill="#a50f33"/><path d="M23 46 L11 26 L31 41 Z M57 46 L69 26 L49 41 Z" fill="#14090f" stroke="#050204" stroke-width="1.4" stroke-linejoin="round"/><path d="M24 44 L15 30 L30 41 Z M56 44 L65 30 L50 41 Z" fill="#a50f33"/></g>
         <g id="petBag" class="bag-only">
           <rect x="57" y="46" width="20" height="24" rx="7" fill="#f08fae" stroke="#b0607a" stroke-width="2.5"/>
           <rect x="61" y="56" width="12" height="8" rx="3" fill="#ffd3df" stroke="#b0607a" stroke-width="1.5"/>
@@ -447,6 +512,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <circle cx="33.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/><circle cx="46.5" cy="61" r="2.6" fill="#f6b3c8" stroke="#d77f9c" stroke-width="1"/>
         </g>
         <g class="char char-him"><ellipse class="foot foot-l" cx="31" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><ellipse class="foot foot-r" cx="49" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><path d="M28 47 L52 47 Q58 60 58 73 Q40 78 22 73 Q22 60 28 47 Z" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.4" stroke-linejoin="round"/><path d="M34 47 L40 61 L46 47 Z" fill="#2c2a31"/><path d="M34 47 L37.5 58 L30.5 52 Z M46 47 L42.5 58 L49.5 52 Z" fill="#26232a" stroke="#0b0a0c" stroke-width=".9" stroke-linejoin="round"/><circle cx="40" cy="64" r=".95" fill="#5a5660"/><circle cx="40" cy="69" r=".95" fill="#5a5660"/><g class="arm arm-l"><ellipse cx="25" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="27.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/><g class="acc-bracelet"><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M25.20 59.00 L25.70 60.31 L27.10 60.38 L26.01 61.26 L26.38 62.62 L25.20 61.85 L24.02 62.62 L24.39 61.26 L23.30 60.38 L24.70 60.31 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g><g class="arm arm-r"><ellipse cx="55" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="52.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/></g></g>
+        <g class="char char-boo"><path d="M40 12 Q17 12 17 40 L17 66 Q21 72 25 66 Q29 72 33 66 Q37 72 40 66 Q43 72 47 66 Q51 72 55 66 Q59 72 63 66 L63 40 Q63 12 40 12 Z" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2.2" stroke-linejoin="round"/><path d="M24 56 Q40 62 56 56" stroke="#e9e4f7" stroke-width="3" fill="none"/><g class="arm arm-l"><ellipse cx="18" cy="48" rx="4" ry="6" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2" transform="rotate(30 18 48)"/></g><g class="arm arm-r"><ellipse cx="62" cy="48" rx="4" ry="6" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2" transform="rotate(-30 62 48)"/></g><ellipse cx="28" cy="44" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".75"/><ellipse cx="52" cy="44" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".75"/></g>
         <path id="petStrap" class="bag-only" d="M46 50 q7 7 8 17" stroke="#f08fae" stroke-width="3.4" fill="none" stroke-linecap="round"/>
         <g class="sail-only"><path d="M29 48.5 L51 48.5 L47 58 L40 53 L33 58 Z" fill="#2f5fa8" stroke="#1d3c6e" stroke-width="1.6" stroke-linejoin="round"/><path d="M31 51 L49 51" stroke="#fffafa" stroke-width="1.4"/><path d="M38 54 l2 3 l2 -3 Z" fill="#e5484d"/></g>
         <g class="sleep-only blanket"><path d="M12 56 Q40 49 68 56 L70 79 Q40 83 10 79 Z" fill="#f7a8c0" stroke="#c9718e" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 61 Q40 54 69 61" stroke="#fff4f7" stroke-width="3" fill="none"/><path d="M24 68 h4 M40 70 h4 M56 68 h4 M32 75 h4 M48 75 h4" stroke="#fff4f7" stroke-width="2.4" stroke-linecap="round"/></g>
@@ -491,6 +557,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         <g class="char char-him"><ellipse cx="20.8" cy="37.5" rx="3" ry="4.2" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="59.2" cy="37.5" rx="3" ry="4.2" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="40" cy="35" rx="19.5" ry="16.5" fill="#e6b48a" stroke="#8a5634" stroke-width="2.4"/><path d="M21.4 34.5 Q20.8 27 24.6 23 L26 31 Z M58.6 34.5 Q59.2 27 55.4 23 L54 31 Z" fill="#2a1d17" opacity=".45"/><circle cx="26" cy="22" r="5" fill="#2a1d17"/><circle cx="31" cy="17.5" r="5.5" fill="#2a1d17"/><circle cx="37" cy="15.5" r="5.6" fill="#2a1d17"/><circle cx="43" cy="15.5" r="5.6" fill="#2a1d17"/><circle cx="49" cy="17.5" r="5.5" fill="#2a1d17"/><circle cx="54" cy="22" r="5" fill="#2a1d17"/><circle cx="40" cy="19.5" r="6" fill="#2a1d17"/><circle cx="29.5" cy="24.5" r="4" fill="#2a1d17"/><circle cx="50.5" cy="24.5" r="4" fill="#2a1d17"/><circle cx="34" cy="25.5" r="3.3" fill="#2a1d17"/><circle cx="40" cy="26" r="3.4" fill="#2a1d17"/><circle cx="46" cy="25.5" r="3.3" fill="#2a1d17"/><path d="M28 18 q2 -2 4 0 M36 13 q2 -2 4 0 M44 14 q2 -2 4 0 M51 19 q2 -1.6 3.6 .6 M37.6 24 q1.6 -1.6 3.2 0" stroke="#4a3328" stroke-width="1.1" fill="none" stroke-linecap="round"/><path d="M29.4 32.8 q3.6 -2 7 -.4 M43.6 32.4 q3.4 -1.6 7 .4" stroke="#2a1d17" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M21.5 39 Q22 50 31 53 Q40 56 49 53 Q58 50 58.5 39 Q56 46 50 47.6 Q45 46.5 40 47.8 Q35 46.5 30 47.6 Q24 46 21.5 39 Z" fill="#3a2a22" opacity=".8"/><path d="M35.4 43.4 Q40 41.8 44.6 43.4 Q40 44.6 35.4 43.4 Z" fill="#3a2a22" opacity=".85"/><ellipse cx="27" cy="42.5" rx="3.6" ry="2.2" fill="#f2a0a8" opacity=".35"/><ellipse cx="53" cy="42.5" rx="3.6" ry="2.2" fill="#f2a0a8" opacity=".35"/></g>
         <g id="petFace" class="face"></g>
         <g class="sail-only"><path d="M28 21 Q40 2 52 21 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="2" stroke-linejoin="round"/><rect x="25" y="18" width="30" height="7" rx="3.5" fill="#fffafa" stroke="#c9b7bd" stroke-width="2"/><path d="M27 21.5 h26" stroke="#2f5fa8" stroke-width="2"/></g>
+        <path class="sig sig-kitten sig-head" d="M29 21 Q27 13 31 10 Q31 16 34 19 Z M51 21 Q53 13 49 10 Q49 16 46 19 Z" fill="#e5484d" stroke="#8a1c22" stroke-width="1.2" stroke-linejoin="round"/><g class="sig sig-plush"><path d="M56 62 q7 -9 14 0" stroke="#3a2a22" stroke-width="1.4" fill="none"/><ellipse cx="63" cy="68" rx="7.5" ry="6.5" fill="#f28c28" stroke="#b5571a" stroke-width="1.6"/><path d="M60 66.5 l1.6 -2 l1.6 2 Z M64.4 66.5 l1.6 -2 l1.6 2 Z M60 70 q3 2.4 6 0" fill="#ffd166" stroke="#a04a12" stroke-width=".6"/></g><g class="char char-vamp"><path d="M37.2 45.2 l1 2.6 l1 -2.6 Z M40.8 45.2 l1 2.6 l1 -2.6 Z" fill="#fff" stroke="#9a9aa8" stroke-width=".5" stroke-linejoin="round"/></g><g class="outfit outfit-shades"><rect x="26.5" y="34" width="12" height="7.5" rx="3.2" fill="#1c1a22" stroke="#000" stroke-width="1"/><rect x="41.5" y="34" width="12" height="7.5" rx="3.2" fill="#1c1a22" stroke="#000" stroke-width="1"/><path d="M38.5 36.5 h3 M26.5 36 l-5 -1.5 M53.5 36 l5 -1.5" stroke="#1c1a22" stroke-width="1.6" stroke-linecap="round"/><path d="M28.5 35.6 h3 M43.5 35.6 h3" stroke="#fff" stroke-width="1" opacity=".6"/></g><g class="outfit outfit-beanie"><path d="M21 27 Q21 9 40 9 Q59 9 59 27 Z" fill="#8ecdf0" stroke="#4b8fb8" stroke-width="1.8"/><path d="M29 14 v8 M35 11 v11 M45 11 v11 M51 14 v8" stroke="#6fb8e0" stroke-width="1.2"/><rect x="19.5" y="23" width="41" height="7" rx="3.5" fill="#5fa8d3" stroke="#4b8fb8" stroke-width="1.4"/><circle cx="40" cy="7" r="4.2" fill="#fff" stroke="#c8d8e8" stroke-width="1.2"/></g><g class="outfit outfit-hearts"><path d="M22 27 Q40 9 58 27" stroke="#f06c96" stroke-width="2.4" fill="none"/><path d="M31 19.5 v-3 M49 19.5 v-3" stroke="#f06c96" stroke-width="1.4"/><path d="M31 16 C25 12 28 6.5 31 10 C34 6.5 37 12 31 16 Z" fill="#f06c96" stroke="#b8456b" stroke-width=".8"/><path d="M49 16 C43 12 46 6.5 49 10 C52 6.5 55 12 49 16 Z" fill="#f06c96" stroke="#b8456b" stroke-width=".8"/></g><g class="outfit outfit-witch"><path d="M27 22 Q33 6 46 -6 Q44 6 53 22 Z" fill="#2a1d36" stroke="#120b18" stroke-width="1.8" stroke-linejoin="round"/><rect x="28.5" y="16" width="23.5" height="4" rx="1.2" fill="#8e44ad"/><rect x="37.5" y="15.5" width="5" height="5" rx="1" fill="none" stroke="#f2c14e" stroke-width="1.3"/><ellipse cx="40" cy="22" rx="24" ry="4.6" fill="#2a1d36" stroke="#120b18" stroke-width="1.8"/></g><g class="outfit outfit-horse"><path d="M27 12 L29 -3 L35 9 Z M53 12 L51 -3 L45 9 Z" fill="#8b5a2b" stroke="#4a2e14" stroke-width="1.6" stroke-linejoin="round"/><path d="M29.5 9 l1 -7 l3 6 Z M50.5 9 l-1 -7 l-3 6 Z" fill="#e3a8a0"/><ellipse cx="40" cy="27" rx="17.5" ry="21" fill="#8b5a2b" stroke="#4a2e14" stroke-width="2"/><path d="M34 7 q3 -5 6 0 q3 -6 6 0 q-1 6 -6 9 q-5 -3 -6 -9 Z" fill="#3b2414"/><ellipse cx="40" cy="45" rx="13.5" ry="10" fill="#c9a27a" stroke="#4a2e14" stroke-width="1.8"/><ellipse cx="35.5" cy="46" rx="1.8" ry="2.6" fill="#3b2414"/><ellipse cx="44.5" cy="46" rx="1.8" ry="2.6" fill="#3b2414"/><path d="M34 51.5 q6 2.4 12 0" stroke="#3b2414" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="32" cy="26" r="3.4" fill="#fff" stroke="#4a2e14" stroke-width="1"/><circle cx="48" cy="26" r="3.4" fill="#fff" stroke="#4a2e14" stroke-width="1"/><circle cx="32.6" cy="26.8" r="1.6" fill="#1a1010"/><circle cx="47.4" cy="26.8" r="1.6" fill="#1a1010"/><path d="M28.6 26 a3.4 3.4 0 0 1 6.8 0 Z M44.6 26 a3.4 3.4 0 0 1 6.8 0 Z" fill="#8b5a2b" stroke="#4a2e14" stroke-width=".8"/></g><g class="outfit outfit-pumpkin"><path d="M38.5 12 q1 -5 4 -6" stroke="#4f7a2b" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="33" rx="23" ry="19.5" fill="#f28c28" stroke="#b5571a" stroke-width="2.2"/><path d="M40 14 v38 M29 16 q-6 17 0 34 M51 16 q6 17 0 34" stroke="#d9741c" stroke-width="1.6" fill="none"/><path d="M28 31 l5 -6 l5 6 Z M42 31 l5 -6 l5 6 Z" fill="#ffd166" stroke="#a04a12" stroke-width=".8"/><path d="M29 40 l3 4 l3 -3 l3 4 l3 -4 l3 3 l3 -4 l3 3 q-11 9 -21 -3 Z" fill="#ffd166" stroke="#a04a12" stroke-width=".8" stroke-linejoin="round"/></g><g class="outfit outfit-mummy"><path d="M19.5 21 Q40 18 60.5 21" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 21 Q40 18 60.5 21" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 26.5 Q40 23.5 60.5 26.5" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 26.5 Q40 23.5 60.5 26.5" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 44.5 Q40 42.5 60.5 44.5" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 44.5 Q40 42.5 60.5 44.5" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 50 Q40 48 60.5 50" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 50 Q40 48 60.5 50" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M57 50 q6 2 8 8" stroke="#f6efdc" stroke-width="3.4" fill="none" stroke-linecap="round"/></g><g class="outfit outfit-sheet"><path d="M40 6 Q18 6 17 34 L15 74 Q20 79 24 74 Q29 79 33 74 Q38 79 42 74 Q47 79 51 74 Q56 79 60 74 Q64 79 65 74 L63 34 Q62 6 40 6 Z" fill="#fbfbff" stroke="#c8c8d8" stroke-width="2" stroke-linejoin="round"/><ellipse cx="33" cy="34" rx="3" ry="4.2" fill="#1d1a24"/><ellipse cx="47" cy="34" rx="3" ry="4.2" fill="#1d1a24"/><ellipse cx="40" cy="44" rx="2.2" ry="2.8" fill="#1d1a24"/><ellipse cx="27" cy="41" rx="3.2" ry="2" fill="#ffb3c6" opacity=".6"/><ellipse cx="53" cy="41" rx="3.2" ry="2" fill="#ffb3c6" opacity=".6"/></g>
         <g class="outfit outfit-crown">
           <path d="M22 26 Q40 12 58 26" stroke="#7fbf7f" stroke-width="2" fill="none"/>
           <circle cx="23" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="29" cy="20.5" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="35" cy="18" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="41" cy="17.3" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="47" cy="18.4" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="52.5" cy="21" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="57" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/>
@@ -575,6 +642,13 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     d.toHim = { notes: [], last: iso(yest), run: 9 };
     for (var n = 0; n < 30; n++) d.toHim.notes.push({ id: "dn" + n, text: "Demo note " + (n + 1) + " ♡", at: Date.now() - n * 86400000 });
     d.hearts = 1000;
+    d.hev = { start: days[29], done: 0, notes: 0, angels: 0, answers: 0, focus: 0 };
+    d.answers = [{ qid: "x1", q: "What made you smile today?", a: "You ♡", at: Date.now() }, { qid: "x2", q: "Dream date?", a: "Picnic", at: Date.now() }, { qid: "x3", q: "Favorite song?", a: "Ours", at: Date.now() }];
+    d.focusDone = 3; d.focusMins = 75; d.care = { fed: Date.now() - 30 * 36e5, pet: 0, days: days.slice(0, 6), hd: "", hn: 0 };
+    var soon = new Date(); soon.setDate(soon.getDate() + 12);
+    d.ctrl = { countdown: { label: "Days until I see you ❤️", date: iso(soon) }, q: { id: "zdemo", text: "What's your favorite memory of us?" },
+      surprises: [{ id: "gd1", emoji: "🌹", title: "Just because", msg: "I'm so proud of you. Open this whenever you need a smile ♡", when: { t: "now" } }, { id: "gd2", emoji: "🧸", title: "For a big streak", msg: "70 days?! You're amazing.", when: { t: "streak", v: 70 } }],
+      approved: { dc1: Date.now() } };
     return d;
   }
   var S = VIEW ? seed() : DEMO ? demoState() : load();
@@ -634,6 +708,94 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (!pushIsOn() || VIEW) return;
     navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (s) { return pushRem(s ? s.toJSON() : null); }).catch(function () {});
   }
+  /* ---------- things between you two: ZoZo sets them in Petal View (petal_ctrl), her app reads them ---------- */
+  var QUESTIONS = ["What made you smile today?", "What's one thing you're proud of this week?", "If we could go anywhere tomorrow, where would we go?", "What's your favorite memory of us?", "What song reminds you of me?", "What's something small I do that you love?", "What are you most excited about this month?", "What's your dream date?", "What's one thing you want to learn this year?", "Which class do you enjoy most right now, and why?", "What would make tomorrow a perfect day?", "What's your comfort food when you're stressed?", "What movie should we watch together next?", "What's one thing you wish I knew about you?", "What's your favorite thing about yourself?", "If you could have any superpower, what would it be?", "What's the best compliment you've ever gotten?", "What's something you want us to do together soon?", "What do you need more of this week?", "What's one goal you have for this semester?", "When did you last laugh really hard?", "What's your favorite way to relax?", "What would you name our future cat?", "What's a place you want to visit with me?", "What always cheers you up?", "What was your favorite part of today?", "What are you looking forward to?", "What's your love language?", "What's a habit you want to start?", "What do you love most about us?"];
+  var GIFT_EMOJI = ["🎁", "💝", "🌹", "🧸", "💌", "🍫", "✨", "🎀", "💍", "🌙"];
+  var CTRL = {};
+  function ctrl() { return VIEW ? CTRL : (S.ctrl || {}); }
+  function answered(id) { return (S.answers || []).filter(function (x) { return x.qid === id; })[0] || null; }
+  function currentQuestion() {
+    var c = ctrl();
+    if (c.q && c.q.text && !answered(c.q.id)) return { id: c.q.id, text: c.q.text, his: true };
+    var t = iso(new Date()), day = Math.floor(Date.parse(t + "T00:00:00Z") / 86400000);
+    return { id: "auto-" + t, text: QUESTIONS[day % QUESTIONS.length] };
+  }
+  function countdownCard() {
+    var cd = ctrl().countdown; if (!cd || !cd.date) return "";
+    var n = daysUntil(cd.date);
+    return '<section class="card cdown"><div class="cd-num">' + (n > 0 ? n : n === 0 ? "🎉" : "♡") + "</div><div><b>" + esc(cd.label || "Days until I see you ❤️") + '</b><div class="stat">' +
+      (n > 1 ? n + " days to go · " + esc(fmtDate(cd.date)) : n === 1 ? "Tomorrow!! · " + esc(fmtDate(cd.date)) : n === 0 ? "It's today!!" : "That was " + esc(fmtDate(cd.date)) + " ♡") + "</div></div></section>";
+  }
+  function questionCard() {
+    var q = currentQuestion(), a = answered(q.id);
+    return '<section class="card qcard" id="tQuestion"><h3>💭 ' + (q.his ? "A question from " + esc(SHARE_WITH) : "Question of the day") + '</h3><div class="qtext" dir="auto">' + esc(q.text) + "</div>" +
+      (a ? '<div class="qans" dir="auto">' + esc(a.a) + "</div>" + (VIEW ? "" : '<div class="stat">' + esc(SHARE_WITH) + " can see your answer ♡</div>")
+        : VIEW ? '<div class="stat">Not answered yet</div>' : '<textarea id="qAns" dir="auto" placeholder="Your answer…"></textarea><div class="btns" style="margin-top:8px"><button class="btn sm" type="button" data-act="answer" data-id="' + esc(q.id) + '">Answer</button></div>') + "</section>";
+  }
+  function surpriseOpen(g) {
+    var w = g.when || { t: "now" };
+    if (w.t === "date") return iso(new Date()) >= w.v;
+    if (w.t === "streak") return streakNow() >= +w.v;
+    if (w.t === "tasks") return (stats().done || 0) >= +w.v;
+    return true;
+  }
+  function surpriseHint(g) { var w = g.when || {}; return w.t === "date" ? "Opens on " + fmtDate(w.v) : w.t === "streak" ? "Opens at a " + w.v + "-day streak" : w.t === "tasks" ? "Opens after " + w.v + " finished assignments" : "Ready to open"; }
+  function surprisesCard() {
+    var list = ctrl().surprises || []; if (!list.length) return "";
+    var opened = S.opened || {};
+    return '<section class="card" id="tSurprise"><h3>🎁 Surprises from ' + esc(SHARE_WITH) + '</h3><div class="gifts">' + list.map(function (g) {
+      var ok = surpriseOpen(g), op = opened[g.id];
+      return '<div class="gift' + (op ? " open" : ok ? " ready" : "") + '"><div class="gbox">' + (op ? esc(g.emoji || "🎁") : "🎁") + "</div><b>" + (op ? esc(g.title || "Surprise") : ok ? "Ready to open!" : "Locked 🔒") + '</b><div class="stat">' + (op ? "opened " + esc(fmtStamp(op)) : esc(surpriseHint(g))) + "</div>" +
+        (op ? '<button class="btn ghost sm" type="button" data-act="giftview" data-id="' + g.id + '">See again</button>' : ok && !VIEW ? '<button class="btn sm" type="button" data-act="giftopen" data-id="' + g.id + '">Open 🎁</button>' : "") + "</div>";
+    }).join("") + "</div></section>";
+  }
+  function confettiHtml() {
+    var c = "";
+    for (var i = 0; i < 26; i++) c += '<span style="left:' + (i * 37 % 100) + "%;animation-duration:" + (2.2 + (i % 5) * .45) + "s;animation-delay:" + (i % 7) * .18 + 's">' + ["🎉", "💗", "✨", "🌸", "⭐"][i % 5] + "</span>";
+    return c;
+  }
+  function fetchCtrl() {
+    if (VIEW || DEMO || !SB_URL || lsGet("petal-viewer")) return;
+    sbRpc("get_ctrl", { p_dev: devId() }).then(function (c) {
+      if (!c || JSON.stringify(c) === JSON.stringify(S.ctrl || {})) return;
+      var old = S.ctrl || {}, oa = old.approved || {}, na = c.approved || {};
+      var newly = Object.keys(na).filter(function (k) { return !oa[k]; });
+      var gifts = (c.surprises || []).filter(function (g) { return !(old.surprises || []).some(function (o) { return o.id === g.id; }); }).length;
+      S.ctrl = c; commit();
+      newly.forEach(function (k) { var cp = (S.coupons || []).filter(function (x) { return x.id === k; })[0]; if (cp) toast(SHARE_WITH + " accepted your " + couponInfo(cp.k)[2] + " coupon 😘"); });
+      if (gifts) toast(gifts === 1 ? "A new surprise from " + SHARE_WITH + " 🎁" : gifts + " new surprises from " + SHARE_WITH + " 🎁");
+    }).catch(function () {});
+  }
+  // Petal View: ZoZo's controls
+  function saveCtrl(msg) {
+    sbRpc("set_ctrl", { p_pass: lsGet("petal-view-pass") || "", p_data: CTRL }).then(function (ok) { toast(ok ? msg : "Couldn't save. Check your passcode."); }).catch(function () { toast("Couldn't save. Check your internet."); });
+    render();
+  }
+  function vControls() {
+    var c = CTRL, cd = c.countdown || {}, q = c.q, qa = q ? answered(q.id) : null;
+    var h = '<section class="card vtool"><h2>⏳ Countdown</h2><div class="note" style="margin:-6px 0 10px">Shows on her Overview page.</div><div class="form">' +
+      '<label>What for<input id="cdLabel" type="text" dir="auto" value="' + esc(cd.label || "Days until I see you ❤️") + '"></label><label>Date<input id="cdDate" type="date" value="' + esc(cd.date || "") + '"></label></div>' +
+      '<div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="cdSave">Save countdown</button>' + (cd.date ? '<button class="btn ghost" type="button" data-act="cdClear">Remove</button>' : "") + "</div></section>";
+    h += '<section class="card vtool"><h2>💭 Her question</h2>' + (q ? '<div class="stat" style="margin-bottom:8px">Now asking: “' + esc(q.text) + "” · " + (qa ? "she answered ✓" : "waiting for her answer") + "</div>" : '<div class="stat" style="margin-bottom:8px">No question from you right now, so she gets a recommended one each day.</div>') +
+      '<label class="stat">Pick a recommended one<select id="qPick"><option value="">…</option>' + QUESTIONS.map(function (x, i) { return '<option value="' + i + '">' + esc(x) + "</option>"; }).join("") + "</select></label>" +
+      '<textarea id="qOwn" dir="auto" placeholder="…or type your own question" style="margin-top:8px"></textarea><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="qSend">Ask her</button></div>' +
+      '<h3 style="margin-top:16px">Her answers</h3>' + ((S.answers || []).length ? (S.answers || []).slice(0, 15).map(function (a) { return '<div class="qrow"><b dir="auto">' + esc(a.q) + '</b><div dir="auto">' + esc(a.a) + '</div><div class="stat">' + esc(fmtStamp(a.at)) + "</div></div>"; }).join("") : '<div class="empty">no answers yet</div>') + "</section>";
+    h += '<section class="card vtool"><h2>🎁 Surprises</h2><div class="note" style="margin:-6px 0 10px">She sees a wrapped gift and opens it when it unlocks.</div><div class="form">' +
+      '<label>Gift<select id="gEmoji">' + GIFT_EMOJI.map(function (e) { return "<option>" + e + "</option>"; }).join("") + '</select></label><label>Title<input id="gTitle" type="text" dir="auto" placeholder="A little something"></label></div>' +
+      '<textarea id="gMsg" dir="auto" placeholder="Your message inside the gift…" style="margin-top:8px"></textarea><div class="form" style="margin-top:8px">' +
+      '<label>Unlocks<select id="gWhen"><option value="now">Right away</option><option value="date">On a date</option><option value="streak">At a streak of…</option><option value="tasks">After … finished assignments</option></select></label>' +
+      '<label>Date or number<input id="gVal" type="text" placeholder="e.g. 2026-12-01 or 10"></label></div><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="gAdd">Add surprise</button></div>' +
+      ((c.surprises || []).length ? '<div style="margin-top:14px">' + c.surprises.map(function (g) {
+        var op = (S.opened || {})[g.id];
+        return '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + esc((g.emoji || "🎁") + " " + (g.title || "Surprise")) + '</b><button class="btn ghost sm" type="button" data-act="gDel" data-id="' + g.id + '">' + (confirmKey === "g" + g.id ? "Tap again" : "Delete") + '</button></div><div class="stat">' + esc(surpriseHint(g)) + " · " + (op ? "she opened it " + esc(fmtStamp(op)) + " ✓" : "not opened yet") + "</div></div>";
+      }).join("") + "</div>" : "") + "</section>";
+    var wait = (S.coupons || []).filter(function (x) { return x.used && !(c.approved || {})[x.id]; });
+    h += '<section class="card vtool"><h2>🎟️ Coupons to accept</h2>' + (wait.length ? '<div class="tickets">' + wait.map(function (x) { var ci = couponInfo(x.k); return '<div class="ticket"><div class="em">' + ci[1] + "</div><b>" + esc(ci[2]) + '</b><div class="stat">used ' + esc(fmtStamp(x.used)) + '</div><button class="btn sm" type="button" data-act="approve" data-id="' + x.id + '">Accept 😘</button></div>'; }).join("") + "</div>" : '<div class="empty">nothing waiting ♡</div>') + "</section>";
+    h += '<section class="card vtool"><h2>🎃 Halloween mode</h2><div class="stat">Now ' + (hallo() ? "on" : "off") + " · " + (CTRL.halloween === true ? "always on" : CTRL.halloween === false ? "turned off" : "automatic, until " + esc(fmtDate(HW_END))) + '</div><div class="btns" style="margin-top:8px">' +
+      [["on", "On"], ["off", "Off"], ["auto", "Automatic"]].map(function (o) { return '<button class="btn sm ghost" type="button" data-act="hwSet" data-id="' + o[0] + '">' + o[1] + "</button>"; }).join("") + "</div></section>";
+    h += '<section class="card vtool"><h2>🔔 Notifications</h2><div class="stat">To get a notification when she uses a coupon, sends you a note or answers a question, tap the 🔔 button at the top of Petal View on this phone.</div></section>';
+    return h;
+  }
   var viewAt = 0;
   function viewCard(msg, ask) {
     $("main").innerHTML = '<section class="card"><h2>Petal View</h2><div class="note">' + esc(msg) + "</div>" +
@@ -656,6 +818,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       if (r.data.off) { viewCard("Sharing is turned off."); return; }
       var base = seed(); S = r.data; for (var k in base) if (!(k in S)) S[k] = base[k]; S.viewed = true;
       document.body.classList.add("viewonly"); applyTheme(); render();
+      sbRpc("get_ctrl_viewer", { p_pass: pass }).then(function (c) { CTRL = c || {}; render(); }).catch(function () {});
     }).catch(function () { if (!S.viewed) viewCard("Couldn't connect. Check your internet, then close and reopen."); });
   }
   function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 3200); }
@@ -932,10 +1095,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { idx: t, offset: 0 };
   }
   /* ---------- what's new & guided tours ---------- */
-  var WN = 3, APP_VER = 3;
+  var WN = 4, APP_VER = 4;
   function news(all) {
     var seen = all ? 0 : S.wn || 0;
-    return [["coupons", "💗 Hearts & coupons", "Earn hearts every day, from your streak and from quests, then save up for kiss, hug and date coupons.", 3],
+    return [["event", "🎃 Spooky Season", "Halloween is here! Spooky quests unlock costumes, emotes, Boo the ghost and… Vampire ZoZo 🧛 Tap the pumpkin.", 4],
+      ["you2", "💭 Questions, surprises & a countdown", "Answer a question every day, open surprises from " + SHARE_WITH + ", and count down the days ❤️", 4],
+      ["care", "🐾 Feed & pet your friends", "Take care of your friend for hearts, buy outfits in the shop, and let your friends play together.", 4],
+      ["focus", "⏱️ Focus timer & grade goals", "Study with your friend for hearts, set a goal for each subject, and see your week every Sunday.", 4],
+      ["coupons", "💗 Hearts & coupons", "Earn hearts every day, from your streak and from quests, then save up for kiss, hug and date coupons.", 3],
       ["streak2", "🔥 Streak goals", "Your streak now lights after 2 things a day. Pick a 14, 30 or 50-day goal for a big heart bonus.", 3],
       ["notehim", "💌 Notes to ZoZo", "Write ZoZo a note from the Notes page. Can you write one 10 days in a row?", 3],
       ["emotes", "🎭 Emotes & 10 new quests", "New quests unlock emotes for your friends, a white star bracelet and… ZoZo himself 👀", 3],
@@ -948,6 +1115,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       .filter(function (w) { return w[3] > seen && (SB_URL || (w[0] !== "share" && w[0] !== "push")); });
   }
   var TOURS = {
+    event: [["event", "#tEvent", "Finish these spooky quests before the season ends 🎃 Each one unlocks a costume, an emote or a new friend. The pumpkin button brings you back here."]],
+    you2: [["overview", "#tQuestion", "A new question every day 💭 Your answer goes to " + SHARE_WITH + " and counts toward your streak. Surprises and the countdown show up here too."]],
+    care: [["friends", "#tCare", "Feed and pet your friend every day (+1 💗 each). If you forget them for too long they get sad 🥺"]],
+    focus: [["focus", "#tFocus", "Pick 15, 25 or 45 minutes and study with your friend. You get +3 💗 and it counts for your streak 🔥"]],
     coupons: [["coupons", "#tWallet", "These are your hearts 💗 You get a few every day, more when you light your streak, 25 for a perfect week, and extra from quests and streak goals."], ["coupons", "#tShop", "Trade hearts for coupons here. Tap Use when you want to cash one in, and ZoZo will see it 😘"]],
     streak2: [["overview", "#streakChip", "Do 2 things in your planner each day to light your streak. Tap it to pick your goal: 14, 30 or 50 days 🎯"]],
     notehim: [["notes", "#tHim", "Write ZoZo a little note here 💌 He sees it on his side. Write one every day to keep your note streak going."]],
@@ -977,8 +1148,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
 
   /* ---------- friends & quests ---------- */
-  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"]];
-  var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"]];
+  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"], ["boo", "Boo", "A tiny friendly ghost 👻"], ["vamp", "Vampire ZoZo", "Spooky, but only for you 🧛"]];
+  var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"], ["shades", "Sunglasses"], ["beanie", "Cozy beanie"], ["hearts", "Heart headband"], ["witch", "Witch hat 🎃"], ["horse", "Horse mask 🎃"], ["pumpkin", "Pumpkin head 🎃"], ["mummy", "Mummy wraps 🎃"], ["sheet", "Ghost sheet 🎃"]];
   var QUESTS = [
     { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi", h: 15 },
     { id: "q2", t: "Finish 5 assignments before their deadline", k: "onTime", n: 5, r: "kitten", rt: "Tofe", h: 20 },
@@ -998,17 +1169,86 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     { id: "q16", t: "Add 10 grades", k: "grades", n: 10, r: "e_twirl", rt: "Twirl emote 💫", h: 20 },
     { id: "q17", t: "Open your planner on 30 different days", k: "days", n: 30, r: "e_letter", rt: "Love letter emote 💌", h: 70 },
     { id: "q18", t: "Send ZoZo 30 notes", k: "toHimTotal", n: 30, r: "e_shy", rt: "Shy emote 😊", h: 40 },
+    { id: "h1", ev: true, t: "🎃 Light your streak on 3 days during Spooky Season", k: "h_streak", n: 3, r: "e_boo", rt: "Boo! emote 👻", h: 30 },
+    { id: "h2", ev: true, t: "🎃 Finish 5 assignments during Spooky Season", k: "h_done", n: 5, r: "horse", rt: "Horse mask 🐴", h: 30 },
+    { id: "h3", ev: true, t: "🎃 Write ZoZo 3 notes", k: "h_notes", n: 3, r: "witch", rt: "Witch hat 🧙", h: 20 },
+    { id: "h4", ev: true, t: "🎃 Finish 2 focus sessions", k: "h_focus", n: 2, r: "pumpkin", rt: "Pumpkin head 🎃", h: 25 },
+    { id: "h5", ev: true, t: "🎃 Catch an angel number", k: "h_angels", n: 1, r: "e_trick", rt: "Trick or treat emote 🍬", h: 20 },
+    { id: "h6", ev: true, t: "🎃 Answer 3 questions of the day", k: "h_answers", n: 3, r: "mummy", rt: "Mummy wraps 🧟", h: 20 },
+    { id: "h7", ev: true, t: "🎃 Feed your friend on 5 different days", k: "h_care", n: 5, r: "sheet", rt: "Ghost sheet 👻", h: 30 },
+    { id: "h8", ev: true, t: "🎃 Open your planner on 5 days during Spooky Season", k: "h_days", n: 5, r: "boo", rt: "Boo the ghost (new friend) 👻", h: 40 },
+    { id: "h9", ev: true, t: "🦇 Finish every other Spooky Season quest", k: "h_all", n: 8, r: "vamp", r2: "e_spooky", rt: "Vampire ZoZo (new friend) 🧛 + Spooky dance emote 💀", h: 100 },
     { id: "q19", t: "💀 The hardest quest: keep a 60-day streak AND finish 40 assignments before their deadline", k: "hard", n: 100, r: "e_makeout", rt: "Making out with ZoZo emote 💋", h: 300 }
   ];
-  var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"]];
-  var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍" };
+  var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"], ["e_boo", "👻", "Boo!"], ["e_trick", "🍬", "Trick or treat"], ["e_spooky", "💀", "Spooky dance"]];
+  var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍", horse: "🐴", witch: "🧙", pumpkin: "🎃", mummy: "🧟", sheet: "👻", boo: "👻", vamp: "🧛" };
   EMOTES.forEach(function (e) { REWARD_ICON[e[0]] = e[1]; });
   function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
+  var HW_END = "2026-11-30";
+  function hallo() { var c = ctrl(); return c.halloween === true || (c.halloween !== false && iso(new Date()) <= HW_END); }
+  function hev() {
+    if (!S.hev) { var st = stats(); S.hev = { start: iso(new Date()), done: st.done || 0, notes: toHim().notes.length, angels: (S.angels || []).length, answers: (S.answers || []).length, focus: S.focusDone || 0 }; }
+    return S.hev;
+  }
+  var WEB = '<svg viewBox="0 0 100 100" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"><path d="M0 0 L100.0 0.0 M0 0 L96.6 25.9 M0 0 L86.6 50.0 M0 0 L70.7 70.7 M0 0 L50.0 86.6 M0 0 L25.9 96.6 M0 0 L0.0 100.0"/><path d="M22.0 0.0 Q19.5 2.6 21.3 5.7 Q18.1 7.5 19.1 11.0 Q15.6 12.0 15.6 15.6 Q12.0 15.6 11.0 19.1 Q7.5 18.1 5.7 21.3 Q2.6 19.5 0.0 22.0"/><path d="M42.0 0.0 Q37.2 4.9 40.6 10.9 Q34.6 14.3 36.4 21.0 Q29.7 22.8 29.7 29.7 Q22.8 29.7 21.0 36.4 Q14.3 34.6 10.9 40.6 Q4.9 37.2 0.0 42.0"/><path d="M62.0 0.0 Q54.8 7.2 59.9 16.0 Q51.1 21.2 53.7 31.0 Q43.9 33.7 43.8 43.8 Q33.7 43.9 31.0 53.7 Q21.2 51.1 16.0 59.9 Q7.2 54.8 0.0 62.0"/><path d="M82.0 0.0 Q72.5 9.6 79.2 21.2 Q67.6 28.0 71.0 41.0 Q58.0 44.5 58.0 58.0 Q44.5 58.0 41.0 71.0 Q28.0 67.6 21.2 79.2 Q9.6 72.5 0.0 82.0"/></svg>';
+  function applySpooky() {
+    var on = hallo(), el = $("spooky"), b = $("evBtn");
+    document.documentElement.setAttribute("data-spooky", on ? "1" : "0");
+    if (on && !el) { el = document.createElement("div"); el.id = "spooky"; el.innerHTML = '<div class="web l">' + WEB + '</div><div class="web r">' + WEB + '</div><span class="bat">🦇</span><span class="bat b2">🦇</span><span class="ghost">👻</span><span class="spider"></span>'; document.body.appendChild(el); }
+    if (!on && el) el.parentNode.removeChild(el);
+    if (on && !b) { b = document.createElement("button"); b.id = "evBtn"; b.type = "button"; b.setAttribute("data-act", "tab"); b.setAttribute("data-tab", "event"); b.setAttribute("aria-label", "Spooky Season event"); document.body.appendChild(b); }
+    if (!on && b) { b.parentNode.removeChild(b); b = null; }
+    if (b) { var left = QUESTS.filter(function (q) { return q.ev && !qDone(q); }).length; b.innerHTML = "🎃" + (left ? '<span class="evn">' + left + "</span>" : ""); }
+  }
+  function questRow(q) {
+    var p = Math.max(0, Math.min(qProg(q), q.n)), done = p >= q.n;
+    return '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + (q.k === "hard" ? p + "%" : p + " / " + q.n) + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (q.h ? " + " + q.h + " 💗" : "") + (done ? " · unlocked ♡" : "") + "</div></div>";
+  }
+  function vEvent() {
+    var evq = QUESTS.filter(function (q) { return q.ev; }), dn = evq.filter(qDone).length;
+    var mini = function (ch, name) { return '<div class="fcard' + (has(ch) ? "" : " locked") + '">' + look(ch) + "<b>" + name + "</b></div>"; };
+    return '<section class="card ev-hero"><span class="spark" style="top:12px;right:20px">🦇</span><span class="spark" style="top:50px;right:80px;animation-delay:1s">🕸️</span><span class="spark" style="bottom:14px;right:30px;animation-delay:1.8s">👻</span>' +
+      '<h2>🎃 Spooky Season</h2><div>' + (hallo() ? "Spooky quests and spooky rewards, until " + esc(fmtDate(HW_END)) + "!" : "Spooky Season is over. Your rewards stay yours ♡") + " · " + dn + " / " + evq.length + ' done</div>' +
+      '<div class="ev-rewards">' + mini("boo", "Boo") + mini("vamp", "Vampire ZoZo") + '<div>🐴 🧙 🎃 🧟 👻 costumes<br>👻 🍬 💀 emotes</div></div></section>' +
+      '<section class="card" id="tEvent"><h2>Event quests</h2>' + evq.map(questRow).join("") + "</section>";
+  }
+  var FOOD = { bunny: "🥕", kitten: "🥛", cat: "🐟", plush: "🍬", vamp: "🍅", boo: "🍭" };
+  var SHOPOUT = { shades: 60, beanie: 80, hearts: 100 };
+  function friendName(ch) { for (var i = 0; i < FRIENDS.length; i++) if (FRIENDS[i][0] === ch) return FRIENDS[i][1]; return ch === "him" ? SHARE_WITH : "your friend"; }
+  function care() { if (!S.care) S.care = { fed: 0, pet: 0, days: [], hd: "", hn: 0 }; return S.care; }
+  function mood() {
+    var c = care(), now = Date.now();
+    if (!c.fed && !c.pet) return "new";
+    if ((now - Math.max(c.fed || 0, c.pet || 0)) / 36e5 > 48) return "sad";
+    return (now - (c.fed || 0)) / 36e5 > 24 ? "hungry" : "happy";
+  }
+  function doCare(kind) {
+    var c = care(), now = Date.now(), k = kind === "feed" ? "fed" : "pet", wait = (kind === "feed" ? 4 : 2) * 36e5, last = c[k] || 0;
+    if (now - last < wait) { var m = Math.ceil((wait - (now - last)) / 60000); toast((kind === "feed" ? "Not hungry yet! " : "Still happy from the last one ♡ ") + "Try again in " + (m >= 60 ? Math.ceil(m / 60) + " h" : m + " min")); return; }
+    c[k] = now; var t = iso(new Date()), got = false;
+    if (kind === "feed" && c.days.indexOf(t) < 0) { c.days.push(t); if (c.days.length > 60) c.days.shift(); }
+    if (c.hd !== t) { c.hd = t; c.hn = 0; }
+    if (c.hn < 3) { c.hn++; addHearts(1); got = true; }
+    commit(); careAnim(kind); toast((kind === "feed" ? "Yum! " + (FOOD[S.friend] || "🍪") : "Purr… ♡") + (got ? " +1 💗" : ""));
+  }
   function qProg(q) {
     var st = stats();
     if (q.k === "days") return st.days.length;
     if (q.k === "pair") return (has("plush") ? 1 : 0) + (has("kitten") ? 1 : 0);
     if (q.k === "best") return streak().best;
+    if (q.k.indexOf("h_") === 0) {
+      if (!S.hev && !hallo()) return 0;
+      var e = hev(), since = function (arr) { return (arr || []).filter(function (d) { return d >= e.start; }).length; };
+      if (q.k === "h_streak") return since(streak().hist);
+      if (q.k === "h_done") return (st.done || 0) - e.done;
+      if (q.k === "h_notes") return toHim().notes.length - e.notes;
+      if (q.k === "h_angels") return (S.angels || []).length - e.angels;
+      if (q.k === "h_answers") return (S.answers || []).length - e.answers;
+      if (q.k === "h_focus") return (S.focusDone || 0) - e.focus;
+      if (q.k === "h_care") return since(care().days);
+      if (q.k === "h_days") return since(st.days);
+      if (q.k === "h_all") return QUESTS.filter(function (x) { return x.ev && x.k !== "h_all" && qDone(x); }).length;
+    }
     if (q.k === "toHimRun") return toHimRun();
     if (q.k === "toHimTotal") return toHim().notes.length;
     if (q.k === "angelKinds") { var u = {}; (S.angels || []).forEach(function (a) { u[a.k] = 1; }); return Object.keys(u).length; }
@@ -1017,7 +1257,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return st[q.k] || 0;
   }
   function qDone(q) { return qProg(q) >= q.n; }
-  function has(r) { if (r === "bunny" || r === "cap" || r === "none" || r === "") return true; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return qDone(QUESTS[i]); return false; }
+  function has(r) { if (r === "bunny" || r === "cap" || r === "none" || r === "") return true; if (SHOPOUT[r]) return (S.ownedOut || []).indexOf(r) >= 0; for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r || QUESTS[i].r2 === r) return qDone(QUESTS[i]); return false; }
   function questFor(r) { for (var i = 0; i < QUESTS.length; i++) if (QUESTS[i].r === r) return QUESTS[i].t; return ""; }
   var celebQ = [];
   function checkQuests() {
@@ -1038,7 +1278,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function markDone(x) {
     var st = stats();
-    if (!x.cnt) { x.cnt = true; st.done++; }
+    if (!x.cnt) { x.cnt = true; st.done++; x.doneAt = Date.now(); }
     if (!x.ot && daysUntil(x.d) >= 0) { x.ot = true; st.onTime++; }
   }
 
@@ -1052,6 +1292,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       if (added) { commit(); toast(added === 1 ? "A new note for you ♡" : added + " new notes for you ♡"); }
     }).catch(function () {});
     if (!SB_URL || lsGet("petal-viewer")) return;
+    fetchCtrl();
     sbRpc("get_notes", { p_dev: devId() }).then(function (list) {
       var added = 0; if (!S.seen) S.seen = [];
       (list || []).forEach(function (n) { var id = "n" + n.id; if (S.seen.indexOf(id) >= 0) return; S.seen.push(id); S.notes.unshift({ id: id, text: n.text, at: Date.parse(n.at) || Date.now() }); added++; });
@@ -1079,9 +1320,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (!photos.length) gal = '<div class="empty">no photos yet, add your favorites ♡</div><div class="btns"><button class="btn" type="button" data-act="addphoto">Add photos</button></div>';
     else gal = '<div class="polas">' + shown.map(function (p, i) { return pol(p, false, i); }).join("") + '</div><div class="btns"><button class="btn ghost" type="button" data-act="shuffle">Shuffle</button><button class="btn" type="button" data-act="tab" data-tab="photos">See all ' + photos.length + '</button><button class="btn ghost" type="button" data-act="addphoto">Add photos</button></div>';
     var hi = "Hi, " + (S.name ? esc(S.name) : "beautiful") + " ♡";
-    var sn = streakNow(), nudge = !VIEW && sn && streak().last !== iso(new Date()) ? '<div class="nudge" data-act="streak">🔥 Your ' + sn + '-day streak is waiting! Do one thing today to keep it.</div>' : "";
-    return nudge + '<section class="card hello"><div class="sub">' + esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })) + '</div><div class="big">' + hi + '</div><div>' + esc(line) + (ov ? " · overall " + r1(ov.pct) + "% (" + letter(ov.pct) + ")" : "") + "</div></section>" +
-      (S.notes.length ? noteCard(S.notes[0]) : "") +
+    var sn = streakNow(), nudge = !VIEW && sn && streak().last !== iso(new Date()) ? '<div class="nudge" data-act="streak">🔥 Your ' + sn + '-day streak is waiting! Do 2 things today to keep it.</div>' : "";
+    return nudge + countdownCard() + '<div class="btns" style="justify-content:flex-end;margin:-6px 0 10px"><button class="btn ghost sm" type="button" data-act="recap">📊 My week</button></div>' + '<section class="card hello"><div class="sub">' + esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })) + '</div><div class="big">' + hi + '</div><div>' + esc(line) + (ov ? " · overall " + r1(ov.pct) + "% (" + letter(ov.pct) + ")" : "") + "</div></section>" +
+      (S.notes.length ? noteCard(S.notes[0]) : "") + surprisesCard() + questionCard() +
       '<section class="card"><h3>Our little gallery</h3>' + gal + "</section>" +
       '<div class="grid2"><section class="card"><h3>' + dl + "'s classes</h3>" + (nd.offset > 1 ? '<div class="note">free day today, next up is ' + DAYFULL[nd.idx] + "</div>" : "") +
       '<ul class="list">' + (classes || '<li class="empty">nothing scheduled yet</li>') + "</ul></section>" +
@@ -1165,6 +1406,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       var st = subjStats(s.id);
       h += '<div class="gcard p' + s.c + '"><div class="gl">' + pill(s.id, true) + '<span class="avg">' + (st ? r1(st.pct) + "% " + letter(st.pct) : "–") + "</span></div>" +
         '<div class="bar"><i style="width:' + (st ? Math.max(0, Math.min(100, st.pct)) : 0) + '%"></i></div>';
+      var gg = (S.gGoal || {})[s.id];
+      h += '<div class="gl"><span class="stat">🎯 Goal</span><span><input class="ggoal" type="number" min="1" max="100" step="1" placeholder="%" value="' + (gg || "") + '" data-act="ggoal" data-id="' + s.id + '" aria-label="Goal for ' + esc(s.n) + '"> ' +
+        (gg && st ? (st.pct >= gg ? "✅ reached!" : "need +" + r1(gg - st.pct) + "%") : "") + "</span></div>";
       if (st) {
         st.items.forEach(function (g) {
           h += '<div class="gl"><span dir="auto">' + esc(g.n) + (g.w > 0 ? ' <span class="stat">(' + g.w + "%)</span>" : "") + "</span><span>" + g.v + " / " + g.m + ' <button class="x" type="button" data-act="del" data-k="grades" data-id="' + g.id + '" aria-label="Delete ' + esc(g.n) + '">×</button></span></div>';
@@ -1182,6 +1426,26 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       (photos.length ? '<div class="polas">' + photos.slice().reverse().map(function (p, i) { return pol(p, true, i); }).join("") + "</div>" : '<div class="empty">Add your first photo ♡</div>') + "</section>";
   }
 
+  function mmss(ms) { var t = Math.ceil(ms / 1000); return Math.floor(t / 60) + ":" + pad(t % 60); }
+  function vFocus() {
+    var f = S.focus, left = f ? Math.max(0, f.end - Date.now()) : 0;
+    var h = '<section class="card focusc" id="tFocus"><h2>⏱️ Focus timer</h2>';
+    if (f) h += '<div class="ring" style="--p:' + (1 - left / (f.len * 60000)).toFixed(3) + '"><div class="t" id="focusLeft">' + mmss(left) + '</div></div><div class="stat" style="text-align:center">Studying with ' + esc(friendName(S.friend)) + " 📚 You can switch pages, I'll keep counting.</div>" +
+      '<div class="btns" style="margin-top:10px;justify-content:center"><button class="btn ghost" type="button" data-act="focusStop">' + (confirmKey === "fstop" ? "Tap again to give up" : "Stop") + "</button></div>";
+    else h += '<div class="note">Pick a session. Your friend studies with you, and you get +3 💗 when it finishes. A finished session also counts toward your streak 🔥</div><div class="btns" style="justify-content:center;margin-top:12px">' +
+      [15, 25, 45].map(function (m) { return '<button class="btn" type="button" data-act="focusGo" data-id="' + m + '">' + m + " min</button>"; }).join("") + "</div>";
+    return h + '</section><section class="card"><h3>Your focus so far</h3><div class="stat">' + (S.focusDone || 0) + " sessions · " + (S.focusMins || 0) + " minutes</div></section>";
+  }
+  function weekStats() {
+    var ws = Date.now() - 7 * 864e5, t = toHim();
+    return {
+      done: S.assignments.filter(function (a) { return a.doneAt && a.doneAt >= ws; }).length,
+      focus: (S.focusLog || []).filter(function (x) { return x.at >= ws; }).reduce(function (a, x) { return a + x.len; }, 0),
+      angels: (S.angels || []).filter(function (a) { return a.at >= ws; }).length,
+      notes: t.notes.filter(function (n) { return n.at >= ws; }).length,
+      hearts: (S.heartsEarned || 0) - (S.recapHE || 0), streak: streakNow()
+    };
+  }
   function vCoupons() {
     var have = S.hearts || 0, mine = (S.coupons || []).filter(function (c) { return !c.used; }), used = (S.coupons || []).filter(function (c) { return c.used; });
     var ticket = function (c, btn) { var ci = couponInfo(c.k); return '<div class="ticket' + (c.used ? " used" : "") + '"><div class="em">' + ci[1] + "</div><b>" + esc(ci[2]) + "</b>" + btn + "</div>"; };
@@ -1192,7 +1456,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     h += '<section class="card"><h2>My coupons</h2>' + (mine.length ? '<div class="tickets">' + mine.map(function (c) {
       return ticket(c, '<button class="btn sm" type="button" data-act="usecoupon" data-id="' + c.id + '">' + (confirmKey === "cp" + c.id ? "Tap again to use" : "Use now") + "</button>");
     }).join("") + "</div>" : '<div class="empty">no coupons yet, buy one with your hearts ♡</div>') + "</section>";
-    if (used.length) h += '<section class="card"><h3>Used</h3><div class="tickets">' + used.map(function (c) { return ticket(c, '<div class="stat">used ' + esc(fmtStamp(c.used)) + "</div>"); }).join("") + "</div></section>";
+    var ap = ctrl().approved || {};
+    if (used.length) h += '<section class="card"><h3>Used</h3><div class="tickets">' + used.map(function (c) { return ticket(c, '<div class="stat">used ' + esc(fmtStamp(c.used)) + "</div><div class=\"stat\">" + (ap[c.id] ? "✅ " + esc(SHARE_WITH) + " accepted" : "⏳ waiting for " + esc(SHARE_WITH)) + "</div>"); }).join("") + "</div></section>";
     return h;
   }
   function vNotes() {
@@ -1223,9 +1488,13 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     }).join("") + "</div>" : '<div class="empty">no angel numbers yet ✨</div>') + "</section>";
     return h;
   }
-  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-char="' + ch + '" data-acc="' + (nap ? "" : S.acc || "") + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
+  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-spooky="' + (hallo() ? 1 : 0) + '" data-char="' + ch + '" data-acc="' + (nap ? "" : S.acc || "") + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
   function vFriends() {
-    var h = '<section class="card" id="tFriends"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
+    var md = mood(), others = FRIENDS.filter(function (f) { return f[0] !== S.friend && has(f[0]); });
+    var mtxt = { "new": "Say hi to your friend ♡", happy: "Happy and full 😊", hungry: "A little hungry… 🥺", sad: "Missed you so much 🥺 Feed and pet me?" }[md];
+    var h = '<section class="card" id="tCare"><h2>Take care of ' + esc(friendName(S.friend)) + '</h2><div class="fcard">' + look(S.friend) + '<div style="display:grid;gap:8px"><b>' + mtxt + '</b><div class="btns"><button class="btn sm" type="button" data-act="feed">Feed ' + (FOOD[S.friend] || "🍪") + '</button><button class="btn sm" type="button" data-act="pat">Pet 🤚</button></div><div class="stat">+1 💗 each, up to 3 a day</div>' +
+      (others.length ? '<div class="btns">' + others.map(function (f) { return '<button class="btn ghost sm" type="button" data-act="play" data-id="' + f[0] + '">Play with ' + esc(f[1]) + " ✨</button>"; }).join("") + "</div>" : "") + "</div></div></section>";
+    h += '<section class="card" id="tFriends"><h2>My friends</h2><div class="note" style="margin:-6px 0 12px">Pick who keeps you company. Finish quests to meet new friends.</div><div class="fgrid">';
     FRIENDS.forEach(function (f) {
       var ok = has(f[0]), on = S.friend === f[0];
       h += '<div class="fcard' + (on ? " on" : "") + (ok ? "" : " locked") + '">' + look(f[0]) + '<div style="display:grid;gap:6px;min-width:0"><b>' + f[1] + '</b><div class="stat">' + (ok ? f[2] : "🔒 " + esc(questFor(f[0]))) + "</div>" +
@@ -1234,6 +1503,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     h += '</div></section><section class="card" id="tOutfits"><h2>Outfits</h2><div class="btns">';
     OUTFITS.forEach(function (o) {
       var ok = has(o[0]);
+      if (!ok && SHOPOUT[o[0]]) { h += '<button class="btn sm ghost" type="button" data-act="buyout" data-id="' + o[0] + '">🛍️ ' + o[1] + " · " + SHOPOUT[o[0]] + " 💗</button>"; return; }
       h += '<button class="btn sm' + (S.outfit === o[0] ? "" : " ghost") + '" type="button" data-act="outfit" data-id="' + o[0] + '"' + (ok ? "" : ' disabled title="' + esc(questFor(o[0])) + '"') + ">" + (ok ? "" : "🔒 ") + o[1] + "</button>";
     });
     h += '</div><h3 style="margin-top:16px">Accessories</h3><div class="btns">' + [["", "None"], ["bracelet", "White star bracelet 🤍"]].map(function (a) {
@@ -1247,10 +1517,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
   function vQuests() {
     var h = '<section class="card" id="tQuests"><h2>Quests</h2><div class="note" style="margin:-6px 0 6px">Little goals, little surprises ♡</div>';
-    QUESTS.forEach(function (q) {
-      var p = Math.min(qProg(q), q.n), done = p >= q.n;
-      h += '<div class="qrow"><div class="btns" style="justify-content:space-between"><b>' + (done ? "✅ " : "") + esc(q.t) + '</b><span class="stat">' + (q.k === "hard" ? p + "%" : p + " / " + q.n) + '</span></div><div class="qbar"><span style="width:' + Math.round(p / q.n * 100) + '%"></span></div><div class="stat">Reward: ' + esc(q.rt) + (q.h ? " + " + q.h + " 💗" : "") + (done ? " · unlocked ♡" : "") + "</div></div>";
-    });
+    QUESTS.filter(function (q) { return !q.ev; }).forEach(function (q) { h += questRow(q); });
     return h + "</section>";
   }
   function vSettings() {
@@ -1271,7 +1538,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = [["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["coupons", "Coupons", (S.coupons || []).filter(function (c) { return !c.used; }).length || ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(qDone).length + "/" + QUESTS.length], ["settings", "Settings", ""]];
+    var items = (VIEW ? [["controls", "ZoZo's controls", ""]] : []).concat(hallo() ? [["event", "🎃 Spooky Season", QUESTS.filter(function (q) { return q.ev && !qDone(q); }).length || "✓"]] : []).concat([["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["coupons", "Coupons", (S.coupons || []).filter(function (c) { return !c.used; }).length || ""], ["focus", "Focus timer", S.focus ? "⏱️" : ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(function (q) { return !q.ev && qDone(q); }).length + "/" + QUESTS.filter(function (q) { return !q.ev; }).length], ["settings", "Settings", ""]]);
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -1293,6 +1560,19 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         (modal.msgs || []).map(function (m) { return "<div><b>" + esc(m) + "</b></div>"; }).join("") + goal +
         (modal.earned ? "<div><b>You earned a streak freeze 🧊</b></div>" : "") + '<div class="week">' + wk + '</div><div class="stat">Best: ' + st.best + " days · Freezes: " + (st.freeze ? "🧊".repeat(st.freeze) : "none") + " (one every 7 days, saves a missed day)</div>" +
         '<div class="btns" style="justify-content:center"><button class="btn" type="button" data-act="closemodal">' + (modal.fresh ? "Continue" : "Got it") + "</button></div></div></div>";
+      return;
+    }
+    if (modal.t === "recap") {
+      var w = weekStats(), cells = [["✅", w.done, "tasks done"], ["🔥", w.streak, "day streak"], ["⏱️", w.focus, "focus minutes"], ["💗", w.hearts, "hearts earned"], ["😇", w.angels, "angel numbers"], ["💌", w.notes, "notes to " + SHARE_WITH]];
+      root.innerHTML = '<div class="modal-bg cele" data-act="closemodal"><div class="cele-box" role="dialog" aria-modal="true" aria-label="Your week"><div class="cele-char">' + look(S.friend) + "</div><h2>Your week ✨</h2>" +
+        '<div class="recap">' + cells.map(function (c, i) { return '<div class="reward" style="animation-delay:' + (0.3 + i * 0.12) + 's">' + c[0] + "<b>" + fmtNum(c[1]) + "</b><small>" + esc(c[2]) + "</small></div>"; }).join("") + "</div>" +
+        '<div class="cele-q">' + (w.done >= 5 ? "What a week. So proud of you ♡" : w.done ? "Every little step counts ♡" : "A new week, a fresh start ♡") + '</div><button class="btn" type="button" data-act="closemodal">♡</button></div></div>';
+      return;
+    }
+    if (modal.t === "gift") {
+      var gg = (ctrl().surprises || []).filter(function (x) { return x.id === modal.id; })[0]; if (!gg) { modal = null; root.innerHTML = ""; return; }
+      root.innerHTML = '<div class="modal-bg cele" data-act="closemodal"><div class="confetti">' + (modal.fresh ? confettiHtml() : "") + '</div><div class="cele-box giftm' + (modal.fresh ? " fresh" : "") + '" role="dialog" aria-modal="true" aria-label="Surprise">' +
+        '<div class="gbox-wrap"><div class="gbox-big">🎁</div></div><div class="gift-content"><div class="g-emoji">' + esc(gg.emoji || "💝") + "</div><h2>" + esc(gg.title || "A surprise for you") + '</h2><div class="g-msg" dir="auto">' + esc(gg.msg || "") + '</div><div class="stat" style="color:#ffd1e1">from ' + esc(SHARE_WITH) + ' ♡</div><button class="btn" type="button" data-act="closemodal">♡</button></div></div></div>';
       return;
     }
     if (modal.t === "quest") {
@@ -1339,7 +1619,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function render() {
     if (VIEW && !S.viewed) { renderRail(); return; }
     renderRail(); renderAlerts(); renderStreak();
-    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, coupons: vCoupons, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
+    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, coupons: vCoupons, controls: vControls, focus: vFocus, event: vEvent, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
     $("main").innerHTML = (VIEW && (tab === "overview" || tab === "notes") ? viewTools() : "") + (v || vOverview)(); renderModal(); applyLook();
   }
   function commit() { checkQuests(); save(); render(); tick(); }
@@ -1394,6 +1674,45 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (a === "wnAll") { startTour(news().map(function (w) { return w[0]; })); return; }
     if (a === "streak") { modal = { t: "streak" }; renderModal(); return; }
     if (a === "pushOn") { enablePush(); return; }
+    if (a === "feed" || a === "pat") { doCare(a === "feed" ? "feed" : "pet"); return; }
+    if (a === "play") { if (has(id)) startDuo("play", id); return; }
+    if (a === "buyout") {
+      var price = SHOPOUT[id], have = S.hearts || 0; if (!price) return;
+      if (have < price) { toast("You need " + (price - have) + " more 💗"); return; }
+      S.hearts = have - price; if (!S.ownedOut) S.ownedOut = []; S.ownedOut.push(id); S.outfit = id; commit(); toast("New outfit! ✨"); return;
+    }
+    if (a === "focusGo") { var fm = +id; S.focus = { len: fm, start: Date.now(), end: Date.now() + fm * 60000 }; commit(); toast("Focus time! " + fm + " minutes 📚"); return; }
+    if (a === "focusStop") { if (confirmKey !== "fstop") { confirmKey = "fstop"; render(); return; } confirmKey = null; S.focus = null; commit(); toast("Stopped. You can try again anytime ♡"); return; }
+    if (a === "recap") { modal = { t: "recap" }; renderModal(); return; }
+    if (a === "answer") {
+      var qa = $("qAns").value.trim(); if (!qa) { $("qAns").focus(); return; }
+      var cq = currentQuestion(); if (!S.answers) S.answers = [];
+      S.answers.unshift({ qid: cq.id, q: cq.text, a: qa, at: Date.now() }); markActive(); commit(); toast(SHARE_WITH + " will see your answer ♡"); return;
+    }
+    if (a === "giftopen" || a === "giftview") {
+      if (a === "giftopen") { if (!S.opened) S.opened = {}; if (!S.opened[id]) { S.opened[id] = Date.now(); save(); } }
+      modal = { t: "gift", id: id, fresh: a === "giftopen" }; render(); return;
+    }
+    if (a === "hwSet") { if (id === "on") CTRL.halloween = true; else if (id === "off") CTRL.halloween = false; else delete CTRL.halloween; saveCtrl("Halloween mode updated 🎃"); return; }
+    if (a === "cdSave") { var cdd = $("cdDate").value; if (!cdd) { $("cdDate").focus(); return; } CTRL.countdown = { label: $("cdLabel").value.trim() || "Days until I see you ❤️", date: cdd }; saveCtrl("Countdown saved ⏳"); return; }
+    if (a === "cdClear") { delete CTRL.countdown; saveCtrl("Countdown removed"); return; }
+    if (a === "qSend") {
+      var qt = $("qOwn").value.trim() || (QUESTIONS[$("qPick").value] || ""); if (!qt) { $("qOwn").focus(); return; }
+      CTRL.q = { id: "z" + uid(), text: qt, at: Date.now() }; saveCtrl("Question sent 💭"); return;
+    }
+    if (a === "gAdd") {
+      var gw = $("gWhen").value, gv = $("gVal").value.trim();
+      if (gw === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(gv)) { toast("Type the date like 2026-12-01"); $("gVal").focus(); return; }
+      if ((gw === "streak" || gw === "tasks") && !(+gv > 0)) { toast("Type a number, like 10"); $("gVal").focus(); return; }
+      if (!CTRL.surprises) CTRL.surprises = [];
+      CTRL.surprises.push({ id: "g" + uid(), emoji: $("gEmoji").value, title: $("gTitle").value.trim() || "A little something", msg: $("gMsg").value.trim(), when: { t: gw, v: gw === "now" ? "" : gv } });
+      saveCtrl("Surprise added 🎁"); return;
+    }
+    if (a === "gDel") {
+      if (confirmKey !== "g" + id) { confirmKey = "g" + id; render(); return; }
+      confirmKey = null; CTRL.surprises = (CTRL.surprises || []).filter(function (g) { return g.id !== id; }); saveCtrl("Surprise deleted"); return;
+    }
+    if (a === "approve") { if (!CTRL.approved) CTRL.approved = {}; CTRL.approved[id] = Date.now(); saveCtrl("Accepted 😘 She'll see it next time she opens the planner."); return; }
     if (a === "vnote") {
       var vt = $("vNote").value.trim(); if (!vt) { $("vNote").focus(); return; }
       sbRpc("add_note", { p_pass: lsGet("petal-view-pass") || "", p_text: vt }).then(function (ok) {
@@ -1492,6 +1811,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var el = e.target.closest("[data-act]"); if (!el) return;
     var a = el.getAttribute("data-act"), id = el.getAttribute("data-id");
     if (a === "toggle") { S.assignments.forEach(function (x) { if (x.id === id) { x.done = el.checked; if (el.checked) markDone(x); if (el.checked && x.rem) x.rem.done = true; } }); if (el.checked) markActive(); commit(); if (el.checked) celebrate(); }
+    else if (a === "ggoal") { var gv = parseFloat(el.value); if (!S.gGoal) S.gGoal = {}; if (gv > 0 && gv <= 100) S.gGoal[id] = gv; else delete S.gGoal[id]; commit(); }
     else if (a === "field") { var s = subj(id), p = el.getAttribute("data-p"); s[p] = el.value.trim() || (p === "n" ? "Subject" : ""); commit(); }
     else if (a === "slotT") { var sl2 = S.slots[+el.getAttribute("data-i")]; if (el.value) sl2[el.getAttribute("data-f")] = el.value; commit(); }
     else if (a === "slot") { var key = el.getAttribute("data-key"); if (el.value) S.tt[key] = el.value; else delete S.tt[key]; commit(); }
@@ -1544,6 +1864,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (!has(S.friend)) S.friend = "bunny";
     if (!has(S.outfit)) S.outfit = "cap";
     petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit); petEl.setAttribute("data-acc", has(S.acc || "") ? S.acc || "" : "");
+    petEl.setAttribute("data-spooky", hallo() ? "1" : "0"); applySpooky();
     petEl.setAttribute("data-buddy", (S.friend === "kitten" || S.friend === "cat") && has("naps") ? "1" : "0");
     if (PT.fName) setFace(PT.fName);
   }
@@ -1598,8 +1919,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function sweetTalk() {
     var h = new Date().getHours(), n = S.name ? ", " + S.name : "";
     var lines = S.friend === "plush" ? ["*squish* ♡", "hug me? 🤍"] : S.friend === "bunny" ? [] : ["meow ♡", "purrr…", "mrrp? 🐾"];
+    var md = mood(); if (md === "sad") lines.push("I missed you 🥺", "where were you? 🥺"); else if (md === "hungry") lines.push("I'm hungry… feed me? 🥺");
+    if (S.focus) lines = ["keep going! 📚", "you're doing so well 📖", "focus mode ✨", "almost there!"];
     var sk = streakNow(); if (sk && streak().last !== iso(new Date()) && h >= 16) lines.push("don't lose your " + sk + "-day streak! 🔥", "our streak! do one thing today? 🔥");
     lines = lines.concat(["you've got this" + n + " ♡", "drink some water 💧", "proud of you ♡", "one step at a time 🌸", "take a little break? ☕", "you're doing great" + n + "!"]);
+    if (hallo()) lines.push("happy spooky season 🎃", "boo! 👻", "trick or treat? 🍬");
     if (h >= 23 || h < 4) lines.push("it's late… go to sleep 🌙"); else if (h < 11) lines.push("good morning" + n + " ☀️");
     say(pick(lines), 3200); PT.next = 3500 + Math.random() * 3000;
   }
@@ -1622,7 +1946,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     e_wave: ["waving", "happy", "hi hi! 👋", ["👋", "♡"]], e_blowkiss: ["idle", "kiss", "mwah! 😘", ["💋", "♡", "💗"]],
     e_hearthands: ["hop", "kiss", "love you 🫶", ["🫶", "♡", "💗"]], e_cheer: ["hop", "happy", "yay!! 🎉", ["🎉", "✨", "⭐"]],
     e_twirl: ["twirl", "happy", "wheee 💫", ["💫", "✨"]], e_letter: ["idle", "happy", "a letter for " + SHARE_WITH + " 💌", ["💌", "♡"]],
-    e_shy: ["shy", "kiss", "hehe… 😊", ["💗", "♡"]]
+    e_shy: ["shy", "kiss", "hehe… 😊", ["💗", "♡"]],
+    e_boo: ["hop", "angry", "BOO! 👻", ["👻", "💀"]], e_trick: ["hop", "kiss", "trick or treat! 🍬", ["🍬", "🍭", "🎃"]],
+    e_spooky: ["dance", "happy", "spooky dance 💀", ["💀", "🦇", "🎃"]]
   };
   var himEl = null;
   function playEmote(id) {
@@ -1633,30 +1959,38 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     PT.st = "emote"; PT.t = 3400; PT.hT = 0; PT.eF = c[3]; PT.tg = null; PT.after = null; PT.sleepGet = null; zEl.hidden = true;
     setCls(c[0]); setFace(c[1]); say(c[2], 3000);
   }
-  function startDuo(id) {
+  function careAnim(kind) {
+    if (layer.hidden || PT.st === "duo") return;
+    PT.st = "emote"; PT.t = 2600; PT.hT = 0; PT.tg = null; PT.after = null; PT.sleepGet = null; zEl.hidden = true;
+    if (kind === "feed") { PT.eF = [FOOD[S.friend] || "🍪", "♡"]; setCls("munch"); setFace("chew"); say(pick(["nom nom!", "yummy ♡", "thank you!!"]), 2200); }
+    else { PT.eF = ["♡", "💗", "✨"]; setCls("hop"); setFace("kiss"); say(pick(["hehe ♡", "more pets!", "I love you 🥰"]), 2200); }
+  }
+  function startDuo(id, who) {
+    who = who || "him";
     var s = psize(), fromLeft = PT.x > window.innerWidth / 2, gap = id === "e_makeout" ? 0.48 : 0.6;
     var sx = fromLeft ? -s - 30 : window.innerWidth + 30, tx = fromLeft ? PT.x - s * gap : PT.x + s * gap;
-    PT.st = "duo"; PT.duoId = id; PT.t = id === "e_makeout" ? 7000 : 4600; PT.hT = 0; PT.duoSx = sx; PT.duoArr = false;
+    PT.st = "duo"; PT.duoId = id; PT.duoWho = who; PT.t = id === "e_makeout" ? 7000 : 4600; PT.hT = 0; PT.duoSx = sx; PT.duoArr = false;
     PT.tg = null; PT.after = null; PT.sleepGet = null; zEl.hidden = true; PT.y = restY(); setCls("idle"); setFace("happy");
-    say(id === "e_makeout" ? SHARE_WITH + "!! 😳" : SHARE_WITH + "! 🤗", 1600);
-    himEl = document.createElement("div"); himEl.className = "duo walk"; himEl.setAttribute("data-char", "him"); himEl.setAttribute("data-outfit", "none");
-    himEl.innerHTML = '<div class="duo-flip" style="width:100%;height:100%;transform:scaleX(' + (fromLeft ? 1 : -1) + ')"><div class="duo-body">' + prevSVG("happy", "him") + "</div></div>";
+    say(id === "play" ? friendName(who) + "! ✨" : id === "e_makeout" ? SHARE_WITH + "!! 😳" : SHARE_WITH + "! 🤗", 1600);
+    himEl = document.createElement("div"); himEl.className = "duo walk"; himEl.setAttribute("data-char", who); himEl.setAttribute("data-outfit", "none"); himEl.setAttribute("data-spooky", hallo() ? "1" : "0");
+    himEl.innerHTML = '<div class="duo-flip" style="width:100%;height:100%;transform:scaleX(' + (fromLeft ? 1 : -1) + ')"><div class="duo-body">' + prevSVG("happy", who) + "</div></div>";
     himEl.style.width = himEl.style.height = s + "px"; himEl.style.transform = "translate(" + sx + "px," + PT.y + "px)"; layer.appendChild(himEl);
-    var lean = (fromLeft ? -1 : 1) * (id === "e_makeout" ? 14 : 9);
+    var lean = (fromLeft ? -1 : 1) * (id === "e_makeout" ? 14 : id === "play" ? 0 : 9);
     setTimeout(function () { if (!himEl) return; himEl.style.transition = "transform 1.6s linear"; himEl.style.transform = "translate(" + tx + "px," + PT.y + "px)"; }, 30);
     setTimeout(function () {
       if (!himEl || PT.st !== "duo") return;
       PT.duoArr = true; himEl.classList.remove("walk");
       himEl.querySelector(".duo-body").style.transform = "rotate(" + (-lean) + "deg)";
       petEl.style.setProperty("--lean", lean + "deg"); setCls("duoing");
-      var f = id === "e_makeout" ? "kiss" : "blink"; setFace(f); himEl.querySelector(".face").innerHTML = faceFor(f, "him");
-      say(id === "e_makeout" ? "💋💋💋" : "hug time 🤗", 2600);
+      var f = id === "e_makeout" ? "kiss" : id === "play" ? "happy" : "blink"; setFace(f); himEl.querySelector(".face").innerHTML = faceFor(f, who);
+      if (id === "play") { setCls("hop"); himEl.classList.add("walk"); }
+      say(id === "e_makeout" ? "💋💋💋" : id === "play" ? "playtime! ✨" : "hug time 🤗", 2600);
     }, 1700);
   }
   function endDuo() {
     var el = himEl; himEl = null; petEl.style.removeProperty("--lean");
     if (el) { el.classList.add("walk"); el.querySelector(".duo-body").style.transform = ""; el.style.transform = "translate(" + PT.duoSx + "px," + PT.y + "px)"; setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1700); }
-    toIdle(3000); say(PT.duoId === "e_makeout" ? "*blushing* 🥰" : "♡", 2000);
+    toIdle(3000); say(PT.duoId === "e_makeout" ? "*blushing* 🥰" : PT.duoId === "play" ? "that was fun!" : "♡", 2000);
   }
   function celebrate() {
     if (layer.hidden || PT.st === "trip" || PT.st === "cry" || PT.st === "lecture") return;
@@ -1670,7 +2004,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     else if (r < 0.55) startDance();
     else if (r < 0.64) startSnack();
     else if (r < 0.74) startSail();
-    else if (r < 0.86) sweetTalk();
+    else if (r < 0.83) sweetTalk();
+    else if (r < 0.88) { var pals = FRIENDS.filter(function (f) { return f[0] !== S.friend && has(f[0]); }); if (pals.length) startDuo("play", pick(pals)[0]); else wander(); }
     else wander();
   }
   function flee(txt) {
@@ -1793,7 +2128,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       if (PT.t <= 0) toIdle();
     } else if (PT.st === "duo") {
       PT.t -= dt * 1000; PT.hT -= dt * 1000;
-      if (PT.duoArr && PT.hT <= 0) { PT.hT = PT.duoId === "e_makeout" ? 170 : 420; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize() * 1.4, PT.y + 4 + Math.random() * 20, PT.duoId === "e_makeout" ? pick(["💋", "💗", "♡", "💕"]) : pick(["♡", "🤍", "💗"])); }
+      if (PT.duoArr && PT.hT <= 0) { PT.hT = PT.duoId === "e_makeout" ? 170 : 420; heart(PT.x + psize() / 2 + (Math.random() - 0.5) * psize() * 1.4, PT.y + 4 + Math.random() * 20, PT.duoId === "e_makeout" ? pick(["💋", "💗", "♡", "💕"]) : PT.duoId === "play" ? pick(["✨", "♪", "⭐"]) : pick(["♡", "🤍", "💗"])); }
       if (PT.t <= 0) endDuo();
     } else if (PT.st === "party") {
       PT.t -= dt * 1000; if (PT.t <= 0) toIdle(2500);
@@ -1827,6 +2162,18 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   (function () { var st = stats(), d = iso(new Date()); if (st.days.indexOf(d) < 0) { st.days.push(d); if (st.days.length > 60) st.days.shift(); } dailyHearts(); checkQuests(); save(); })();
   applyTheme(); render(); tick();
   setInterval(tick, 15000);
+  setInterval(function () {
+    var f = S.focus; if (!f || VIEW) return;
+    var left = f.end - Date.now(), el = $("focusLeft");
+    if (left > 0) { if (el) { el.textContent = mmss(left); el.parentNode.style.setProperty("--p", (1 - left / (f.len * 60000)).toFixed(3)); } return; }
+    S.focus = null; S.focusDone = (S.focusDone || 0) + 1; S.focusMins = (S.focusMins || 0) + f.len;
+    if (!S.focusLog) S.focusLog = []; S.focusLog.push({ at: Date.now(), len: f.len }); if (S.focusLog.length > 100) S.focusLog.shift();
+    addHearts(3); markActive(); commit(); toast("Focus session done! +3 💗"); celebrate();
+    try { if (Notification.permission === "granted") new Notification("Focus session done 🎉", { body: "+3 💗 Take a little break ♡", icon: "icons/icon-192.png" }); } catch (e) {}
+  }, 1000);
+  if (!VIEW && new Date().getDay() === 0 && S.recapWk !== iso(new Date())) setTimeout(function () {
+    if (modal) return; modal = { t: "recap" }; renderModal(); S.recapWk = iso(new Date()); S.recapHE = S.heartsEarned || 0; save();
+  }, 6500);
   if (DEMO) { var dm = document.createElement("div"); dm.textContent = "Demo mode: nothing is saved or sent ♡"; dm.style.cssText = "position:fixed;top:0;left:50%;transform:translateX(-50%);background:#e8590c;color:#fff;font:700 12px sans-serif;padding:4px 12px;border-radius:0 0 12px 12px;z-index:70"; document.body.appendChild(dm); }
   if (VIEW) {
     loadView();

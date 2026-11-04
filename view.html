@@ -10,10 +10,45 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Petal View">
 <meta name="theme-color" content="#2a1b22">
-<style>html, body { margin: 0; height: 100%; background: #2a1b22; } iframe { border: 0; width: 100%; height: 100%; display: block; }</style>
+<style>
+html, body { margin: 0; height: 100%; background: #2a1b22; }
+iframe { border: 0; width: 100%; height: 100%; display: block; }
+#bell { position: fixed; right: 12px; bottom: 12px; z-index: 10; border: 0; border-radius: 999px; padding: 10px 14px; background: #f48fb1; color: #3a1028; font: 700 14px system-ui, sans-serif; box-shadow: 0 4px 14px rgba(0,0,0,.35); cursor: pointer; }
+</style>
 </head>
 <body>
 <!-- The view-only planner, kept on its own page so a home-screen icon can never open the normal app. -->
 <iframe src="index.html?view" title="Petal View"></iframe>
+<!-- Notifications for ZoZo's phone are asked for here, in the top page, where phones allow it. -->
+<button id="bell" type="button" hidden>🔔 Notify me</button>
+<script>
+(function () {
+  var SB_URL = "https://scrmqwetvtlscsiqhsny.supabase.co", SB_KEY = "sb_publishable_ymbj3CZKK_TUeV4ivNZIXA_vAW901ig";
+  var VAPID = "BGK8QxnhLHeIkF2KRLVZg2l3FeQis2eiM2vEQd6CRB7iBdN6poa5ZLfZ96woNSU95u51h-l7osfplE0Gkhsx2mI";
+  var bell = document.getElementById("bell");
+  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) return;
+  navigator.serviceWorker.register("sw.js").catch(function () {});
+  function key(s) { var b = atob((s + "===".slice((s.length + 3) % 4)).replace(/-/g, "+").replace(/_/g, "/")), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  function send(sub) {
+    var pass = ""; try { pass = localStorage.getItem("petal-view-pass") || ""; } catch (e) {}
+    if (!pass) { alert("Open Petal View with your passcode first."); return Promise.reject(); }
+    return fetch(SB_URL + "/rest/v1/rpc/set_viewer_push", { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ p_pass: pass, p_sub: sub }) })
+      .then(function (r) { return r.json(); }).then(function (ok) { if (!ok) throw new Error("no"); });
+  }
+  function subscribe() {
+    return navigator.serviceWorker.ready.then(function (reg) {
+      return reg.pushManager.getSubscription().then(function (s) { return s || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key(VAPID) }); });
+    }).then(function (sub) { return send(sub.toJSON()); });
+  }
+  if (Notification.permission === "granted") { subscribe().then(function () { bell.hidden = true; }).catch(function () { bell.hidden = false; }); }
+  else bell.hidden = false;
+  bell.addEventListener("click", function () {
+    Notification.requestPermission().then(function (p) {
+      if (p !== "granted") { alert("Notifications are blocked. Allow them in your phone settings."); return; }
+      return subscribe().then(function () { bell.textContent = "🔔 On"; setTimeout(function () { bell.hidden = true; }, 1500); });
+    }).catch(function () { alert("Couldn't turn on notifications. Try again while online."); });
+  });
+})();
+</script>
 </body>
 </html>
