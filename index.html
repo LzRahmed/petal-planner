@@ -231,6 +231,44 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 .ev-rewards { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
 .ev-rewards .fcard { background: rgba(0, 0, 0, .25); padding: 6px 10px; }
 .ev-rewards .fcard b { color: #ffd1a1; }
+[data-char="odyssey"] .char-bunny, [data-char="odyssey"] .char-odyssey { display: inline; }
+.suit, .prop { display: none; }
+[data-suit="writer"] .suit-writer, [data-suit="greek"] .suit-greek, [data-suit="captain"] .suit-captain { display: inline; }
+[data-suit="writer"] .outfit, [data-suit="greek"] .outfit, [data-suit="captain"] .outfit, [data-char="odyssey"] .outfit, [data-suit="greek"] .sig-head, [data-suit="captain"] .sig-head { display: none !important; }
+#pet.fighting .prop-sword, #pet.fighting:not([data-char="odyssey"]) .prop-shield, #pet.writing .prop-paper, #pet.writing .prop-quill, #pet.gaming .prop-pad { display: inline; }
+#pet .prop-sword { transform-box: view-box; transform-origin: 56px 64px; }
+#pet.fighting .prop-sword { animation: swordSwing .42s ease-in-out infinite; }
+#pet.fighting #petBody { animation: lunge .42s ease-in-out infinite; }
+#pet .prop-quill { transform-box: view-box; transform-origin: 54px 66px; }
+#pet.writing .prop-quill { animation: quill .6s ease-in-out infinite; }
+#pet.gaming .prop-pad { animation: bob .2s ease-in-out infinite; }
+@keyframes swordSwing { 0%, 100% { transform: rotate(-35deg); } 50% { transform: rotate(35deg); } }
+@keyframes lunge { 50% { transform: translateX(3px) rotate(3deg); } }
+@keyframes quill { 0%, 100% { transform: rotate(-6deg) translateX(0); } 50% { transform: rotate(6deg) translateX(-3px); } }
+.gamebox { position: relative; height: 440px; border-radius: 20px; overflow: hidden; background: linear-gradient(#1d2f6a, #2f5fa8 55%, #3a8fd0); touch-action: none; user-select: none; }
+.gamebox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gamebox .gplayer { position: absolute; bottom: 26px; left: 0; width: 76px; height: 76px; pointer-events: none; }
+.gamebox .gplayer .petprev { width: 76px; height: 76px; padding: 0; }
+.gamebox .ghud { position: absolute; top: 10px; left: 12px; right: 12px; display: flex; justify-content: space-between; color: #fff; font: 800 18px var(--body); text-shadow: 0 2px 4px rgba(0, 0, 0, .4); pointer-events: none; }
+.gamebox .gover { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: #fff; background: rgba(10, 20, 50, .55); }
+.gamebox .gover b { font: 900 30px var(--display); display: block; }
+.moment-hero { background: linear-gradient(135deg, #fff0e0, #ffe0ec); color: #5a2a48; border: 0; }
+.moment-hero h2, .moment-hero .note { color: #6a2a45; }
+.moms { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.mom { margin: 0; background: #fffef8; padding: 8px 8px 10px; border-radius: 4px; box-shadow: var(--shadow); display: grid; gap: 4px; cursor: zoom-in; color: #4a2c3a; }
+.mom img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 2px; }
+.mom figcaption { font: 700 16px var(--hand); min-height: 1em; }
+.mom small { font: 700 10px var(--body); color: #99727f; }
+.mom.big { cursor: default; } .mom.big input { border: 0; background: transparent; font: 700 18px var(--hand); color: #4a2c3a; }
+.recap-moms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; }
+.recap-moms img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 3px solid #fff; }
+.song { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1.5px dashed var(--line); }
+.song:last-child { border-bottom: 0; } .song > div:nth-child(2) { flex: 1; } .sg-ic { font-size: 28px; }
+.movies { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.movie { background: var(--bg); border-radius: 16px; padding: 10px; display: grid; gap: 6px; justify-items: center; text-align: center; }
+.movie img, .movie .noposter { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 10px; }
+.movie .noposter { display: grid; place-items: center; font-size: 46px; background: var(--accent-soft); }
+.dayc textarea { min-height: 70px; }
 .ring { width: 210px; height: 210px; margin: 10px auto; border-radius: 50%; background: conic-gradient(var(--accent) calc(var(--p, 0) * 360deg), var(--accent-soft) 0); display: grid; place-items: center; }
 .ring .t { width: 170px; height: 170px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font: 900 42px var(--display); color: var(--accent); }
 .ggoal { width: 64px; padding: 3px 6px; border-radius: 10px; text-align: center; }
@@ -446,6 +484,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
           <path d="M11.4 69 h1.8 l-.9 1 Z" fill="#f6a3bd"/>
         </g>
         <g class="sig sig-bunny"><path d="M26 52 Q12 40 4 46 Q8 50 6 55 Q12 53 14 58 Q19 54 26 58 Z M54 52 Q68 40 76 46 Q72 50 74 55 Q68 53 66 58 Q61 54 54 58 Z" fill="#3a2350" stroke="#1d1030" stroke-width="1.6" stroke-linejoin="round"/></g><g class="sig sig-cat"><path d="M19 46 Q9 62 13 78 L67 78 Q71 62 61 46 Q51 51 40 51 Q29 51 19 46 Z" fill="#1d1018" stroke="#0a0508" stroke-width="1.6"/><path d="M22 48 Q14 62 17 76 L63 76 Q66 62 58 48 Q49 52 40 52 Q31 52 22 48 Z" fill="#b3123a"/><path d="M24 46 L13 30 L30 41 Z M56 46 L67 30 L50 41 Z" fill="#1d1018" stroke="#0a0508" stroke-width="1.4" stroke-linejoin="round"/></g><g class="char char-vamp"><path d="M18 46 Q8 62 12 78 L68 78 Q72 62 62 46 Q51 51 40 51 Q29 51 18 46 Z" fill="#14090f" stroke="#050204" stroke-width="1.6"/><path d="M21 48 Q13 62 16 76 L64 76 Q67 62 59 48 Q49 52 40 52 Q31 52 21 48 Z" fill="#a50f33"/><path d="M23 46 L11 26 L31 41 Z M57 46 L69 26 L49 41 Z" fill="#14090f" stroke="#050204" stroke-width="1.4" stroke-linejoin="round"/><path d="M24 44 L15 30 L30 41 Z M56 44 L65 30 L50 41 Z" fill="#a50f33"/></g>
+        <g class="char char-odyssey"><path d="M20 46 Q10 62 14 78 L66 78 Q70 62 60 46 Q50 50 40 50 Q30 50 20 46 Z" fill="#a3162a" stroke="#5a0a16" stroke-width="1.6"/></g>
         <g id="petBag" class="bag-only">
           <rect x="57" y="46" width="20" height="24" rx="7" fill="#f08fae" stroke="#b0607a" stroke-width="2.5"/>
           <rect x="61" y="56" width="12" height="8" rx="3" fill="#ffd3df" stroke="#b0607a" stroke-width="1.5"/>
@@ -513,6 +552,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         </g>
         <g class="char char-him"><ellipse class="foot foot-l" cx="31" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><ellipse class="foot foot-r" cx="49" cy="73.5" rx="7" ry="3.8" fill="#2a2730" stroke="#0b0a0c" stroke-width="2.2"/><path d="M28 47 L52 47 Q58 60 58 73 Q40 78 22 73 Q22 60 28 47 Z" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.4" stroke-linejoin="round"/><path d="M34 47 L40 61 L46 47 Z" fill="#2c2a31"/><path d="M34 47 L37.5 58 L30.5 52 Z M46 47 L42.5 58 L49.5 52 Z" fill="#26232a" stroke="#0b0a0c" stroke-width=".9" stroke-linejoin="round"/><circle cx="40" cy="64" r=".95" fill="#5a5660"/><circle cx="40" cy="69" r=".95" fill="#5a5660"/><g class="arm arm-l"><ellipse cx="25" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="27.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/><g class="acc-bracelet"><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#b9b0b8" stroke-width="2.6"/><ellipse cx="25.2" cy="59.4" rx="3.8" ry="1.4" fill="none" stroke="#ffffff" stroke-width="1.5"/><path d="M25.20 59.00 L25.70 60.31 L27.10 60.38 L26.01 61.26 L26.38 62.62 L25.20 61.85 L24.02 62.62 L24.39 61.26 L23.30 60.38 L24.70 60.31 Z" fill="#ffffff" stroke="#a9a0a8" stroke-width=".5" stroke-linejoin="round"/></g></g><g class="arm arm-r"><ellipse cx="55" cy="62.5" rx="3.7" ry="4" fill="#e6b48a" stroke="#8a5634" stroke-width="1.8"/><ellipse cx="52.5" cy="55" rx="5.2" ry="6" fill="#1d1b20" stroke="#0b0a0c" stroke-width="2.2"/></g></g>
         <g class="char char-boo"><path d="M40 12 Q17 12 17 40 L17 66 Q21 72 25 66 Q29 72 33 66 Q37 72 40 66 Q43 72 47 66 Q51 72 55 66 Q59 72 63 66 L63 40 Q63 12 40 12 Z" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2.2" stroke-linejoin="round"/><path d="M24 56 Q40 62 56 56" stroke="#e9e4f7" stroke-width="3" fill="none"/><g class="arm arm-l"><ellipse cx="18" cy="48" rx="4" ry="6" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2" transform="rotate(30 18 48)"/></g><g class="arm arm-r"><ellipse cx="62" cy="48" rx="4" ry="6" fill="#fbfaff" stroke="#b9b2d6" stroke-width="2" transform="rotate(-30 62 48)"/></g><ellipse cx="28" cy="44" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".75"/><ellipse cx="52" cy="44" rx="3.6" ry="2.4" fill="#ffb3c6" opacity=".75"/></g>
+        <g class="char char-odyssey"><path d="M27 47 L53 47 Q57 56 55 66 Q40 70 25 66 Q23 56 27 47 Z" fill="#c88a3a" stroke="#7a4a14" stroke-width="2"/><path d="M33 52 q7 3 14 0 M34 58 q6 2 12 0 M40 51 v13" stroke="#9a6224" stroke-width="1.3" fill="none"/><rect x="26.0" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="30.6" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="35.2" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="39.8" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="44.4" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="49.0" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><rect x="53.599999999999994" y="65" width="4" height="9" rx="1" fill="#7a4a24" stroke="#4a2a12" stroke-width=".6"/><ellipse cx="24" cy="50" rx="7.5" ry="5.4" fill="#c88a3a" stroke="#7a4a14" stroke-width="1.8"/><ellipse cx="56" cy="50" rx="7.5" ry="5.4" fill="#c88a3a" stroke="#7a4a14" stroke-width="1.8"/><path d="M19 50 q5 -3 10 0 M51 50 q5 -3 10 0" stroke="#e8b26a" stroke-width="1" fill="none"/></g><g class="suit suit-writer"><path d="M28 47 L52 47 Q57 52 58 60 L60 75 L55 76 L53 60 Q47 63 40 63 Q33 63 27 60 L25 76 L20 75 L22 60 Q23 52 28 47 Z" fill="#4a2f22" stroke="#24150e" stroke-width="1.8" stroke-linejoin="round"/><path d="M34.5 48 L45.5 48 L45.5 61 L40 64 L34.5 61 Z" fill="#c8a46a" stroke="#7a5a2a" stroke-width="1"/><circle cx="40" cy="54" r=".8" fill="#5a4020"/><circle cx="40" cy="57.5" r=".8" fill="#5a4020"/><circle cx="40" cy="61" r=".8" fill="#5a4020"/><path d="M34.5 48 L37.5 57 L31 52 Z M45.5 48 L42.5 57 L49 52 Z" fill="#3a2419" stroke="#24150e" stroke-width=".8" stroke-linejoin="round"/><path d="M41 59.5 q3 3 5 1" stroke="#e0b84a" stroke-width=".9" fill="none"/><circle cx="46.4" cy="60.4" r="1" fill="#e0b84a"/><path d="M35 46 Q40 44 45 46 Q46 50 40 52 Q34 50 35 46 Z M38.5 51 L40 56 L41.5 51 Z" fill="#fffdf6" stroke="#cfc8b8" stroke-width=".8"/><path d="M49.5 57 Q51 47 56 39 Q55 48 50.5 57 Z" fill="#fffdf6" stroke="#b9b2a2" stroke-width=".7"/><path d="M50 57 L55.4 40" stroke="#8a8274" stroke-width=".5"/></g><g class="suit suit-greek"><path d="M28 47 L52 47 Q56 56 56 66 Q40 69 24 66 Q24 56 28 47 Z" fill="#fbf7ee" stroke="#d8cfb8" stroke-width="1.6"/><path d="M30 47 Q40 56 52 66" stroke="#e6dcc4" stroke-width="1.6" fill="none"/><path d="M24.5 64.5 Q40 67.5 55.5 64.5" stroke="#d4a017" stroke-width="2.2" fill="none"/><path d="M27 56 Q40 58 53 56" stroke="#d4a017" stroke-width="1.8" fill="none"/><circle cx="31" cy="48.5" r="1.8" fill="#d4a017"/><circle cx="49" cy="48.5" r="1.8" fill="#d4a017"/></g><g class="suit suit-captain"><path d="M28 47 L52 47 Q56 56 56 66 Q40 69 24 66 Q24 56 28 47 Z" fill="#1f2f5a" stroke="#0e1830" stroke-width="1.6"/><path d="M34 47 L40 53 L46 47" stroke="#fafafa" stroke-width="2" fill="none"/><circle cx="36" cy="55" r="1.1" fill="#f2c14e"/><circle cx="36" cy="59.5" r="1.1" fill="#f2c14e"/><circle cx="36" cy="64" r="1.1" fill="#f2c14e"/><circle cx="44" cy="55" r="1.1" fill="#f2c14e"/><circle cx="44" cy="59.5" r="1.1" fill="#f2c14e"/><circle cx="44" cy="64" r="1.1" fill="#f2c14e"/><ellipse cx="27" cy="49" rx="4.8" ry="2.1" fill="#f2c14e" stroke="#b88a1c" stroke-width=".8"/><ellipse cx="53" cy="49" rx="4.8" ry="2.1" fill="#f2c14e" stroke="#b88a1c" stroke-width=".8"/><path d="M23 51 v2 M25 51.4 v2 M27 51.6 v2 M29 51.4 v2 M31 51 v2 M49 51 v2 M51 51.4 v2 M53 51.6 v2 M55 51.4 v2 M57 51 v2" stroke="#e0b84a" stroke-width=".8"/></g>
         <path id="petStrap" class="bag-only" d="M46 50 q7 7 8 17" stroke="#f08fae" stroke-width="3.4" fill="none" stroke-linecap="round"/>
         <g class="sail-only"><path d="M29 48.5 L51 48.5 L47 58 L40 53 L33 58 Z" fill="#2f5fa8" stroke="#1d3c6e" stroke-width="1.6" stroke-linejoin="round"/><path d="M31 51 L49 51" stroke="#fffafa" stroke-width="1.4"/><path d="M38 54 l2 3 l2 -3 Z" fill="#e5484d"/></g>
         <g class="sleep-only blanket"><path d="M12 56 Q40 49 68 56 L70 79 Q40 83 10 79 Z" fill="#f7a8c0" stroke="#c9718e" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 61 Q40 54 69 61" stroke="#fff4f7" stroke-width="3" fill="none"/><path d="M24 68 h4 M40 70 h4 M56 68 h4 M32 75 h4 M48 75 h4" stroke="#fff4f7" stroke-width="2.4" stroke-linecap="round"/></g>
@@ -558,6 +598,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         <g id="petFace" class="face"></g>
         <g class="sail-only"><path d="M28 21 Q40 2 52 21 Z" fill="#fffafa" stroke="#c9b7bd" stroke-width="2" stroke-linejoin="round"/><rect x="25" y="18" width="30" height="7" rx="3.5" fill="#fffafa" stroke="#c9b7bd" stroke-width="2"/><path d="M27 21.5 h26" stroke="#2f5fa8" stroke-width="2"/></g>
         <path class="sig sig-kitten sig-head" d="M29 21 Q27 13 31 10 Q31 16 34 19 Z M51 21 Q53 13 49 10 Q49 16 46 19 Z" fill="#e5484d" stroke="#8a1c22" stroke-width="1.2" stroke-linejoin="round"/><g class="sig sig-plush"><path d="M56 62 q7 -9 14 0" stroke="#3a2a22" stroke-width="1.4" fill="none"/><ellipse cx="63" cy="68" rx="7.5" ry="6.5" fill="#f28c28" stroke="#b5571a" stroke-width="1.6"/><path d="M60 66.5 l1.6 -2 l1.6 2 Z M64.4 66.5 l1.6 -2 l1.6 2 Z M60 70 q3 2.4 6 0" fill="#ffd166" stroke="#a04a12" stroke-width=".6"/></g><g class="char char-vamp"><path d="M37.2 45.2 l1 2.6 l1 -2.6 Z M40.8 45.2 l1 2.6 l1 -2.6 Z" fill="#fff" stroke="#9a9aa8" stroke-width=".5" stroke-linejoin="round"/></g><g class="outfit outfit-shades"><rect x="26.5" y="34" width="12" height="7.5" rx="3.2" fill="#1c1a22" stroke="#000" stroke-width="1"/><rect x="41.5" y="34" width="12" height="7.5" rx="3.2" fill="#1c1a22" stroke="#000" stroke-width="1"/><path d="M38.5 36.5 h3 M26.5 36 l-5 -1.5 M53.5 36 l5 -1.5" stroke="#1c1a22" stroke-width="1.6" stroke-linecap="round"/><path d="M28.5 35.6 h3 M43.5 35.6 h3" stroke="#fff" stroke-width="1" opacity=".6"/></g><g class="outfit outfit-beanie"><path d="M21 27 Q21 9 40 9 Q59 9 59 27 Z" fill="#8ecdf0" stroke="#4b8fb8" stroke-width="1.8"/><path d="M29 14 v8 M35 11 v11 M45 11 v11 M51 14 v8" stroke="#6fb8e0" stroke-width="1.2"/><rect x="19.5" y="23" width="41" height="7" rx="3.5" fill="#5fa8d3" stroke="#4b8fb8" stroke-width="1.4"/><circle cx="40" cy="7" r="4.2" fill="#fff" stroke="#c8d8e8" stroke-width="1.2"/></g><g class="outfit outfit-hearts"><path d="M22 27 Q40 9 58 27" stroke="#f06c96" stroke-width="2.4" fill="none"/><path d="M31 19.5 v-3 M49 19.5 v-3" stroke="#f06c96" stroke-width="1.4"/><path d="M31 16 C25 12 28 6.5 31 10 C34 6.5 37 12 31 16 Z" fill="#f06c96" stroke="#b8456b" stroke-width=".8"/><path d="M49 16 C43 12 46 6.5 49 10 C52 6.5 55 12 49 16 Z" fill="#f06c96" stroke="#b8456b" stroke-width=".8"/></g><g class="outfit outfit-witch"><path d="M27 22 Q33 6 46 -6 Q44 6 53 22 Z" fill="#2a1d36" stroke="#120b18" stroke-width="1.8" stroke-linejoin="round"/><rect x="28.5" y="16" width="23.5" height="4" rx="1.2" fill="#8e44ad"/><rect x="37.5" y="15.5" width="5" height="5" rx="1" fill="none" stroke="#f2c14e" stroke-width="1.3"/><ellipse cx="40" cy="22" rx="24" ry="4.6" fill="#2a1d36" stroke="#120b18" stroke-width="1.8"/></g><g class="outfit outfit-horse"><path d="M27 12 L29 -3 L35 9 Z M53 12 L51 -3 L45 9 Z" fill="#8b5a2b" stroke="#4a2e14" stroke-width="1.6" stroke-linejoin="round"/><path d="M29.5 9 l1 -7 l3 6 Z M50.5 9 l-1 -7 l-3 6 Z" fill="#e3a8a0"/><ellipse cx="40" cy="27" rx="17.5" ry="21" fill="#8b5a2b" stroke="#4a2e14" stroke-width="2"/><path d="M34 7 q3 -5 6 0 q3 -6 6 0 q-1 6 -6 9 q-5 -3 -6 -9 Z" fill="#3b2414"/><ellipse cx="40" cy="45" rx="13.5" ry="10" fill="#c9a27a" stroke="#4a2e14" stroke-width="1.8"/><ellipse cx="35.5" cy="46" rx="1.8" ry="2.6" fill="#3b2414"/><ellipse cx="44.5" cy="46" rx="1.8" ry="2.6" fill="#3b2414"/><path d="M34 51.5 q6 2.4 12 0" stroke="#3b2414" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="32" cy="26" r="3.4" fill="#fff" stroke="#4a2e14" stroke-width="1"/><circle cx="48" cy="26" r="3.4" fill="#fff" stroke="#4a2e14" stroke-width="1"/><circle cx="32.6" cy="26.8" r="1.6" fill="#1a1010"/><circle cx="47.4" cy="26.8" r="1.6" fill="#1a1010"/><path d="M28.6 26 a3.4 3.4 0 0 1 6.8 0 Z M44.6 26 a3.4 3.4 0 0 1 6.8 0 Z" fill="#8b5a2b" stroke="#4a2e14" stroke-width=".8"/></g><g class="outfit outfit-pumpkin"><path d="M38.5 12 q1 -5 4 -6" stroke="#4f7a2b" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="33" rx="23" ry="19.5" fill="#f28c28" stroke="#b5571a" stroke-width="2.2"/><path d="M40 14 v38 M29 16 q-6 17 0 34 M51 16 q6 17 0 34" stroke="#d9741c" stroke-width="1.6" fill="none"/><path d="M28 31 l5 -6 l5 6 Z M42 31 l5 -6 l5 6 Z" fill="#ffd166" stroke="#a04a12" stroke-width=".8"/><path d="M29 40 l3 4 l3 -3 l3 4 l3 -4 l3 3 l3 -4 l3 3 q-11 9 -21 -3 Z" fill="#ffd166" stroke="#a04a12" stroke-width=".8" stroke-linejoin="round"/></g><g class="outfit outfit-mummy"><path d="M19.5 21 Q40 18 60.5 21" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 21 Q40 18 60.5 21" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 26.5 Q40 23.5 60.5 26.5" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 26.5 Q40 23.5 60.5 26.5" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 44.5 Q40 42.5 60.5 44.5" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 44.5 Q40 42.5 60.5 44.5" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M19.5 50 Q40 48 60.5 50" stroke="#cfc4a8" stroke-width="5.8" fill="none" stroke-linecap="round"/><path d="M19.5 50 Q40 48 60.5 50" stroke="#f6efdc" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M57 50 q6 2 8 8" stroke="#f6efdc" stroke-width="3.4" fill="none" stroke-linecap="round"/></g><g class="outfit outfit-sheet"><path d="M40 6 Q18 6 17 34 L15 74 Q20 79 24 74 Q29 79 33 74 Q38 79 42 74 Q47 79 51 74 Q56 79 60 74 Q64 79 65 74 L63 34 Q62 6 40 6 Z" fill="#fbfbff" stroke="#c8c8d8" stroke-width="2" stroke-linejoin="round"/><ellipse cx="33" cy="34" rx="3" ry="4.2" fill="#1d1a24"/><ellipse cx="47" cy="34" rx="3" ry="4.2" fill="#1d1a24"/><ellipse cx="40" cy="44" rx="2.2" ry="2.8" fill="#1d1a24"/><ellipse cx="27" cy="41" rx="3.2" ry="2" fill="#ffb3c6" opacity=".6"/><ellipse cx="53" cy="41" rx="3.2" ry="2" fill="#ffb3c6" opacity=".6"/></g>
+        <g class="char char-odyssey"><path d="M36 14 Q37 -8 40 -10 Q43 -8 44 14 Z" fill="#c41e3a" stroke="#7a0f20" stroke-width="1.2"/><path d="M19 34 Q19 14 40 14 Q61 14 61 34 L61 46 Q57 48 55 44 L55 33 Q48 29 40 29 Q32 29 25 33 L25 44 Q23 48 19 46 Z" fill="#c88a3a" stroke="#7a4a14" stroke-width="1.8" stroke-linejoin="round"/><path d="M24 22 Q40 15 56 22" stroke="#e8b26a" stroke-width="1.2" fill="none"/><path d="M38.5 14 v-3 h3 v3" fill="#c88a3a" stroke="#7a4a14" stroke-width=".8"/><circle cx="17" cy="62" r="12" fill="#c88a3a" stroke="#7a4a14" stroke-width="2"/><circle cx="17" cy="62" r="8.5" fill="none" stroke="#9a6224" stroke-width="1.4"/><circle cx="17" cy="62" r="4.5" fill="#a3162a" stroke="#5a0a16" stroke-width="1"/><path d="M9 56 q3 -4 8 -4" stroke="#e8b26a" stroke-width="1.2" fill="none"/></g><g class="suit suit-writer"><circle cx="33" cy="38" r="4.6" fill="rgba(255,255,255,.18)" stroke="#b88a1c" stroke-width="1.2"/><circle cx="47" cy="38" r="4.6" fill="rgba(255,255,255,.18)" stroke="#b88a1c" stroke-width="1.2"/><path d="M37.6 37.4 q2.4 -1.6 4.8 0 M28.4 37 L22 35.5 M51.6 37 L58 35.5" stroke="#b88a1c" stroke-width="1.1" fill="none"/></g><g class="suit suit-greek"><ellipse cx="20.3" cy="25.6" rx="3.4" ry="1.7" transform="rotate(255 20.3 25.6)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="22.1" cy="23.2" rx="3.4" ry="1.7" transform="rotate(267 22.1 23.2)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="24.7" cy="21.1" rx="3.4" ry="1.7" transform="rotate(278 24.7 21.1)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="28.0" cy="19.4" rx="3.4" ry="1.7" transform="rotate(290 28.0 19.4)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="31.7" cy="18.1" rx="3.4" ry="1.7" transform="rotate(302 31.7 18.1)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="35.8" cy="17.3" rx="3.4" ry="1.7" transform="rotate(313 35.8 17.3)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="40.0" cy="17.0" rx="3.4" ry="1.7" transform="rotate(325 40.0 17.0)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="59.7" cy="25.6" rx="3.4" ry="1.7" transform="rotate(-75 59.7 25.6)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="57.9" cy="23.2" rx="3.4" ry="1.7" transform="rotate(-87 57.9 23.2)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="55.3" cy="21.1" rx="3.4" ry="1.7" transform="rotate(-98 55.3 21.1)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="52.0" cy="19.4" rx="3.4" ry="1.7" transform="rotate(-110 52.0 19.4)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="48.3" cy="18.1" rx="3.4" ry="1.7" transform="rotate(-122 48.3 18.1)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="44.2" cy="17.3" rx="3.4" ry="1.7" transform="rotate(-133 44.2 17.3)" fill="#9bbf4e" stroke="#5d7a26" stroke-width=".6"/><ellipse cx="40.0" cy="17.0" rx="3.4" ry="1.7" transform="rotate(-145 40.0 17.0)" fill="#c9b037" stroke="#5d7a26" stroke-width=".6"/><circle cx="40" cy="17.5" r="1.6" fill="#c9b037"/></g><g class="suit suit-captain"><path d="M23 21 Q24 10 40 10 Q56 10 57 21 Z" fill="#fafafa" stroke="#c8c8d0" stroke-width="1.6"/><rect x="22.5" y="18.5" width="35" height="5" rx="1.5" fill="#1f2f5a"/><path d="M24 23.5 Q40 30 56 23.5 Q40 27 24 23.5 Z" fill="#111" stroke="#000" stroke-width=".8"/><circle cx="40" cy="15" r="3.2" fill="#f2c14e" stroke="#b88a1c" stroke-width=".8"/><path d="M40 13 v4.4 M38.4 16.4 q1.6 1.6 3.2 0 M38.6 14 h2.8" stroke="#1f2f5a" stroke-width=".8" fill="none"/></g><g class="prop prop-sword"><path d="M57 63 L67 33" stroke="#d9dde3" stroke-width="2.6" stroke-linecap="round"/><path d="M57 63 L67 33" stroke="#9aa3ad" stroke-width=".7"/><path d="M53.5 60 L61.5 63.5" stroke="#8a5a2b" stroke-width="2.4" stroke-linecap="round"/><path d="M57 63 L55.6 67.4" stroke="#5a3a1a" stroke-width="2.4" stroke-linecap="round"/></g><g class="prop prop-shield"><circle cx="18" cy="61" r="11" fill="#c88a3a" stroke="#7a4a14" stroke-width="2"/><circle cx="18" cy="61" r="7.5" fill="none" stroke="#9a6224" stroke-width="1.3"/><path d="M14 66 L18 55 L22 66" stroke="#a3162a" stroke-width="2" fill="none" stroke-linejoin="round"/></g><g class="prop prop-paper"><path d="M25 57 L53 55 L54 72 L26 74 Z" fill="#fbf3dc" stroke="#cdbf98" stroke-width="1"/><path d="M29 61 h19 M29 64.5 h21 M29 68 h14" stroke="#b8a77a" stroke-width=".8"/></g><g class="prop prop-quill"><path d="M54 66 Q57 52 64 42 Q63 54 55 66 Z" fill="#fffdf6" stroke="#b9b2a2" stroke-width=".8"/><path d="M54.4 66 L63.4 43" stroke="#8a8274" stroke-width=".5"/><path d="M54 66 l-1 3" stroke="#222" stroke-width="1.2" stroke-linecap="round"/></g><g class="prop prop-pad"><rect x="27" y="58" width="26" height="11" rx="5.5" fill="#5b3f8a" stroke="#2e1f4a" stroke-width="1.4"/><path d="M32 61.5 v4 M30 63.5 h4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><circle cx="46" cy="62" r="1.3" fill="#f06c96"/><circle cx="49" cy="64.5" r="1.3" fill="#8ecdf0"/><circle cx="43.5" cy="65" r="1.1" fill="#f2c14e"/></g>
         <g class="outfit outfit-crown">
           <path d="M22 26 Q40 12 58 26" stroke="#7fbf7f" stroke-width="2" fill="none"/>
           <circle cx="23" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="29" cy="20.5" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="35" cy="18" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="41" cy="17.3" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/><circle cx="47" cy="18.4" r="3.3" fill="#fff4f7" stroke="#c9718e" stroke-width="1"/><circle cx="52.5" cy="21" r="3.3" fill="#f2c14e" stroke="#b88a1c" stroke-width="1"/><circle cx="57" cy="25" r="3.3" fill="#f7a8c0" stroke="#c9718e" stroke-width="1"/>
@@ -587,6 +628,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 <div id="toast" hidden></div>
 <input type="file" id="photoIn" accept="image/*" multiple hidden>
 <input type="file" id="angelIn" accept="image/*" hidden>
+<input type="file" id="snapIn" accept="image/*" capture="user" hidden>
+<input type="file" id="posterIn" accept="image/*" hidden>
 <input type="file" id="importIn" accept="application/json,.json" hidden>
 
 <script>
@@ -642,6 +685,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     d.toHim = { notes: [], last: iso(yest), run: 9 };
     for (var n = 0; n < 30; n++) d.toHim.notes.push({ id: "dn" + n, text: "Demo note " + (n + 1) + " ♡", at: Date.now() - n * 86400000 });
     d.hearts = 1000;
+    d.game = { played: 4, best: 64, total: 230, days: days.slice(0, 3), hd: "", hn: 0 };
+    d.days = [{ d: days[1], text: "Long day at uni but the coffee was good ☕", mood: "😊", at: Date.now() - 864e5 }]; d.dayS = { last: days[1], run: 6, best: 6 };
     d.hev = { start: days[29], done: 0, notes: 0, angels: 0, answers: 0, focus: 0 };
     d.answers = [{ qid: "x1", q: "What made you smile today?", a: "You ♡", at: Date.now() }, { qid: "x2", q: "Dream date?", a: "Picnic", at: Date.now() }, { qid: "x3", q: "Favorite song?", a: "Ours", at: Date.now() }];
     d.focusDone = 3; d.focusMins = 75; d.care = { fed: Date.now() - 30 * 36e5, pet: 0, days: days.slice(0, 6), hd: "", hn: 0 };
@@ -780,6 +825,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<label class="stat">Pick a recommended one<select id="qPick"><option value="">…</option>' + QUESTIONS.map(function (x, i) { return '<option value="' + i + '">' + esc(x) + "</option>"; }).join("") + "</select></label>" +
       '<textarea id="qOwn" dir="auto" placeholder="…or type your own question" style="margin-top:8px"></textarea><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="qSend">Ask her</button></div>' +
       '<h3 style="margin-top:16px">Her answers</h3>' + ((S.answers || []).length ? (S.answers || []).slice(0, 15).map(function (a) { return '<div class="qrow"><b dir="auto">' + esc(a.q) + '</b><div dir="auto">' + esc(a.a) + '</div><div class="stat">' + esc(fmtStamp(a.at)) + "</div></div>"; }).join("") : '<div class="empty">no answers yet</div>') + "</section>";
+    h += '<section class="card"><h2>📝 Her days</h2>' + ((S.days || []).length ? S.days.slice(0, 20).map(function (d) { return '<div class="qrow"><b>' + esc(fmtDate(d.d)) + " " + esc(d.mood || "") + '</b><div dir="auto">' + esc(d.text) + "</div></div>"; }).join("") : '<div class="empty">nothing yet</div>') + "</section>";
     h += '<section class="card vtool"><h2>🎁 Surprises</h2><div class="note" style="margin:-6px 0 10px">She sees a wrapped gift and opens it when it unlocks.</div><div class="form">' +
       '<label>Gift<select id="gEmoji">' + GIFT_EMOJI.map(function (e) { return "<option>" + e + "</option>"; }).join("") + '</select></label><label>Title<input id="gTitle" type="text" dir="auto" placeholder="A little something"></label></div>' +
       '<textarea id="gMsg" dir="auto" placeholder="Your message inside the gift…" style="margin-top:8px"></textarea><div class="form" style="margin-top:8px">' +
@@ -1095,10 +1141,15 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     return { idx: t, offset: 0 };
   }
   /* ---------- what's new & guided tours ---------- */
-  var WN = 4, APP_VER = 4;
+  var WN = 5, APP_VER = 5;
   function news(all) {
     var seen = all ? 0 : S.wn || 0;
-    return [["event", "🎃 Spooky Season", "Halloween is here! Spooky quests unlock costumes, emotes, Boo the ghost and… Vampire ZoZo 🧛 Tap the pumpkin.", 4],
+    return [["arcade", "🎮 Odyssey Voyage", "A new mini game! Sail, catch coins and dodge Zeus's lightning to win outfits, emotes and… Odyssey Bunny 🛡️", 5],
+      ["outfits", "👗 Outfits", "Whole outfits for your friends: the Old writer, a Greek hero and a Sea captain for Tofe.", 5],
+      ["moments", "📸 Moments", "Snap a square photo of right now and send it to " + SHARE_WITH + ". As many as you want ♡", 5],
+      ["day", "📝 Tell me about your day", "Tell " + SHARE_WITH + " about your day, every day, for a day streak with its own rewards ✍️", 5],
+      ["songs", "🎵 Songs & 🎬 Movies", "Send each other songs, and keep a movie list together with who's seen what.", 5],
+      ["event", "🎃 Spooky Season", "Halloween is here! Spooky quests unlock costumes, emotes, Boo the ghost and… Vampire ZoZo 🧛 Tap the pumpkin.", 4],
       ["you2", "💭 Questions, surprises & a countdown", "Answer a question every day, open surprises from " + SHARE_WITH + ", and count down the days ❤️", 4],
       ["care", "🐾 Feed & pet your friends", "Take care of your friend for hearts, buy outfits in the shop, and let your friends play together.", 4],
       ["focus", "⏱️ Focus timer & grade goals", "Study with your friend for hearts, set a goal for each subject, and see your week every Sunday.", 4],
@@ -1115,6 +1166,11 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       .filter(function (w) { return w[3] > seen && (SB_URL || (w[0] !== "share" && w[0] !== "push")); });
   }
   var TOURS = {
+    arcade: [["arcade", "#tArcade", "Tap Start and drag left and right. Score 30, 60 and 100 to unlock new things. Play every day for the Sea captain outfit ⚓"]],
+    outfits: [["outfits", "#tSuits", "Your outfit wardrobe 👗 Unlocked outfits can be worn here. Some are only for certain friends."]],
+    moments: [["moments", "#tMoments", "Tap Take a moment, snap a photo and add a caption. " + SHARE_WITH + " gets it right away 📸"]],
+    day: [["overview", "#tDay", "Write a little about your day here every day 📝 Keep it going for 7 days for a new emote, and 14 for the Old writer outfit."]],
+    songs: [["songs", "#tSongs", "Paste a song link to send it 🎵"], ["movies", "#tMovies", "Add movies with a poster, then tick them off when you've seen them 🎬"]],
     event: [["event", "#tEvent", "Finish these spooky quests before the season ends 🎃 Each one unlocks a costume, an emote or a new friend. The pumpkin button brings you back here."]],
     you2: [["overview", "#tQuestion", "A new question every day 💭 Your answer goes to " + SHARE_WITH + " and counts toward your streak. Surprises and the countdown show up here too."]],
     care: [["friends", "#tCare", "Feed and pet your friend every day (+1 💗 each). If you forget them for too long they get sad 🥺"]],
@@ -1148,7 +1204,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   }
 
   /* ---------- friends & quests ---------- */
-  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"], ["boo", "Boo", "A tiny friendly ghost 👻"], ["vamp", "Vampire ZoZo", "Spooky, but only for you 🧛"]];
+  var FRIENDS = [["bunny", "Bunny", "Your first little friend ♡"], ["plush", "Kuromi", "Handmade with love"], ["kitten", "Tofe", "Tiny, fluffy and curious"], ["cat", "Big Ass Tofe", "All grown up"], ["boo", "Boo", "A tiny friendly ghost 👻"], ["vamp", "Vampire ZoZo", "Spooky, but only for you 🧛"], ["odyssey", "Odyssey Bunny", "A hero in bronze armor 🛡️"]];
   var OUTFITS = [["none", "No hat"], ["cap", "Graduation cap"], ["crown", "Flower crown"], ["bow", "Pink bow"], ["party", "Party hat"], ["halo", "Angel halo"], ["star", "Star clip"], ["shades", "Sunglasses"], ["beanie", "Cozy beanie"], ["hearts", "Heart headband"], ["witch", "Witch hat 🎃"], ["horse", "Horse mask 🎃"], ["pumpkin", "Pumpkin head 🎃"], ["mummy", "Mummy wraps 🎃"], ["sheet", "Ghost sheet 🎃"]];
   var QUESTS = [
     { id: "q1", t: "Finish 3 assignments before their deadline", k: "onTime", n: 3, r: "plush", rt: "Kuromi", h: 15 },
@@ -1169,6 +1225,20 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     { id: "q16", t: "Add 10 grades", k: "grades", n: 10, r: "e_twirl", rt: "Twirl emote 💫", h: 20 },
     { id: "q17", t: "Open your planner on 30 different days", k: "days", n: 30, r: "e_letter", rt: "Love letter emote 💌", h: 70 },
     { id: "q18", t: "Send ZoZo 30 notes", k: "toHimTotal", n: 30, r: "e_shy", rt: "Shy emote 😊", h: 40 },
+    { id: "g1", t: "Play Odyssey Voyage 3 times", k: "gPlayed", n: 3, r: "e_game", rt: "Gaming emote 🎮", h: 15 },
+    { id: "g2", t: "Score 30 in one Odyssey Voyage", k: "gBest", n: 30, r: "suit_greek", rt: "Greek hero outfit 🏛️", h: 20 },
+    { id: "g3", t: "Play Odyssey Voyage on 5 different days", k: "gDays", n: 5, r: "suit_captain", rt: "Sea captain outfit ⚓ (for Tofe & Big Ass Tofe)", h: 25 },
+    { id: "g4", t: "Score 60 in one Odyssey Voyage", k: "gBest", n: 60, r: "e_fight", rt: "Sword & shield emote ⚔️", h: 40 },
+    { id: "g5", t: "Score 100 in one Odyssey Voyage", k: "gBest", n: 100, r: "odyssey", rt: "Odyssey Bunny 🛡️ (new friend)", h: 80 },
+    { id: "g6", t: "Collect 1,000 points in Odyssey Voyage", k: "gTotal", n: 1000, r: "", rt: "A hero's bonus", h: 60 },
+    { id: "d1", t: "Tell ZoZo about your day 3 days in a row", k: "dayRun", n: 3, r: "", rt: "A little bonus", h: 15 },
+    { id: "d2", t: "Tell ZoZo about your day 7 days in a row", k: "dayRun", n: 7, r: "e_quill", rt: "Quill writing emote ✒️", h: 40 },
+    { id: "d3", t: "Tell ZoZo about your day 14 days in a row", k: "dayRun", n: 14, r: "suit_writer", rt: "Old writer outfit 🖋️", h: 80 },
+    { id: "d4", t: "Tell ZoZo about your day 30 days in a row", k: "dayRun", n: 30, r: "", rt: "A big bonus", h: 200 },
+    { id: "m1", t: "Share 5 moments with ZoZo", k: "momN", n: 5, r: "", rt: "A little bonus", h: 20 },
+    { id: "m2", t: "Send ZoZo 3 songs", k: "songN", n: 3, r: "", rt: "A little bonus", h: 15 },
+    { id: "m3", t: "Add 5 movies to your list", k: "movN", n: 5, r: "", rt: "A little bonus", h: 15 },
+    { id: "m4", t: "Watch 3 movies from your list", k: "movSeenN", n: 3, r: "", rt: "A movie-night bonus 🍿", h: 25 },
     { id: "h1", ev: true, t: "🎃 Light your streak on 3 days during Spooky Season", k: "h_streak", n: 3, r: "e_boo", rt: "Boo! emote 👻", h: 30 },
     { id: "h2", ev: true, t: "🎃 Finish 5 assignments during Spooky Season", k: "h_done", n: 5, r: "horse", rt: "Horse mask 🐴", h: 30 },
     { id: "h3", ev: true, t: "🎃 Write ZoZo 3 notes", k: "h_notes", n: 3, r: "witch", rt: "Witch hat 🧙", h: 20 },
@@ -1180,8 +1250,8 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     { id: "h9", ev: true, t: "🦇 Finish every other Spooky Season quest", k: "h_all", n: 8, r: "vamp", r2: "e_spooky", rt: "Vampire ZoZo (new friend) 🧛 + Spooky dance emote 💀", h: 100 },
     { id: "q19", t: "💀 The hardest quest: keep a 60-day streak AND finish 40 assignments before their deadline", k: "hard", n: 100, r: "e_makeout", rt: "Making out with ZoZo emote 💋", h: 300 }
   ];
-  var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"], ["e_boo", "👻", "Boo!"], ["e_trick", "🍬", "Trick or treat"], ["e_spooky", "💀", "Spooky dance"]];
-  var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍", horse: "🐴", witch: "🧙", pumpkin: "🎃", mummy: "🧟", sheet: "👻", boo: "👻", vamp: "🧛" };
+  var EMOTES = [["e_wave", "👋", "Wave"], ["e_blowkiss", "😘", "Blow a kiss"], ["e_hearthands", "🫶", "Heart hands"], ["e_cheer", "🎉", "Cheer"], ["e_twirl", "💫", "Twirl"], ["e_letter", "💌", "Love letter"], ["e_shy", "😊", "Shy"], ["e_hug", "🤗", "Hug ZoZo"], ["e_makeout", "💋", "Make out with ZoZo"], ["e_boo", "👻", "Boo!"], ["e_trick", "🍬", "Trick or treat"], ["e_spooky", "💀", "Spooky dance"], ["e_fight", "⚔️", "Sword & shield"], ["e_quill", "✒️", "Writing a letter"], ["e_game", "🎮", "Gaming"]];
+  var REWARD_ICON = { plush: "🧸", kitten: "🐱", cat: "🐈", crown: "🌸", bow: "🎀", party: "🥳", halo: "😇", star: "⭐", naps: "😴", bracelet: "🤍", horse: "🐴", witch: "🧙", pumpkin: "🎃", mummy: "🧟", sheet: "👻", boo: "👻", vamp: "🧛", odyssey: "🛡️", suit_writer: "🖋️", suit_greek: "🏛️", suit_captain: "⚓" };
   EMOTES.forEach(function (e) { REWARD_ICON[e[0]] = e[1]; });
   function stats() { if (!S.stats) S.stats = seed().stats; return S.stats; }
   var HW_END = "2026-11-30";
@@ -1212,7 +1282,10 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       '<div class="ev-rewards">' + mini("boo", "Boo") + mini("vamp", "Vampire ZoZo") + '<div>🐴 🧙 🎃 🧟 👻 costumes<br>👻 🍬 💀 emotes</div></div></section>' +
       '<section class="card" id="tEvent"><h2>Event quests</h2>' + evq.map(questRow).join("") + "</section>";
   }
-  var FOOD = { bunny: "🥕", kitten: "🥛", cat: "🐟", plush: "🍬", vamp: "🍅", boo: "🍭" };
+  var SUITS = [["writer", "Old writer", "Frock coat, waistcoat, cravat, round spectacles and a quill", null], ["greek", "Greek hero", "A white chiton with a gold border and a laurel wreath", null], ["captain", "Sea captain", "Navy coat with gold buttons, epaulettes and a captain's hat", ["kitten", "cat"]]];
+  function suitFits(sid, ch) { var su = SUITS.filter(function (x) { return x[0] === sid; })[0]; return !!su && (!su[3] || su[3].indexOf(ch) >= 0); }
+  function liveSuit(ch) { return S.suit && has("suit_" + S.suit) && suitFits(S.suit, ch) ? S.suit : ""; }
+  var FOOD = { odyssey: "🍇", bunny: "🥕", kitten: "🥛", cat: "🐟", plush: "🍬", vamp: "🍅", boo: "🍭" };
   var SHOPOUT = { shades: 60, beanie: 80, hearts: 100 };
   function friendName(ch) { for (var i = 0; i < FRIENDS.length; i++) if (FRIENDS[i][0] === ch) return FRIENDS[i][1]; return ch === "him" ? SHARE_WITH : "your friend"; }
   function care() { if (!S.care) S.care = { fed: 0, pet: 0, days: [], hd: "", hn: 0 }; return S.care; }
@@ -1249,6 +1322,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       if (q.k === "h_days") return since(st.days);
       if (q.k === "h_all") return QUESTS.filter(function (x) { return x.ev && x.k !== "h_all" && qDone(x); }).length;
     }
+    if (q.k === "dayRun") return dayRun();
+    if (q.k.charAt(0) === "g" && q.k.length > 1 && q.k.charAt(1) === q.k.charAt(1).toUpperCase()) { var gm = S.game || {}; return q.k === "gDays" ? (gm.days || []).length : gm[q.k.slice(1).toLowerCase()] || 0; }
+    if (q.k === "momN" || q.k === "songN" || q.k === "movN" || q.k === "movSeenN") return S[q.k] || 0;
     if (q.k === "toHimRun") return toHimRun();
     if (q.k === "toHimTotal") return toHim().notes.length;
     if (q.k === "angelKinds") { var u = {}; (S.angels || []).forEach(function (a) { u[a.k] = 1; }); return Object.keys(u).length; }
@@ -1322,7 +1398,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     var hi = "Hi, " + (S.name ? esc(S.name) : "beautiful") + " ♡";
     var sn = streakNow(), nudge = !VIEW && sn && streak().last !== iso(new Date()) ? '<div class="nudge" data-act="streak">🔥 Your ' + sn + '-day streak is waiting! Do 2 things today to keep it.</div>' : "";
     return nudge + countdownCard() + '<div class="btns" style="justify-content:flex-end;margin:-6px 0 10px"><button class="btn ghost sm" type="button" data-act="recap">📊 My week</button></div>' + '<section class="card hello"><div class="sub">' + esc(new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })) + '</div><div class="big">' + hi + '</div><div>' + esc(line) + (ov ? " · overall " + r1(ov.pct) + "% (" + letter(ov.pct) + ")" : "") + "</div></section>" +
-      (S.notes.length ? noteCard(S.notes[0]) : "") + surprisesCard() + questionCard() +
+      (S.notes.length ? noteCard(S.notes[0]) : "") + dayCard() + surprisesCard() + questionCard() +
       '<section class="card"><h3>Our little gallery</h3>' + gal + "</section>" +
       '<div class="grid2"><section class="card"><h3>' + dl + "'s classes</h3>" + (nd.offset > 1 ? '<div class="note">free day today, next up is ' + DAYFULL[nd.idx] + "</div>" : "") +
       '<ul class="list">' + (classes || '<li class="empty">nothing scheduled yet</li>') + "</ul></section>" +
@@ -1426,7 +1502,153 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       (photos.length ? '<div class="polas">' + photos.slice().reverse().map(function (p, i) { return pol(p, true, i); }).join("") + "</div>" : '<div class="empty">Add your first photo ♡</div>') + "</section>";
   }
 
+  /* ---------- moments, songs and movies live in shared Supabase tables (her key: device id, his: passcode) ---------- */
+  var SHARED = { moments: null, songs: null, movies: null }, pendingMoment = null, pendingPoster = "", movieFilter = "all", dayMood = "😊";
+  function myKey() { return VIEW ? lsGet("petal-view-pass") || "" : devId(); }
+  function whoName(w) { return VIEW ? (w === "him" ? "You" : "Her") : (w === "her" ? "You" : SHARE_WITH); }
+  function demoShared(kind) {
+    var t = Date.now(), dot = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10" fill="#f7a8c0"/><circle cx="5" cy="5" r="3" fill="#fff"/></svg>');
+    if (kind === "moments") return [{ id: 1, who: "her", thumb: dot, cap: "coffee break ☕", at: t }, { id: 2, who: "him", thumb: dot, cap: "miss you", at: t - 864e5 }];
+    if (kind === "songs") return [{ id: 1, who: "him", title: "Our song", artist: "Someone", url: "https://example.com", at: t }];
+    return [{ id: 1, who: "her", title: "Before Sunrise", poster: "", seen_her: true, seen_him: false, at: t }];
+  }
+  function loadShared(kind) {
+    if (DEMO) { SHARED[kind] = demoShared(kind); return; }
+    if (!SB_URL || (!VIEW && lsGet("petal-viewer")) || !navigator.onLine) { SHARED[kind] = SHARED[kind] || []; return; }
+    sbRpc(kind + "_list", { p_key: myKey() }).then(function (r) { SHARED[kind] = r || []; render(); if (modal && modal.t === "recap") renderModal(); }).catch(function () { SHARED[kind] = SHARED[kind] || []; });
+  }
+  function shared(kind) { if (SHARED[kind] === null) { SHARED[kind] = []; loadShared(kind); } return SHARED[kind]; }
+  function sharedCall(fn, args, ok) {
+    if (DEMO) { toast("Demo mode: nothing is sent ♡"); return; }
+    if (!navigator.onLine) { toast("Connect to the internet to send this ♡"); return; }
+    args.p_key = myKey();
+    sbRpc(fn, args).then(function (r) { if (r === null || r === false) { toast("Couldn't send. Is sharing on?"); return; } ok(r); }).catch(function () { toast("Couldn't send. Check your internet."); });
+  }
+  function squareImg(file, size, q) {
+    return new Promise(function (res, rej) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () { var w = img.naturalWidth, h = img.naturalHeight, m = Math.min(w, h), c = document.createElement("canvas"); c.width = c.height = size; c.getContext("2d").drawImage(img, (w - m) / 2, (h - m) / 2, m, m, 0, 0, size, size); URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg", q)); };
+      img.onerror = function () { URL.revokeObjectURL(url); rej(new Error("img")); }; img.src = url;
+    });
+  }
+  function posterImg(file) {
+    return new Promise(function (res, rej) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () { var s2 = Math.min(1, 240 / img.naturalWidth, 360 / img.naturalHeight), c = document.createElement("canvas"); c.width = Math.round(img.naturalWidth * s2); c.height = Math.round(img.naturalHeight * s2); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg", 0.72)); };
+      img.onerror = function () { URL.revokeObjectURL(url); rej(new Error("img")); }; img.src = url;
+    });
+  }
+  function weekOf(ms) { var d = new Date(ms); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - d.getDay()); return iso(d); }
+  function vMoments() {
+    var list = shared("moments"), groups = {}, order = [];
+    list.forEach(function (m) { var k = weekOf(new Date(m.at).getTime()); if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(m); });
+    var h = '<section class="card moment-hero vtool" id="tMoments"><h2>📸 Moments</h2><div class="note" style="margin:-4px 0 12px">Snap a square photo of right now and send it to ' + (VIEW ? "her" : esc(SHARE_WITH)) + " ♡ As many as you want.</div>" +
+      '<button class="btn" type="button" data-act="snap">Take a moment 📸</button></section>';
+    if (!list.length) return h + '<section class="card"><div class="empty">no moments yet ✨</div></section>';
+    order.forEach(function (k) {
+      h += '<section class="card vtool"><h3>' + (k === weekOf(Date.now()) ? "This week" : "Week of " + esc(fmtDate(k))) + " · " + groups[k].length + ' 📸</h3><div class="moms">' + groups[k].map(function (m) {
+        return '<figure class="mom" data-act="momView" data-id="' + m.id + '"><img src="' + esc(m.thumb) + '" alt=""><figcaption dir="auto">' + esc(m.cap || "") + "</figcaption><small>" + esc(whoName(m.who)) + " · " + esc(fmtStamp(new Date(m.at).getTime())) + "</small></figure>";
+      }).join("") + "</div></section>";
+    });
+    return h;
+  }
+  function vSongs() {
+    var list = shared("songs");
+    var card = function (x) { return '<div class="song"><div class="sg-ic">🎵</div><div style="min-width:0"><b dir="auto">' + esc(x.title) + "</b>" + (x.artist ? '<div class="stat" dir="auto">' + esc(x.artist) + "</div>" : "") + '<div class="stat">from ' + esc(whoName(x.who)) + " · " + esc(fmtStamp(new Date(x.at).getTime())) + "</div></div>" +
+      (/^https?:\/\//.test(x.url || "") ? '<a class="btn sm" href="' + esc(x.url) + '" target="_blank" rel="noopener">▶ Listen</a>' : "") + "</div>"; };
+    var me = VIEW ? "him" : "her";
+    return '<section class="card vtool" id="tSongs"><h2>🎵 Songs</h2><div class="note" style="margin:-4px 0 10px">Send a song you want ' + (VIEW ? "her" : esc(SHARE_WITH)) + ' to hear. Paste a Spotify, YouTube or Anghami link.</div><div class="form">' +
+      '<label>Song<input id="sgTitle" type="text" dir="auto" placeholder="Song name"></label><label>Artist<input id="sgArtist" type="text" dir="auto" placeholder="Artist"></label></div>' +
+      '<label class="stat" style="display:grid;gap:4px;margin-top:8px">Link<input id="sgUrl" type="text" placeholder="https://…"></label><div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="songSend">Send song 🎵</button></div></section>' +
+      '<section class="card vtool"><h3>For you</h3>' + (list.filter(function (x) { return x.who !== me; }).map(card).join("") || '<div class="empty">no songs yet</div>') + "</section>" +
+      '<section class="card vtool"><h3>You sent</h3>' + (list.filter(function (x) { return x.who === me; }).map(card).join("") || '<div class="empty">nothing sent yet</div>') + "</section>";
+  }
+  function vMovies() {
+    var list = shared("movies"), me = VIEW ? "him" : "her";
+    var shown = list.filter(function (m) { return movieFilter === "all" || (movieFilter === "todo" ? !(m.seen_her && m.seen_him) : m.seen_her && m.seen_him); });
+    var h = '<section class="card vtool" id="tMovies"><h2>🎬 Our movie list</h2><div class="note" style="margin:-4px 0 10px">Add a movie to watch together. Tick it off when you\'ve seen it.</div><div class="form">' +
+      '<label>Movie<input id="mvTitle" type="text" dir="auto" placeholder="Movie name"></label><label>Poster<button class="btn ghost" type="button" data-act="poster">' + (pendingPoster ? "Poster added ✓" : "Choose a picture") + "</button></label></div>" +
+      (pendingPoster ? '<img src="' + pendingPoster + '" alt="" style="width:80px;border-radius:8px;margin-top:8px">' : "") + '<div class="btns" style="margin-top:10px"><button class="btn" type="button" data-act="movieAdd">Add to our list 🎬</button></div></section>';
+    h += '<section class="card vtool"><div class="btns" style="margin-bottom:12px">' + [["all", "All"], ["todo", "To watch"], ["both", "Seen by both"]].map(function (f) { return '<button class="btn sm' + (movieFilter === f[0] ? "" : " ghost") + '" type="button" data-act="mvFilter" data-id="' + f[0] + '">' + f[1] + "</button>"; }).join("") + "</div>";
+    h += shown.length ? '<div class="movies">' + shown.map(function (m) {
+      var mine = me === "her" ? m.seen_her : m.seen_him, theirs = me === "her" ? m.seen_him : m.seen_her;
+      return '<div class="movie">' + (m.poster ? '<img src="' + esc(m.poster) + '" alt="">' : '<div class="noposter">🎬</div>') + '<b dir="auto">' + esc(m.title) + '</b><div class="stat">added by ' + esc(whoName(m.who)) + "</div>" +
+        '<button class="btn sm' + (mine ? "" : " ghost") + '" type="button" data-act="mvSeen" data-id="' + m.id + '">' + (mine ? "✓ You've seen it" : "Mark as seen") + '</button><div class="stat">' + (theirs ? "✓ " : "✗ ") + esc(VIEW ? "Her" : SHARE_WITH) + (theirs ? " has seen it" : " hasn't seen it") + "</div>" +
+        '<button class="x" type="button" data-act="mvDel" data-id="' + m.id + '">' + (confirmKey === "mv" + m.id ? "Tap again" : "remove") + "</button></div>";
+    }).join("") + "</div>" : '<div class="empty">nothing here yet 🍿</div>';
+    return h + "</section>";
+  }
+  function dayRun() { var d = S.dayS || {}; if (!d.last) return 0; return daysBetween(d.last, iso(new Date())) <= 1 ? d.run : 0; }
+  function dayCard() {
+    var t = iso(new Date()), e = (S.days || [])[0], todays = e && e.d === t ? e : null, run = dayRun();
+    var h = '<section class="card dayc" id="tDay"><h3>📝 ' + (VIEW ? "Her day" : "Tell " + esc(SHARE_WITH) + " about your day") + (run ? ' <span class="stat">· 🔥 ' + run + "-day streak</span>" : "") + "</h3>";
+    if (VIEW) return h + (todays ? '<div class="qans" dir="auto">' + esc(todays.mood || "") + " " + esc(todays.text) + "</div>" : '<div class="stat">She hasn\'t written today yet.</div>') + "</section>";
+    return h + (todays ? '<div class="qans" dir="auto">' + esc(todays.mood || "") + " " + esc(todays.text) + '</div><div class="stat">Sent to ' + esc(SHARE_WITH) + ' ♡ You can add more below.</div>' : '<div class="stat">Write a little every day to keep your day streak alive ✍️</div>') +
+      '<div class="btns" style="margin:8px 0">' + ["😊", "🥰", "😐", "😢", "😴", "🤩"].map(function (m) { return '<button class="btn sm' + (dayMood === m ? "" : " ghost") + '" type="button" data-act="dmood" data-id="' + m + '">' + m + "</button>"; }).join("") + "</div>" +
+      '<textarea id="dayText" dir="auto" placeholder="How was your day?"></textarea><div class="btns" style="margin-top:8px"><button class="btn sm" type="button" data-act="daySend">' + (todays ? "Add to today" : "Send") + "</button></div></section>";
+  }
   function mmss(ms) { var t = Math.ceil(ms / 1000); return Math.floor(t / 60) + ":" + pad(t % 60); }
+  function vOutfits() {
+    var h = '<section class="card" id="tSuits"><h2>👗 Outfits</h2><div class="note" style="margin:-6px 0 12px">Whole outfits for your friends. Win them in the Arcade and from your day streak ♡</div><div class="fgrid">';
+    SUITS.forEach(function (su) {
+      var ok = has("suit_" + su[0]), ch = suitFits(su[0], S.friend) ? S.friend : (su[3] || [S.friend])[0], on = S.suit === su[0];
+      var prev = '<div class="petprev" data-spooky="0" data-char="' + ch + '" data-suit="' + su[0] + '" data-acc="" data-outfit="none" data-buddy="0">' + prevSVG("happy", ch) + "</div>";
+      h += '<div class="fcard' + (on ? " on" : "") + (ok ? "" : " locked") + '">' + prev + '<div style="display:grid;gap:6px;min-width:0"><b>' + esc(su[1]) + '</b><div class="stat">' + (ok ? esc(su[2]) + (su[3] ? " · only for " + su[3].map(friendName).join(" & ") : "") : "🔒 " + esc(questFor("suit_" + su[0]))) + "</div>" +
+        (ok ? '<div class="btns"><button class="btn sm' + (on ? "" : " ghost") + '" type="button" data-act="suit" data-id="' + (on ? "" : su[0]) + '">' + (on ? "Take it off" : "Wear it") + "</button></div>" + (on && !suitFits(su[0], S.friend) ? '<div class="stat">Switch to ' + su[3].map(friendName).join(" or ") + " to see it</div>" : "") : "") + "</div></div>";
+    });
+    return h + "</div></section>";
+  }
+  function vArcade() {
+    var g = S.game || {};
+    return '<section class="card" id="tArcade"><h2>🎮 Odyssey Voyage</h2><div class="note" style="margin:-6px 0 10px">Sail with ' + esc(friendName(S.friend)) + "! Drag left and right to catch coins 🪙, hearts 💗 and stars ⭐ (+3). Dodge Zeus's lightning ⚡ and the rocks 🪨. Best: " + (g.best || 0) + "</div>" +
+      '<div class="gamebox" id="gameBox"><canvas id="gameCv"></canvas><div class="gplayer" id="gPlayer">' + look(S.friend) + '</div><div class="ghud"><span id="gScore">0</span><span id="gLives">💗💗💗</span></div>' +
+      '<div class="gover" id="gOver"><div><b>⛵ Ready to sail?</b><div style="margin:8px 0 14px">Score 100 to win Odyssey Bunny 🛡️</div><button class="btn" type="button" data-act="gameGo">Start</button></div></div></div></section>' +
+      '<section class="card"><h3>Your voyages</h3><div class="stat">' + (g.played || 0) + " games · best " + (g.best || 0) + " · " + fmtNum(g.total || 0) + " points in total</div></section>";
+  }
+  var GAME = null;
+  function startGame() {
+    var box = $("gameBox"), cv = $("gameCv"), pl = $("gPlayer"); if (!box) return;
+    var W = box.clientWidth, H = box.clientHeight, dpr = window.devicePixelRatio || 1, ctx = cv.getContext("2d");
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    $("gOver").hidden = true;
+    var G = GAME = { x: W / 2, tx: W / 2, items: [], score: 0, lives: 3, t0: performance.now(), last: performance.now(), spawn: 0, hit: 0, over: false };
+    var move = function (e) { var r = box.getBoundingClientRect(), cx = (e.touches ? e.touches[0].clientX : e.clientX) - r.left; G.tx = Math.max(30, Math.min(W - 30, cx)); };
+    box.onpointerdown = box.onpointermove = move; box.ontouchmove = function (e) { move(e); e.preventDefault(); };
+    var KINDS = [["🪙", 1, 0.5], ["💗", 1, 0.2], ["⭐", 3, 0.1], ["⚡", -1, 0.13], ["🪨", -1, 0.07]];
+    var pickKind = function () { var r = Math.random(), a = 0; for (var i = 0; i < KINDS.length; i++) { a += KINDS[i][2]; if (r < a) return KINDS[i]; } return KINDS[0]; };
+    var step = function (now) {
+      if (G !== GAME || !document.body.contains(box)) return;
+      var dt = Math.min(0.05, (now - G.last) / 1000), el = (now - G.t0) / 1000; G.last = now;
+      var speed = 150 + el * 6, every = Math.max(0.32, 0.9 - el * 0.012);
+      G.spawn -= dt; if (G.spawn <= 0) { G.spawn = every; var k = pickKind(); G.items.push({ x: 20 + Math.random() * (W - 40), y: -20, k: k, v: speed * (0.85 + Math.random() * 0.3) }); }
+      G.x += (G.tx - G.x) * Math.min(1, dt * 12);
+      pl.style.transform = "translateX(" + (G.x - 38) + "px)" + (G.hit > 0 ? " rotate(" + (Math.sin(now / 30) * 10) + "deg)" : "");
+      G.hit -= dt;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "rgba(255,255,255,.18)"; for (var wv = 0; wv < 3; wv++) { ctx.beginPath(); for (var xx = 0; xx <= W; xx += 12) ctx.lineTo(xx, H - 20 - wv * 7 + Math.sin(xx / 22 + now / 400 + wv) * 3); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill(); }
+      ctx.fillStyle = "#8a5a2b"; ctx.beginPath(); ctx.moveTo(G.x - 40, H - 34); ctx.lineTo(G.x + 40, H - 34); ctx.lineTo(G.x + 28, H - 16); ctx.lineTo(G.x - 28, H - 16); ctx.fill();
+      ctx.font = "28px serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      for (var i = G.items.length - 1; i >= 0; i--) {
+        var it = G.items[i]; it.y += it.v * dt; ctx.fillText(it.k[0], it.x, it.y);
+        if (it.y > H - 95 && it.y < H - 40 && Math.abs(it.x - G.x) < 40) {
+          G.items.splice(i, 1);
+          if (it.k[1] > 0) { G.score += it.k[1]; $("gScore").textContent = G.score; }
+          else if (G.hit <= 0) { G.lives--; G.hit = 0.8; $("gLives").textContent = "💗".repeat(Math.max(0, G.lives)) + "🖤".repeat(3 - Math.max(0, G.lives)); if (G.lives <= 0) { endGame(G.score); return; } }
+        } else if (it.y > H + 30) G.items.splice(i, 1);
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function endGame(score) {
+    GAME = null;
+    var g = S.game || (S.game = { played: 0, best: 0, total: 0, days: [], hd: "", hn: 0 }), t = iso(new Date()), newBest = score > (g.best || 0);
+    g.played = (g.played || 0) + 1; g.best = Math.max(g.best || 0, score); g.total = (g.total || 0) + score; if (!g.days) g.days = []; if (g.days.indexOf(t) < 0) g.days.push(t);
+    if (g.hd !== t) { g.hd = t; g.hn = 0; }
+    var earn = Math.min(5, Math.floor(score / 20), 15 - (g.hn || 0)); if (earn > 0) { g.hn += earn; addHearts(earn); }
+    var ov = $("gOver"); if (ov) { ov.hidden = false; ov.innerHTML = "<div><b>" + (newBest ? "New best! 🏆" : "Voyage over ⛵") + '</b><div style="margin:8px 0 14px">Score ' + score + (earn > 0 ? " · +" + earn + " 💗" : "") + '</div><button class="btn" type="button" data-act="gameGo">Sail again</button></div>'; }
+    markActive(); checkQuests(); save(); renderRail(); renderStreak(); if (modal) renderModal();
+  }
   function vFocus() {
     var f = S.focus, left = f ? Math.max(0, f.end - Date.now()) : 0;
     var h = '<section class="card focusc" id="tFocus"><h2>⏱️ Focus timer</h2>';
@@ -1443,6 +1665,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
       focus: (S.focusLog || []).filter(function (x) { return x.at >= ws; }).reduce(function (a, x) { return a + x.len; }, 0),
       angels: (S.angels || []).filter(function (a) { return a.at >= ws; }).length,
       notes: t.notes.filter(function (n) { return n.at >= ws; }).length,
+      days: (S.days || []).filter(function (d) { return d.at >= ws; }).length,
       hearts: (S.heartsEarned || 0) - (S.recapHE || 0), streak: streakNow()
     };
   }
@@ -1488,7 +1711,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     }).join("") + "</div>" : '<div class="empty">no angel numbers yet ✨</div>') + "</section>";
     return h;
   }
-  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-spooky="' + (hallo() ? 1 : 0) + '" data-char="' + ch + '" data-acc="' + (nap ? "" : S.acc || "") + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
+  function look(ch, nap) { return '<div class="petprev' + (nap ? " nap" : "") + '" data-spooky="' + (hallo() ? 1 : 0) + '" data-char="' + ch + '" data-suit="' + (nap ? "" : liveSuit(ch)) + '" data-acc="' + (nap ? "" : S.acc || "") + '" data-outfit="' + (nap ? "none" : S.outfit) + '" data-buddy="' + (nap ? 1 : 0) + '">' + prevSVG(nap ? "sleep" : "happy", ch) + "</div>"; }
   function vFriends() {
     var md = mood(), others = FRIENDS.filter(function (f) { return f[0] !== S.friend && has(f[0]); });
     var mtxt = { "new": "Say hi to your friend ♡", happy: "Happy and full 😊", hungry: "A little hungry… 🥺", sad: "Missed you so much 🥺 Feed and pet me?" }[md];
@@ -1538,7 +1761,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
 
   function renderRail() {
     var open = S.assignments.filter(function (a) { return !a.done; }).length;
-    var items = (VIEW ? [["controls", "ZoZo's controls", ""]] : []).concat(hallo() ? [["event", "🎃 Spooky Season", QUESTS.filter(function (q) { return q.ev && !qDone(q); }).length || "✓"]] : []).concat([["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["coupons", "Coupons", (S.coupons || []).filter(function (c) { return !c.used; }).length || ""], ["focus", "Focus timer", S.focus ? "⏱️" : ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(function (q) { return !q.ev && qDone(q); }).length + "/" + QUESTS.filter(function (q) { return !q.ev; }).length], ["settings", "Settings", ""]]);
+    var items = (VIEW ? [["controls", "ZoZo's controls", ""]] : []).concat(hallo() ? [["event", "🎃 Spooky Season", QUESTS.filter(function (q) { return q.ev && !qDone(q); }).length || "✓"]] : []).concat([["overview", "Overview", ""], ["subjects", "Subjects", S.subjects.length], ["timetable", "Timetable", ""], ["assignments", "Assignments", open || ""], ["exams", "Exams", S.exams.length || ""], ["grades", "Grades", ""], ["photos", "Photos", photos.length || ""], ["notes", "Notes", S.notes.length || ""], ["angels", "Angel numbers", (S.angels || []).length || ""], ["coupons", "Coupons", (S.coupons || []).filter(function (c) { return !c.used; }).length || ""], ["focus", "Focus timer", S.focus ? "⏱️" : ""], ["moments", "Moments 📸", ""], ["arcade", "Arcade 🎮", ""], ["outfits", "Outfits 👗", ""], ["songs", "Songs 🎵", ""], ["movies", "Movies 🎬", ""], ["friends", "Friends", ""], ["quests", "Quests", QUESTS.filter(function (q) { return !q.ev && qDone(q); }).length + "/" + QUESTS.filter(function (q) { return !q.ev; }).length], ["settings", "Settings", ""]]);
     var h = '<div class="lbl">My planner</div>';
     items.forEach(function (it) { h += '<button type="button" data-act="tab" data-tab="' + it[0] + '"' + (tab === it[0] ? ' aria-current="page"' : "") + ">" + it[1] + '<span class="n">' + it[2] + "</span></button>"; });
     $("rail").innerHTML = h;
@@ -1562,10 +1785,23 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
         '<div class="btns" style="justify-content:center"><button class="btn" type="button" data-act="closemodal">' + (modal.fresh ? "Continue" : "Got it") + "</button></div></div></div>";
       return;
     }
+    if (modal.t === "moment") {
+      var pm = pendingMoment; if (!pm) { modal = null; root.innerHTML = ""; return; }
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal" role="dialog" aria-modal="true" aria-label="New moment"><h2>Your moment 📸</h2><figure class="mom big"><img src="' + pm.img + '" alt=""><input id="momCap" type="text" dir="auto" maxlength="120" placeholder="add a caption…"></figure>' +
+        '<div class="btns"><button class="btn" type="button" data-act="momSend">Send to ' + esc(VIEW ? "her" : SHARE_WITH) + ' ♡</button><button class="btn ghost" type="button" data-act="closemodal">Cancel</button></div></div></div>';
+      return;
+    }
+    if (modal.t === "momview") {
+      var mv = (SHARED.moments || []).filter(function (x) { return String(x.id) === String(modal.id); })[0]; if (!mv) { modal = null; root.innerHTML = ""; return; }
+      root.innerHTML = '<div class="modal-bg" data-act="closemodal"><div class="modal zoom" role="dialog" aria-modal="true" aria-label="Moment"><figure class="mom big"><img id="momFull" src="' + esc(modal.img || mv.thumb) + '" alt=""><figcaption dir="auto">' + esc(mv.cap || "") + "</figcaption><small>" + esc(whoName(mv.who)) + " · " + esc(fmtStamp(new Date(mv.at).getTime())) + "</small></figure>" +
+        '<div class="btns" style="justify-content:center">' + ((VIEW ? mv.who === "him" : mv.who === "her") && !DEMO ? '<button class="btn ghost" type="button" data-act="momDel" data-id="' + mv.id + '">' + (confirmKey === "md" + mv.id ? "Tap again to delete" : "Delete") + "</button>" : "") + '<button class="btn" type="button" data-act="closemodal">Close</button></div></div></div>';
+      return;
+    }
     if (modal.t === "recap") {
-      var w = weekStats(), cells = [["✅", w.done, "tasks done"], ["🔥", w.streak, "day streak"], ["⏱️", w.focus, "focus minutes"], ["💗", w.hearts, "hearts earned"], ["😇", w.angels, "angel numbers"], ["💌", w.notes, "notes to " + SHARE_WITH]];
+      var w = weekStats(), cells = [["✅", w.done, "tasks done"], ["🔥", w.streak, "day streak"], ["⏱️", w.focus, "focus minutes"], ["💗", w.hearts, "hearts earned"], ["😇", w.angels, "angel numbers"], ["💌", w.notes, "notes to " + SHARE_WITH], ["📝", w.days, "days told"], ["📸", shared("moments").filter(function (m) { return new Date(m.at).getTime() >= Date.now() - 7 * 864e5; }).length, "moments"]];
       root.innerHTML = '<div class="modal-bg cele" data-act="closemodal"><div class="cele-box" role="dialog" aria-modal="true" aria-label="Your week"><div class="cele-char">' + look(S.friend) + "</div><h2>Your week ✨</h2>" +
         '<div class="recap">' + cells.map(function (c, i) { return '<div class="reward" style="animation-delay:' + (0.3 + i * 0.12) + 's">' + c[0] + "<b>" + fmtNum(c[1]) + "</b><small>" + esc(c[2]) + "</small></div>"; }).join("") + "</div>" +
+        (function () { var wm = shared("moments").filter(function (m) { return new Date(m.at).getTime() >= Date.now() - 7 * 864e5; }).slice(0, 9); return wm.length ? '<div class="recap-moms">' + wm.map(function (m) { return '<img src="' + esc(m.thumb) + '" alt="">'; }).join("") + "</div>" : ""; })() +
         '<div class="cele-q">' + (w.done >= 5 ? "What a week. So proud of you ♡" : w.done ? "Every little step counts ♡" : "A new week, a fresh start ♡") + '</div><button class="btn" type="button" data-act="closemodal">♡</button></div></div>';
       return;
     }
@@ -1619,7 +1855,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   function render() {
     if (VIEW && !S.viewed) { renderRail(); return; }
     renderRail(); renderAlerts(); renderStreak();
-    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, coupons: vCoupons, controls: vControls, focus: vFocus, event: vEvent, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
+    var v = { overview: vOverview, subjects: vSubjects, timetable: vTimetable, assignments: vAssignments, exams: vExams, grades: vGrades, photos: vPhotos, notes: vNotes, angels: vAngels, coupons: vCoupons, controls: vControls, focus: vFocus, event: vEvent, moments: vMoments, songs: vSongs, movies: vMovies, arcade: vArcade, outfits: vOutfits, friends: vFriends, quests: vQuests, settings: vSettings }[tab];
     $("main").innerHTML = (VIEW && (tab === "overview" || tab === "notes") ? viewTools() : "") + (v || vOverview)(); renderModal(); applyLook();
   }
   function commit() { checkQuests(); save(); render(); tick(); }
@@ -1674,6 +1910,70 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (a === "wnAll") { startTour(news().map(function (w) { return w[0]; })); return; }
     if (a === "streak") { modal = { t: "streak" }; renderModal(); return; }
     if (a === "pushOn") { enablePush(); return; }
+    if (a === "gameGo") { startGame(); return; }
+    if (a === "suit") { if (!id || has("suit_" + id)) { S.suit = id; commit(); toast(id ? "Looking good ✨" : "Outfit off"); } return; }
+    if (a === "snap") { $("snapIn").click(); return; }
+    if (a === "momSend") {
+      var pmo = pendingMoment; if (!pmo) return; var cap = ($("momCap").value || "").trim();
+      sharedCall("moments_add", { p_img: pmo.img, p_thumb: pmo.thumb, p_cap: cap }, function (newId) {
+        SHARED.moments = [{ id: newId, who: VIEW ? "him" : "her", thumb: pmo.thumb, cap: cap, at: new Date().toISOString() }].concat(SHARED.moments || []);
+        pendingMoment = null; modal = null; if (!VIEW) { S.momN = (S.momN || 0) + 1; markActive(); commit(); } else render(); toast("Moment sent 📸");
+      });
+      return;
+    }
+    if (a === "momView") {
+      modal = { t: "momview", id: id }; renderModal();
+      if (!DEMO && navigator.onLine) sbRpc("moments_get", { p_key: myKey(), p_id: +id }).then(function (img) { if (img && modal && modal.t === "momview" && modal.id === id) { modal.img = img; renderModal(); } }).catch(function () {});
+      return;
+    }
+    if (a === "momDel") {
+      if (confirmKey !== "md" + id) { confirmKey = "md" + id; renderModal(); return; }
+      confirmKey = null; sharedCall("moments_del", { p_id: +id }, function () { SHARED.moments = (SHARED.moments || []).filter(function (x) { return String(x.id) !== String(id); }); modal = null; render(); toast("Deleted"); });
+      return;
+    }
+    if (a === "songSend") {
+      var st2 = $("sgTitle").value.trim(), sa = $("sgArtist").value.trim(), su = $("sgUrl").value.trim();
+      if (!st2) { $("sgTitle").focus(); return; }
+      if (su && !/^https?:\/\//.test(su)) { toast("Paste the full link, starting with https://"); $("sgUrl").focus(); return; }
+      sharedCall("songs_add", { p_title: st2, p_artist: sa, p_url: su }, function (newId) {
+        SHARED.songs = [{ id: newId, who: VIEW ? "him" : "her", title: st2, artist: sa, url: su, at: new Date().toISOString() }].concat(SHARED.songs || []);
+        if (!VIEW) { S.songN = (S.songN || 0) + 1; markActive(); commit(); } else render(); toast("Song sent 🎵");
+      });
+      return;
+    }
+    if (a === "poster") { $("posterIn").click(); return; }
+    if (a === "mvFilter") { movieFilter = id; render(); return; }
+    if (a === "movieAdd") {
+      var mt = $("mvTitle").value.trim(); if (!mt) { $("mvTitle").focus(); return; }
+      var pp = pendingPoster;
+      sharedCall("movies_add", { p_title: mt, p_poster: pp }, function (newId) {
+        SHARED.movies = [{ id: newId, who: VIEW ? "him" : "her", title: mt, poster: pp, seen_her: false, seen_him: false, at: new Date().toISOString() }].concat(SHARED.movies || []);
+        pendingPoster = ""; if (!VIEW) { S.movN = (S.movN || 0) + 1; markActive(); commit(); } else render(); toast("Added to our list 🎬");
+      });
+      return;
+    }
+    if (a === "mvSeen") {
+      var mvi = (SHARED.movies || []).filter(function (x) { return String(x.id) === String(id); })[0]; if (!mvi) return;
+      var key2 = VIEW ? "seen_him" : "seen_her", nv = !mvi[key2];
+      sharedCall("movies_seen", { p_id: +id, p_seen: nv }, function () { mvi[key2] = nv; if (!VIEW && nv) { S.movSeenN = (S.movSeenN || 0) + 1; commit(); } else render(); toast(nv ? "Marked as seen 🍿" : "Unmarked"); });
+      return;
+    }
+    if (a === "mvDel") {
+      if (confirmKey !== "mv" + id) { confirmKey = "mv" + id; render(); return; }
+      confirmKey = null; sharedCall("movies_del", { p_id: +id }, function () { SHARED.movies = (SHARED.movies || []).filter(function (x) { return String(x.id) !== String(id); }); render(); });
+      return;
+    }
+    if (a === "dmood") { dayMood = id; render(); return; }
+    if (a === "daySend") {
+      var dt = $("dayText").value.trim(); if (!dt) { $("dayText").focus(); return; }
+      var today = iso(new Date()); if (!S.days) S.days = []; if (!S.dayS) S.dayS = { last: "", run: 0, best: 0 };
+      if (S.days[0] && S.days[0].d === today) { S.days[0].text += "\n" + dt; S.days[0].mood = dayMood; }
+      else {
+        S.days.unshift({ d: today, text: dt, mood: dayMood, at: Date.now() }); if (S.days.length > 120) S.days.pop();
+        var ds = S.dayS; ds.run = ds.last && daysBetween(ds.last, today) === 1 ? ds.run + 1 : 1; ds.last = today; ds.best = Math.max(ds.best || 0, ds.run);
+      }
+      markActive(); commit(); toast(SHARE_WITH + " will read about your day ♡"); return;
+    }
     if (a === "feed" || a === "pat") { doCare(a === "feed" ? "feed" : "pet"); return; }
     if (a === "play") { if (has(id)) startDuo("play", id); return; }
     if (a === "buyout") {
@@ -1825,6 +2125,14 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
   });
   $("photoIn").addEventListener("change", function (e) { addPhotos(e.target.files); e.target.value = ""; });
   $("angelIn").addEventListener("change", function (e) { pickAngel(e.target.files[0]); e.target.value = ""; });
+  $("snapIn").addEventListener("change", function (e) {
+    var f = e.target.files[0]; e.target.value = ""; if (!f) return;
+    Promise.all([squareImg(f, 720, 0.8), squareImg(f, 240, 0.7)]).then(function (r) { pendingMoment = { img: r[0], thumb: r[1] }; modal = { t: "moment" }; renderModal(); }).catch(function () { toast("That picture could not be read."); });
+  });
+  $("posterIn").addEventListener("change", function (e) {
+    var f = e.target.files[0]; e.target.value = ""; if (!f) return;
+    posterImg(f).then(function (d) { pendingPoster = d; render(); }).catch(function () { toast("That picture could not be read."); });
+  });
   $("importIn").addEventListener("change", function (e) { if (e.target.files[0]) importAll(e.target.files[0]); e.target.value = ""; });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal) { modal = null; renderModal(); } });
   document.addEventListener("visibilitychange", function () { if (!document.hidden) tick(); });
@@ -1864,7 +2172,7 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     if (!has(S.friend)) S.friend = "bunny";
     if (!has(S.outfit)) S.outfit = "cap";
     petEl.setAttribute("data-char", S.friend); petEl.setAttribute("data-outfit", S.outfit); petEl.setAttribute("data-acc", has(S.acc || "") ? S.acc || "" : "");
-    petEl.setAttribute("data-spooky", hallo() ? "1" : "0"); applySpooky();
+    petEl.setAttribute("data-spooky", hallo() ? "1" : "0"); petEl.setAttribute("data-suit", liveSuit(S.friend)); applySpooky();
     petEl.setAttribute("data-buddy", (S.friend === "kitten" || S.friend === "cat") && has("naps") ? "1" : "0");
     if (PT.fName) setFace(PT.fName);
   }
@@ -1948,7 +2256,9 @@ table.tt select.none { color: var(--muted); background: var(--bg); border-style:
     e_twirl: ["twirl", "happy", "wheee 💫", ["💫", "✨"]], e_letter: ["idle", "happy", "a letter for " + SHARE_WITH + " 💌", ["💌", "♡"]],
     e_shy: ["shy", "kiss", "hehe… 😊", ["💗", "♡"]],
     e_boo: ["hop", "angry", "BOO! 👻", ["👻", "💀"]], e_trick: ["hop", "kiss", "trick or treat! 🍬", ["🍬", "🍭", "🎃"]],
-    e_spooky: ["dance", "happy", "spooky dance 💀", ["💀", "🦇", "🎃"]]
+    e_spooky: ["dance", "happy", "spooky dance 💀", ["💀", "🦇", "🎃"]],
+    e_fight: ["fighting", "angry", "for Ithaca! ⚔️", ["⚔️", "✨", "🛡️"]], e_quill: ["writing", "happy", "dear " + SHARE_WITH + "… ✒️", ["✒️", "📜", "♡"]],
+    e_game: ["gaming", "happy", "one more round! 🎮", ["🎮", "⭐", "✨"]]
   };
   var himEl = null;
   function playEmote(id) {
